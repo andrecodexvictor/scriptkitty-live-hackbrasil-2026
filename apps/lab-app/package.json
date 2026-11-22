@@ -1,0 +1,47 @@
+{
+  "name": "@script-kitty/lab-app",
+  "version": "0.1.0",
+  "description": "ScriptKitty 2.0 Synthetic Vulnerable Lab Application for Autonomous Remediation Verification",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./db": {
+      "types": "./dist/db.d.ts",
+      "import": "./dist/db.js",
+      "default": "./dist/db.js"
+    },
+    "./routes/search": {
+      "types": "./dist/routes/search.d.ts",
+      "import": "./dist/routes/search.js",
+      "default": "./dist/routes/search.js"
+    },
+    "./routes/diagnostics": {
+      "types": "./dist/routes/diagnostics.d.ts",
+      "import": "./dist/routes/diagnostics.js",
+      "default": "./dist/routes/diagnostics.js"
+    },
+    "./routes/reports": {
+      "types": "./dist/routes/reports.d.ts",
+      "import": "./dist/routes/reports.js",
+      "default": "./dist/routes/reports.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "node --test tests/**/*.test.mts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.3"
+  }
+}

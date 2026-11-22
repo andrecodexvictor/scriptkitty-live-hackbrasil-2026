@@ -1,0 +1,71 @@
+{
+  "name": "@script-kitty/remediation-engine",
+  "version": "0.1.0",
+  "description": "ScriptKitty 2.0 Autonomous Remediation Engine (AppSec Closed-Loop Lifecycle)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./sandbox": {
+      "types": "./dist/sandbox.d.ts",
+      "import": "./dist/sandbox.js",
+      "default": "./dist/sandbox.js"
+    },
+    "./patcher": {
+      "types": "./dist/patcher.d.ts",
+      "import": "./dist/patcher.js",
+      "default": "./dist/patcher.js"
+    },
+    "./rollback": {
+      "types": "./dist/rollback.d.ts",
+      "import": "./dist/rollback.js",
+      "default": "./dist/rollback.js"
+    },
+    "./rechecker": {
+      "types": "./dist/rechecker.d.ts",
+      "import": "./dist/rechecker.js",
+      "default": "./dist/rechecker.js"
+    },
+    "./lifecycle": {
+      "types": "./dist/lifecycle.d.ts",
+      "import": "./dist/lifecycle.js",
+      "default": "./dist/lifecycle.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/types.js",
+      "default": "./dist/types.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "node --test --test-concurrency=1 tests/**/*.test.mts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@script-kitty/contracts": "*",
+    "@script-kitty/quality-gate": "*",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.3"
+  },
+  "keywords": [
+    "security",
+    "remediation",
+    "appsec",
+    "autonomous",
+    "diff",
+    "rollback",
+    "sandbox",
+    "patch-cat"
+  ],
+  "author": "Script Kitty Team",
+  "license": "MIT"
+}

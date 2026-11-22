@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "script-kitty-remediation"
+version = "0.2.0"
+description = "Deterministic PatchCat remediation transformer, unified/reverse diff generator, blast-radius analyzer, and SHA-256 patch proposal signer."
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.setuptools.packages.find]
+include = ["script_kitty_remediation*"]

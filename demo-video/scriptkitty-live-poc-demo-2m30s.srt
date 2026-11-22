@@ -1,0 +1,74 @@
+1
+00:00:00,400 --> 00:00:07,700
+ScriptKitty Live e PatchCat: segurança que enxerga
+o caminho inteiro do ataque com o motor ChainBreak.
+
+2
+00:00:08,300 --> 00:00:17,355
+No terminal, o serviço inicia em laboratório isolado:
+auto-merge, deploy e execução externa travados por padrão.
+
+3
+00:00:20,400 --> 00:00:27,220
+Console ScriptKitty Live conectado em tempo real
+ao servidor MCP local sobre HTTP seguro em loopback.
+
+4
+00:00:30,400 --> 00:00:38,072
+No cenário Baseline, o ChainBreak comprova zero rotas proibidas
+e preserva todos os três fluxos legítimos de negócio.
+
+5
+00:00:45,400 --> 00:00:52,929
+Ao selecionar o rollout candidato, o PatchCat alerta
+para uma regressão crítica de permissão no fluxo de pagamento.
+
+6
+00:00:54,400 --> 00:01:02,226
+O ChainBreak destaca o caminho completo até o destino externo,
+expondo dados restritos de pagamento com severidade P1.
+
+7
+00:01:05,200 --> 00:01:13,524
+Cada salto tem origem exata e hash SHA-256 verificável,
+distinguindo alcançabilidade no grafo de exploração em produção.
+
+8
+00:01:15,400 --> 00:01:23,531
+Na Revisão Humana de Risco, a triagem atua de forma consultiva
+e escala automaticamente para aprovação humana.
+
+9
+00:01:26,500 --> 00:01:39,349
+No transporte MCP fail-closed: HTTP 401 sem token, HTTP 403 em origem
+inválida, bloqueio entre tenants e replay idempotente.
+
+10
+00:01:40,400 --> 00:01:49,614
+Na Remediação Verificada, o diff remove o vínculo excessivo:
+os riscos caem de um para zero mantendo 3/3 fluxos ativos.
+
+11
+00:01:54,400 --> 00:02:04,600
+AppSec corrige SQLi, CMDi e IDOR; Runtime Guardian (168/168) protege MCP
+e o sandbox Kali LAB valida com segurança (18/18).
+
+12
+00:02:05,200 --> 00:02:10,300
+No Release Gate, simular auto-certificação dispara rejeição imediata
+pela política independente de separação tripartite.
+
+13
+00:02:10,800 --> 00:02:17,200
+Com três revisores distintos, o Gate aprova com custódia Merkle RFC 8785
+mantendo auto-merge e deploy travados para humano.
+
+14
+00:02:17,700 --> 00:02:22,800
+O pacote consultivo sela as provas criptográficas da entrega e bloqueia
+alterações de política ou textos sem evidência verificável.
+
+15
+00:02:23,300 --> 00:02:29,600
+ScriptKitty Live: 632/632 testes verificados (612 TS + 20 Python),
+121/121 invariantes em 7 tiers — segurança determinística.

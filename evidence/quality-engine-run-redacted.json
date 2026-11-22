@@ -1,0 +1,44 @@
+{
+  "gateIds": [
+    "G06",
+    "G08"
+  ],
+  "verifiedSha": "f1c334f8c4e58dbe433b45156a0d3491faa60588",
+  "generatedAtUtc": "2026-11-21T23:49:51.687Z",
+  "qualityGate": {
+    "targetCommitSha": "f1c334f8c4e58dbe433b45156a0d3491faa60588",
+    "inconclusiveEvidenceVerdict": "BLOCK",
+    "selfCertificationRejectVerdict": "REJECT",
+    "triPartyPassVerdict": "PASS",
+    "triPartyAuditMerkleRoot": "67dcf99a567e5b9544c6bba9c74ad93ec4dc5ba3be41ef99181d34d1dfdbc5a3",
+    "custodyChainMerkleRoot": "9fbb95a92215d758bff4663c3af80b98c7f08e0e925c9bb300c3075c6b1bea1b",
+    "factoryDeliveryV1": {
+      "contract": "factory.delivery.v1",
+      "eligible": true,
+      "stage": "approved",
+      "blockReason": null,
+      "submissionsRemaining": 3,
+      "correctionsRemaining": 3,
+      "commitSha": "f1c334f8c4e58dbe433b45156a0d3491faa60588",
+      "checkedAt": "2026-11-21T12:00:00.000Z",
+      "externalExecution": false,
+      "mergeAllowed": false,
+      "deployAllowed": false,
+      "deploymentAllowed": false
+    }
+  },
+  "remediationVerification": {
+    "bundleId": "zenpr-7615e8f8391eca23",
+    "forbiddenPathDeltaSummary": "1 -> 0",
+    "legitimateOperationsSummary": "3/3",
+    "merkleRoot": "4f911797012ede51b1ae5ad10fef3debc81509ac0de75e54e88086baf94631de",
+    "merkleBundleValid": true,
+    "merkleInclusionProofValid": true,
+    "governanceChecks": {
+      "policyMutationBlocked": "E_POLICY_MUTATION_FORBIDDEN",
+      "sodViolationBlocked": "E_SOD_VIOLATION",
+      "unverifiedAiProseBlocked": "UNVERIFIED_AI_PROSE_REJECTED",
+      "crossTenantEvidenceBlocked": "TENANT_ISOLATION_VIOLATION"
+    }
+  }
+}

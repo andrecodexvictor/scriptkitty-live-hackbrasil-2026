@@ -1,0 +1,238 @@
+{
+  "gateId": "G00",
+  "verifiedSha": "f1c334f8c4e58dbe433b45156a0d3491faa60588",
+  "verifiedAtUtc": "2026-11-21T23:43:29.568Z",
+  "status": "BLOCKED",
+  "competitionRepository": {
+    "apiEndpoint": "https://api.github.com/repos/andrecodexvictor/scriptkitty-live-hackbrasil-2026",
+    "httpStatus": 200,
+    "eligibleContainer": true,
+    "metadata": {
+      "full_name": "andrecodexvictor/scriptkitty-live-hackbrasil-2026",
+      "html_url": "https://github.com/andrecodexvictor/scriptkitty-live-hackbrasil-2026",
+      "created_at": "2026-11-21T12:22:37Z",
+      "updated_at": "2026-11-21T12:22:38Z",
+      "pushed_at": "2026-11-21T12:22:38Z",
+      "private": false,
+      "fork": false,
+      "size": 0,
+      "default_branch": "main",
+      "createdAfterCutoff": true,
+      "cutoffIso": "2026-11-04T21:00:00-03:00"
+    },
+    "remoteHeadSha": null,
+    "error": null
+  },
+  "localGitWorkspace": {
+    "headSha": "f1c334f8c4e58dbe433b45156a0d3491faa60588",
+    "originUrl": "https://github.com/andrecodexvictor/Script-kitty.git",
+    "originMatchesCompetition": false,
+    "remoteCommitSynced": false,
+    "preEventCommitCount": 28,
+    "preEventCommits": [
+      {
+        "sha": "e7c4a1a",
+        "fullSha": "e7c4a1a08f0dcbfb95cc918f3a8a8b8af262c201",
+        "authorDate": "2026-07-25T14:38:11-03:00",
+        "subject": "feat: initial release of Script Kitty v1.0 defensive security platform",
+        "isPreEvent": true
+      },
+      {
+        "sha": "7325302",
+        "fullSha": "73253028bb2bed70a7817bd06a81cd09087e9972",
+        "authorDate": "2026-07-25T14:45:24-03:00",
+        "subject": "feat: initial commit and workspace setup",
+        "isPreEvent": true
+      },
+      {
+        "sha": "89b2e78",
+        "fullSha": "89b2e78842ba475e9b04421283f1dc4c4a09dc9f",
+        "authorDate": "2026-07-25T16:05:27-03:00",
+        "subject": "feat: add Plug-and-Play zero-config SAST, secret, header, and AI guardrail auditor",
+        "isPreEvent": true
+      },
+      {
+        "sha": "109ad61",
+        "fullSha": "109ad6104d9f162bf48ab9584af382cfd7e3e680",
+        "authorDate": "2026-07-25T16:40:20-03:00",
+        "subject": "feat: professionalize security engine nomenclature, add ANSI Art Detective Cat to CLI, upgrade Rust policy core with Merkle Root audit log, and add automated auto_scan engine",
+        "isPreEvent": true
+      },
+      {
+        "sha": "b4fbb30",
+        "fullSha": "b4fbb30f7077136b194eb94d951ad8b4328726d0",
+        "authorDate": "2026-07-25T16:46:25-03:00",
+        "subject": "feat: add bot deployment scripts (Linux/Windows/Docker), AI Agent CLI installers for Claude Code, Grok, OpenCode, Antigravity, Codex, Cursor, and CLI terminal preview artwork",
+        "isPreEvent": true
+      },
+      {
+        "sha": "5ee32e5",
+        "fullSha": "5ee32e5afed346669748aa7441815014dd9d2815",
+        "authorDate": "2026-07-25T16:56:53-03:00",
+        "subject": "feat: add Cyber Detective Fedora Cat ANSI Art TrueColor banner to CLI and engine",
+        "isPreEvent": true
+      },
+      {
+        "sha": "42a74c6",
+        "fullSha": "42a74c6d2cc5c3bd6f6d992a00fe92fcff3f631d",
+        "authorDate": "2026-07-25T17:02:27-03:00",
+        "subject": "feat: add friendly non-technical detective cat patch messages and continuous memory logging",
+        "isPreEvent": true
+      },
+      {
+        "sha": "d988b0b",
+        "fullSha": "d988b0b4ea30ee8cdbf22e937a3c9fc0e2def5d3",
+        "authorDate": "2026-07-25T17:09:00-03:00",
+        "subject": "feat: add i18n language selector with default English (en), Portuguese (pt), and Spanish (es) support for CLI and Web Dashboard",
+        "isPreEvent": true
+      },
+      {
+        "sha": "ce6986f",
+        "fullSha": "ce6986f7644a1ff0e597ae014a34d013d1267c1f",
+        "authorDate": "2026-07-25T17:12:25-03:00",
+        "subject": "feat: replace sparse line-art banner with solid high-density Unicode Block Art Detective Cat",
+        "isPreEvent": true
+      },
+      {
+        "sha": "32fac9b",
+        "fullSha": "32fac9b2c90c1a85acc680054591739774281e77",
+        "authorDate": "2026-07-25T17:16:14-03:00",
+        "subject": "feat: add animated frame-by-frame block art banner with detective smoking cigar and smoke drift",
+        "isPreEvent": true
+      },
+      {
+        "sha": "8750763",
+        "fullSha": "875076346b39cad261caf23d7ad7971818485bb4",
+        "authorDate": "2026-07-25T17:18:44-03:00",
+        "subject": "feat: redesign Cyber Detective Cat banner with cat ears, snout, whiskers, cyber glasses, and pipe portrait matching reference design",
+        "isPreEvent": true
+      },
+      {
+        "sha": "a5670b7",
+        "fullSha": "a5670b7207cb2d9ffbb4591cd924c35a95fa84a3",
+        "authorDate": "2026-07-25T17:20:23-03:00",
+        "subject": "feat: render solid pixel-perfect Block Art Cyber Cat Portrait with ears, SK hat, glasses, whiskers, snout, pipe, coat and tie",
+        "isPreEvent": true
+      },
+      {
+        "sha": "641d464",
+        "fullSha": "641d4647b13d85b9aaa298664bfddb4fab24f04b",
+        "authorDate": "2026-07-25T17:22:47-03:00",
+        "subject": "feat: replace CLI terminal preview asset in README with high-res Block Art Cyber Cat terminal screenshot",
+        "isPreEvent": true
+      },
+      {
+        "sha": "7a31030",
+        "fullSha": "7a31030663c6920143dbf9cf4ffce8b4239626b0",
+        "authorDate": "2026-07-25T17:25:01-03:00",
+        "subject": "fix: render CLI Block Art banner cleanly once without frame stacking or terminal scrollback duplication",
+        "isPreEvent": true
+      },
+      {
+        "sha": "4b2dbf3",
+        "fullSha": "4b2dbf3f228b11a205dc5808ab012f43e90db477",
+        "authorDate": "2026-07-25T17:36:36-03:00",
+        "subject": "feat: add simple global CLI shortcuts sk and kitty, multi-provider AI Key Manager (OpenAI, Google, NVIDIA, OpenRouter, Claude, Grok), and ChatGPT Codex Subscription Token authentication",
+        "isPreEvent": true
+      },
+      {
+        "sha": "25c073b",
+        "fullSha": "25c073b2e9f17dba8df88dc89c4940acab6dba49",
+        "authorDate": "2026-07-25T17:40:44-03:00",
+        "subject": "feat: add interactive navigable TUI menu when script-kitty or sk is launched without subcommands",
+        "isPreEvent": true
+      },
+      {
+        "sha": "34e481c",
+        "fullSha": "34e481c4f4f1b72fde913a1fcea44e6b1aa47c58",
+        "authorDate": "2026-07-25T17:42:43-03:00",
+        "subject": "feat: add interactive Feature Checkbox Selector and CLI AI Agent Setup Wizard for direct model and key configuration",
+        "isPreEvent": true
+      },
+      {
+        "sha": "bd760c1",
+        "fullSha": "bd760c14ce728d5ba610049c1c90b0921d84f924",
+        "authorDate": "2026-07-25T17:46:59-03:00",
+        "subject": "feat: replace CLI mock data with real live filesystem SAST scanner, secret leak detector, and HTTP header auditor",
+        "isPreEvent": true
+      },
+      {
+        "sha": "53e8921",
+        "fullSha": "53e8921e6551e18082bad088caf7842c8a9869f6",
+        "authorDate": "2026-07-25T17:51:44-03:00",
+        "subject": "feat: add conversational CLI agent mode and defensive static analysis module",
+        "isPreEvent": true
+      },
+      {
+        "sha": "78c381c",
+        "fullSha": "78c381c9eb8900a794ad6908a72952b313da7ebb",
+        "authorDate": "2026-07-25T18:02:26-03:00",
+        "subject": "feat: enforce mandatory AI login for CLI agent chat, upgrade guardrail engine with anti-hallucination verification, and update README",
+        "isPreEvent": true
+      },
+      {
+        "sha": "a1e759a",
+        "fullSha": "a1e759a86252817acdb161306452653955a3b3d0",
+        "authorDate": "2026-07-25T18:16:19-03:00",
+        "subject": "feat: implement Defensive Harness Engine applying Martin Fowler harness engineering concepts for continuous local auditing",
+        "isPreEvent": true
+      },
+      {
+        "sha": "fe8f632",
+        "fullSha": "fe8f632084e48a5c064dd8e0594303629eb825ba",
+        "authorDate": "2026-07-25T18:17:19-03:00",
+        "subject": "docs: incrementally restore full README.md with mascot banner, stack diagram, operating modes, structure tree, and all new capabilities",
+        "isPreEvent": true
+      },
+      {
+        "sha": "10c197d",
+        "fullSha": "10c197dd695e19aedbd22e3dd50649e9bca60e23",
+        "authorDate": "2026-07-25T18:21:03-03:00",
+        "subject": "feat: add Cryptographic Vulnerability Auditor and Modular Harness Engine for multi-module security pass",
+        "isPreEvent": true
+      },
+      {
+        "sha": "7d9cb24",
+        "fullSha": "7d9cb247368925340ded9d6859555e6bc490139e",
+        "authorDate": "2026-07-25T18:22:21-03:00",
+        "subject": "chore: add internal lab module exclusions to .gitignore",
+        "isPreEvent": true
+      },
+      {
+        "sha": "8f5b9f1",
+        "fullSha": "8f5b9f1b1d4b13c09155ae2f68df227307dbf73e",
+        "authorDate": "2026-07-25T18:23:49-03:00",
+        "subject": "feat: add System Architecture (IaC) and Dependency Supply-Chain Vulnerability Auditors to Modular Harness Engine",
+        "isPreEvent": true
+      },
+      {
+        "sha": "b1c9e2b",
+        "fullSha": "b1c9e2b97322210c4ef432f7c722feb5ebad2001",
+        "authorDate": "2026-07-25T18:27:12-03:00",
+        "subject": "feat: add RELEASE_NOTES.md for v1.0.0 and Database & Authentication Security Auditor module",
+        "isPreEvent": true
+      },
+      {
+        "sha": "c976486",
+        "fullSha": "c97648687c2a8786c7c9d71dbcd1ce4965878d80",
+        "authorDate": "2026-07-25T18:31:16-03:00",
+        "subject": "feat: add native ZenPR integration bridge, self-learning adaptive agent memory, and update README",
+        "isPreEvent": true
+      },
+      {
+        "sha": "f1c334f",
+        "fullSha": "f1c334f8c4e58dbe433b45156a0d3491faa60588",
+        "authorDate": "2026-07-25T18:35:00-03:00",
+        "subject": "feat: implement Persistent Knowledge Graph and LangGraph state memory engine",
+        "isPreEvent": true
+      }
+    ],
+    "hasProvenanceMd": true,
+    "hasLicense": true
+  },
+  "blockers": [
+    "Competition repository (https://github.com/andrecodexvictor/scriptkitty-live-hackbrasil-2026) has size=0 KB and remoteHeadSha=none (local HEAD=f1c334f). Human approval required before pushing.",
+    "Local remote 'origin' points to 'https://github.com/andrecodexvictor/Script-kitty.git' instead of 'https://github.com/andrecodexvictor/scriptkitty-live-hackbrasil-2026.git'.",
+    "History has 28 pre-event commit(s) before 2026-11-04T21:00:00-03:00; clean competition push must follow PROVENANCE.md."
+  ]
+}

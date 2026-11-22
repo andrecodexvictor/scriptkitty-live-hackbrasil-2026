@@ -1,0 +1,73 @@
+{
+  "name": "@script-kitty/kali-mcp-assessment",
+  "version": "0.1.0",
+  "description": "ScriptKitty 2.0 Kali Linux Security Verification MCP Runtime (LAB_SANDBOX_ONLY, zero shell interpolation, RuntimeGuardian + Tri-Party SoD + RFC 8785 Custody)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./schemas": {
+      "types": "./dist/schemas.d.ts",
+      "import": "./dist/schemas.js",
+      "default": "./dist/schemas.js"
+    },
+    "./argv-builder": {
+      "types": "./dist/argv-builder.d.ts",
+      "import": "./dist/argv-builder.js",
+      "default": "./dist/argv-builder.js"
+    },
+    "./sandbox-profile": {
+      "types": "./dist/sandbox-profile.d.ts",
+      "import": "./dist/sandbox-profile.js",
+      "default": "./dist/sandbox-profile.js"
+    },
+    "./lab-runner": {
+      "types": "./dist/lab-runner.d.ts",
+      "import": "./dist/lab-runner.js",
+      "default": "./dist/lab-runner.js"
+    },
+    "./capabilities": {
+      "types": "./dist/capabilities.d.ts",
+      "import": "./dist/capabilities.js",
+      "default": "./dist/capabilities.js"
+    },
+    "./server": {
+      "types": "./dist/server.d.ts",
+      "import": "./dist/server.js",
+      "default": "./dist/server.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "node --test tests/**/*.test.mts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.1",
+    "@script-kitty/contracts": "*",
+    "@script-kitty/quality-gate": "*",
+    "@script-kitty/security-actions": "*",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.3"
+  },
+  "keywords": [
+    "security",
+    "kali-linux",
+    "mcp",
+    "sandbox",
+    "zero-trust",
+    "gvisor",
+    "verification",
+    "agentsec"
+  ],
+  "author": "Script Kitty Team",
+  "license": "MIT"
+}

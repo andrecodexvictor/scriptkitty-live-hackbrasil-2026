@@ -1,0 +1,35 @@
+# Script Kitty — Hardened Rootless Kali Verification Sandbox (LAB_SANDBOX_ONLY)
+# Installs strictly read-only/defensive assessment packages over a digest-pinned base.
+
+FROM kalilinux/kali-rolling@sha256:9f7a8f2f5b4e1e6e8f2c0b7a4d5c6e8f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    HOME=/tmp \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONPYCACHEPREFIX=/tmp/__pycache__ \
+    LAB_SANDBOX_ONLY=1 \
+    PATH="/usr/local/bin:/usr/bin:/bin"
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+      ca-certificates \
+      curl \
+      lynis \
+      nikto \
+      nmap \
+      python3 \
+      whatweb && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    groupadd --gid 65532 sandbox && \
+    useradd --uid 65532 --gid 65532 --no-create-home --shell /usr/sbin/nologin sandbox && \
+    mkdir -p /workspace && \
+    chown 65532:65532 /workspace && \
+    chmod 0555 /workspace
+
+WORKDIR /workspace
+
+USER 65532:65532
+
+ENTRYPOINT ["/usr/bin/env"]
+CMD ["sleep", "infinity"]

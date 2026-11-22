@@ -1,0 +1,86 @@
+{
+  "name": "@script-kitty/adapters",
+  "version": "0.1.0",
+  "description": "ScriptKitty 2.0 Decoupled Security Engine Adapters (Mantis, Codex, Cloudflare, Quality Engine, Harness2, OWASP Skills Pack, Kali Lab MCP)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./adapter-interface": {
+      "types": "./dist/adapter-interface.d.ts",
+      "import": "./dist/adapter-interface.js",
+      "default": "./dist/adapter-interface.js"
+    },
+    "./execution-boundary": {
+      "types": "./dist/execution-boundary.d.ts",
+      "import": "./dist/execution-boundary.js",
+      "default": "./dist/execution-boundary.js"
+    },
+    "./mantis-adapter": {
+      "types": "./dist/mantis-adapter.d.ts",
+      "import": "./dist/mantis-adapter.js",
+      "default": "./dist/mantis-adapter.js"
+    },
+    "./codex-security-adapter": {
+      "types": "./dist/codex-security-adapter.d.ts",
+      "import": "./dist/codex-security-adapter.js",
+      "default": "./dist/codex-security-adapter.js"
+    },
+    "./cloudflare-adapter": {
+      "types": "./dist/cloudflare-adapter.d.ts",
+      "import": "./dist/cloudflare-adapter.js",
+      "default": "./dist/cloudflare-adapter.js"
+    },
+    "./quality-engine-adapter": {
+      "types": "./dist/quality-engine-adapter.d.ts",
+      "import": "./dist/quality-engine-adapter.js",
+      "default": "./dist/quality-engine-adapter.js"
+    },
+    "./harness2-adapter": {
+      "types": "./dist/harness2-adapter.d.ts",
+      "import": "./dist/harness2-adapter.js",
+      "default": "./dist/harness2-adapter.js"
+    },
+    "./owasp-skills-adapter": {
+      "types": "./dist/owasp-skills-adapter.d.ts",
+      "import": "./dist/owasp-skills-adapter.js",
+      "default": "./dist/owasp-skills-adapter.js"
+    },
+    "./kali-mcp-adapter": {
+      "types": "./dist/kali-mcp-adapter.d.ts",
+      "import": "./dist/kali-mcp-adapter.js",
+      "default": "./dist/kali-mcp-adapter.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "node --test tests/**/*.test.mts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@script-kitty/contracts": "*",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.3"
+  },
+  "keywords": [
+    "security",
+    "adapters",
+    "mantis",
+    "codex-security",
+    "cloudflare",
+    "quality-engine",
+    "zero-trust",
+    "appsec",
+    "agentsec"
+  ],
+  "author": "Script Kitty Team",
+  "license": "MIT"
+}

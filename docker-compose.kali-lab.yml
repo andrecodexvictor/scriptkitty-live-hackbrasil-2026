@@ -1,0 +1,53 @@
+services:
+  lab-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: script-kitty-lab-app
+    user: "65532:65532"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 64
+    mem_limit: 256m
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+    environment:
+      NODE_ENV: production
+      HOST: "0.0.0.0"
+      PORT: "3000"
+    networks:
+      - lab_loopback_bridge
+    restart: "no"
+
+  kali-mcp-sandbox:
+    build:
+      context: ./packages/kali-mcp-assessment/docker
+      dockerfile: Dockerfile.kali-sandbox
+    image: script-kitty/kali-sandbox:lab-only
+    container_name: script-kitty-kali-sandbox
+    user: "65532:65532"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true", "seccomp=./packages/kali-mcp-assessment/docker/seccomp-kali-lab.json"]
+    pids_limit: 64
+    mem_limit: 1024m
+    cpus: "1.0"
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+    environment:
+      LAB_SANDBOX_ONLY: "1"
+      ALLOWED_LAB_TARGET: "http://lab-app:3000"
+    depends_on:
+      - lab-app
+    networks:
+      - lab_loopback_bridge
+    restart: "no"
+
+networks:
+  lab_loopback_bridge:
+    driver: bridge
+    internal: true
+    ipam:
+      config:
+        - subnet: 172.30.0.0/28

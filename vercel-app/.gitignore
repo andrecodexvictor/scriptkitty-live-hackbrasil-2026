@@ -1,0 +1,10 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+.vercel/
+
+# Logs & temp files
+*.log
+.DS_Store

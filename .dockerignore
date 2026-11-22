@@ -1,0 +1,54 @@
+# Version control & CI metadata
+.git
+.gitignore
+.github
+.dotarchitecture
+.dotcontext
+.dotstack
+
+# Host dependencies & build outputs
+node_modules
+**/node_modules
+dist
+**/dist
+build
+target
+coverage
+*.tsbuildinfo
+
+# Secrets, keys, and local environment files (NEVER bake into image)
+.env
+.env.*
+*.env
+*.pem
+*.key
+*.pfx
+*.p12
+.ssh
+.aws
+credentials.json
+
+# Runtime state, artifacts, and experimental scratch directories
+.context
+scratch
+extracted_artifacts
+artifacts.zip
+internal_lab
+packages/agent_runtime/script_kitty_agent/lab
+vercel-app
+assets
+
+# Documentation & tests not required inside production runtime container
+docs
+*.md
+**/tests
+**/*.test.*
+
+# Logs & IDE state
+*.log
+npm-debug.log*
+.vscode
+.idea
+*.swp
+.DS_Store
+Thumbs.db

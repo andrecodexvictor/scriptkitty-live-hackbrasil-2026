@@ -1,0 +1,33 @@
+{
+  "name": "@script-kitty/patchcat-orchestrator",
+  "version": "0.1.0",
+  "description": "Autonomous governance-bounded PatchCat Orchestrator coordinating Guardian, Invokta Action Engine, ChainBreak, Kali Sandbox, Company Brain, JEV-as-a-Judge, Counterfactual Remediation, Deterministic Quality Gate, Factory Delivery Eligibility, and ZenPR Advisory Bundles",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/**/*.test.mts",
+    "clean": "node -e \"import('node:fs').then(fs => fs.rmSync('dist', { recursive: true, force: true }))\""
+  },
+  "dependencies": {
+    "@script-kitty/chainbreak": "0.1.0",
+    "@script-kitty/company-context": "0.1.0",
+    "@script-kitty/contracts": "0.1.0",
+    "@script-kitty/jev-judge": "0.1.0",
+    "@script-kitty/kali-mcp-assessment": "0.1.0",
+    "@script-kitty/quality-gate": "0.1.0",
+    "@script-kitty/security-actions": "0.1.0",
+    "zod": "^3.25.76"
+  }
+}

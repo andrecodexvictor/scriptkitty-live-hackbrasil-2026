@@ -1,0 +1,79 @@
+{
+  "name": "@script-kitty/runtime-guardian",
+  "version": "0.1.0",
+  "description": "ScriptKitty 2.0 AgentSec Runtime Guardian - In-process MCP & Agent Security Interceptor",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/types.js",
+      "default": "./dist/types.js"
+    },
+    "./tool-poisoning": {
+      "types": "./dist/tool-poisoning.d.ts",
+      "import": "./dist/tool-poisoning.js",
+      "default": "./dist/tool-poisoning.js"
+    },
+    "./prompt-injection": {
+      "types": "./dist/prompt-injection.d.ts",
+      "import": "./dist/prompt-injection.js",
+      "default": "./dist/prompt-injection.js"
+    },
+    "./scope-guard": {
+      "types": "./dist/scope-guard.d.ts",
+      "import": "./dist/scope-guard.js",
+      "default": "./dist/scope-guard.js"
+    },
+    "./confused-deputy": {
+      "types": "./dist/confused-deputy.d.ts",
+      "import": "./dist/confused-deputy.js",
+      "default": "./dist/confused-deputy.js"
+    },
+    "./audit-logger": {
+      "types": "./dist/audit-logger.d.ts",
+      "import": "./dist/audit-logger.js",
+      "default": "./dist/audit-logger.js"
+    },
+    "./middleware": {
+      "types": "./dist/middleware.d.ts",
+      "import": "./dist/middleware.js",
+      "default": "./dist/middleware.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "node --test --test-concurrency=1 tests/**/*.test.mts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.1",
+    "@script-kitty/contracts": "*",
+    "@script-kitty/quality-gate": "*",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.3"
+  },
+  "keywords": [
+    "security",
+    "agentsec",
+    "mcp",
+    "runtime-guardian",
+    "prompt-injection",
+    "tool-poisoning",
+    "confused-deputy",
+    "scope-guard",
+    "merkle",
+    "audit"
+  ],
+  "author": "Script Kitty Team",
+  "license": "MIT"
+}

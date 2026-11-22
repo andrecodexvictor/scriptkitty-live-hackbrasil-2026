@@ -1,0 +1,49 @@
+{
+  "name": "@script-kitty/jev-judge",
+  "version": "0.1.0",
+  "description": "JEV-as-a-Judge v0 - Evidence-first fail-closed security triage & escalation pipeline",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./schemas": {
+      "types": "./dist/schemas.d.ts",
+      "import": "./dist/schemas.js",
+      "default": "./dist/schemas.js"
+    },
+    "./sanitizer": {
+      "types": "./dist/sanitizer.d.ts",
+      "import": "./dist/sanitizer.js",
+      "default": "./dist/sanitizer.js"
+    },
+    "./typesafe-provider": {
+      "types": "./dist/typesafe-provider.d.ts",
+      "import": "./dist/typesafe-provider.js",
+      "default": "./dist/typesafe-provider.js"
+    },
+    "./pipeline": {
+      "types": "./dist/pipeline.d.ts",
+      "import": "./dist/pipeline.js",
+      "default": "./dist/pipeline.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "node --test tests/**/*.test.mts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.3"
+  },
+  "author": "Script Kitty Team",
+  "license": "MIT"
+}

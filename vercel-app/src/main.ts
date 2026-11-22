@@ -45,11 +45,14 @@ const COPY: Record<
     consoleDesc: string;
     btnDiff: string;
     btnGate: string;
-    bannerFixTitle: string;
-    bannerFixDesc: string;
     graphTitle: string;
     clearBanner: string;
     workflowsTitle: string;
+    noWorkflows: string;
+    preservedWorkflow: string;
+    brokenWorkflow: string;
+    fixtureMetadata: string;
+    simulationNote: string;
     reviewTitle: string;
     gateTitle: string;
     testSelfCert: string;
@@ -91,16 +94,18 @@ const COPY: Record<
     consoleTitle: 'ChainBreak Scenario Explorer',
     consoleDesc:
       'Switch between synthetic payment-lab policy states to inspect reachable exposure chains, counterfactual 1-edge diffs, and 3-party release gates.',
-    btnDiff: 'Preview Fix Diff',
-    btnGate: 'Validate Release Gate',
-    bannerFixTitle: 'Counterfactual 1-line permission fix verified',
-    bannerFixDesc:
-      "Removing excess permission link 'e-rollout-exporter-read-pii' drops unauthorized paths from 1 to 0 while keeping 3/3 business workflows operational.",
+    btnDiff: 'Compare Rollout Fix',
+    btnGate: 'View Gate Simulation',
     graphTitle: 'Access Reachability Graph',
-    clearBanner: 'No unauthorized export routes detected. Policy NO_RESTRICTED_DATA_EXTERNAL_TRANSFER holds.',
-    workflowsTitle: 'Protected Business Workflows',
+    clearBanner: 'This scenario has no unauthorized export routes.',
+    workflowsTitle: 'Business Workflows',
+    noWorkflows: 'This scenario defines no business workflows.',
+    preservedWorkflow: 'Preserved',
+    brokenWorkflow: 'Broken',
+    fixtureMetadata: 'Fixture Metadata',
+    simulationNote: 'This example shows the separation-of-duties check. Release approval is outside the simulation.',
     reviewTitle: 'Human Risk Review',
-    gateTitle: 'Release Gate & Custody Proof',
+    gateTitle: 'Separation of Duties Simulation',
     testSelfCert: 'Test Self-Cert Guard',
     restoreSod: 'Restore Independent Review',
     problemHeading: 'Why probabilistic scanners miss chained agent risk',
@@ -142,16 +147,18 @@ const COPY: Record<
     consoleTitle: 'Explorador de Cenários ChainBreak',
     consoleDesc:
       'Alterne entre estados sintéticos do laboratório de pagamentos para inspecionar cadeias alcançáveis, diffs mínimos de 1 aresta e portões tripartites de release.',
-    btnDiff: 'Visualizar Diff da Correção',
-    btnGate: 'Validar Release Gate',
-    bannerFixTitle: 'Correção contrafactual mínima de 1 linha verificada',
-    bannerFixDesc:
-      "Remover o vínculo excessivo 'e-rollout-exporter-read-pii' reduz rotas proibidas de 1 para 0 mantendo 3/3 fluxos legítimos operando.",
+    btnDiff: 'Comparar Correção do Rollout',
+    btnGate: 'Ver Simulação do Gate',
     graphTitle: 'Grafo de Alcançabilidade de Acesso',
-    clearBanner: 'Nenhuma rota de exportação não autorizada detectada. Política NO_RESTRICTED_DATA_EXTERNAL_TRANSFER preservada.',
-    workflowsTitle: 'Fluxos de Negócio Protegidos',
+    clearBanner: 'Este cenário não tem rotas de exportação não autorizadas.',
+    workflowsTitle: 'Fluxos de Negócio',
+    noWorkflows: 'Este cenário não define fluxos de negócio.',
+    preservedWorkflow: 'Preservado',
+    brokenWorkflow: 'Interrompido',
+    fixtureMetadata: 'Metadados da Fixture',
+    simulationNote: 'Este exemplo mostra a checagem de separação de deveres. A aprovação de release fica fora da simulação.',
     reviewTitle: 'Revisão Humana de Risco',
-    gateTitle: 'Release Gate e Prova de Custódia',
+    gateTitle: 'Simulação de Separação de Deveres',
     testSelfCert: 'Testar Bloqueio de Auto-Certificação',
     restoreSod: 'Restaurar Revisão Independente',
     problemHeading: 'Por que scanners probabilísticos perdem riscos encadeados em agentes',
@@ -241,13 +248,14 @@ function renderSrTable(sc: (typeof VERCEL_SCENARIOS)[ScenarioId]): string {
     </div>`;
 }
 
-function render(): void {
+function render(focusId = document.activeElement?.id): void {
   applyDocumentTheme(currentTheme);
   const t = COPY[currentLang];
   const sc = VERCEL_SCENARIOS[activeScenarioId];
   const mState = getMascotState();
   const activePose = mapMascotStateToPose(mState, sc.reviewStatus === 'PENDING_REVIEW');
-  const gatePass = !simulateSelfCert;
+  const sodPass = !simulateSelfCert;
+  const workflowCount = `${sc.operations.filter((operation) => operation.preserved).length}/${sc.operations.length}`;
   const isPt = currentLang === 'pt';
 
   const app = document.getElementById('app');
@@ -403,14 +411,14 @@ function render(): void {
               </div>
               <div class="workspace-actions">
                 <button class="btn btn-primary" id="btn-pr-suggest" type="button">${t.btnDiff}</button>
-                <button class="btn btn-secondary" id="btn-pr" type="button">${t.btnGate}</button>
+                <a class="btn btn-secondary" id="btn-pr" href="#release-gate-simulation">${t.btnGate}</a>
               </div>
             </div>
 
             <section class="action-strip ${sc.pathsCount > 0 ? 'strip-alert' : 'strip-clear'}">
               <div class="action-strip-copy">
-                <h3>${t.bannerFixTitle}</h3>
-                <p>${t.bannerFixDesc}</p>
+                <h3>${sc.label}</h3>
+                <p>${isPt ? sc.summaryPt : sc.summaryEn}</p>
               </div>
               <span class="status-pill ${sc.pathsCount > 0 ? 'badge-high' : 'badge-low'}">
                 ${sc.pathsCount > 0 ? 'PATH_VALIDATED (P1)' : '0 VIOLATIONS'}
@@ -433,7 +441,7 @@ function render(): void {
             <section class="panel" id="panel-chainbreak">
               <div class="panel-header">
                 <span class="panel-title">${t.graphTitle}</span>
-                <span class="panel-meta">${sc.pathsCount} path(s) · ${sc.legitPreserved}/${sc.legitTotal} workflows OK</span>
+                <span class="panel-meta">${sc.pathsCount} path(s) · ${workflowCount} workflows OK</span>
               </div>
               <div class="graph-canvas-wrap">
                 ${renderScenarioGraphSvg(sc)}
@@ -449,7 +457,6 @@ function render(): void {
                         <span class="status-pill badge-medium">Severity P1</span>
                         <code class="mono-tag">NO_RESTRICTED_DATA_EXTERNAL_TRANSFER</code>
                       </div>
-                      <p class="path-summary">${isPt ? sc.summaryPt : sc.summaryEn}</p>
                       <div class="table-responsive">
                         <table class="data-table">
                           <thead><tr><th>Hop</th><th>Edge</th><th>Transition</th><th>Class</th><th>Source</th></tr></thead>
@@ -466,24 +473,23 @@ function render(): void {
                     </div>`
               }
 
-              <div class="sub-section-title">${t.workflowsTitle} (${sc.legitPreserved}/${sc.legitTotal})</div>
-              <div class="legit-ops-grid">
-                <div class="legit-op-item">
-                  <span class="legit-op-head"><span class="status-indicator dot-ok" aria-hidden="true"></span><code>op-support-read-profile</code></span>
-                  <span class="op-desc">Support reads synthetic profile within support-ops scope.</span>
-                </div>
-                <div class="legit-op-item">
-                  <span class="legit-op-head"><span class="status-indicator dot-ok" aria-hidden="true"></span><code>op-non-sensitive-export</code></span>
-                  <span class="op-desc">Support exports PUBLIC non-sensitive report summary.</span>
-                </div>
-                <div class="legit-op-item">
-                  <span class="legit-op-head"><span class="status-indicator dot-ok" aria-hidden="true"></span><code>op-finance-process-payments</code></span>
-                  <span class="op-desc">Finance reads payment PII and writes internal ledger.</span>
-                </div>
-              </div>
+              <div class="sub-section-title">${t.workflowsTitle} (${workflowCount})</div>
+              ${
+                sc.operations.length === 0
+                  ? `<p class="muted-note">${t.noWorkflows}</p>`
+                  : `<div class="legit-ops-grid">
+                      ${sc.operations.map((operation) => `
+                        <div class="legit-op-item">
+                          <span class="legit-op-head"><code>${operation.id}</code></span>
+                          <span class="op-desc">${operation.preserved ? t.preservedWorkflow : t.brokenWorkflow} ·
+                            ${isPt ? operation.descriptionPt : operation.descriptionEn}</span>
+                        </div>
+                      `).join('')}
+                    </div>`
+              }
 
               <details class="tech-receipt">
-                <summary>Cryptographic &amp; Policy Receipt</summary>
+                <summary>${t.fixtureMetadata}</summary>
                 <div class="tech-receipt-body">
                   <div>fixtureId: ${sc.id} · policyVersion: ${sc.policyVersion}</div>
                   <div>inputSha256: <code>${sc.inputSha256}</code></div>
@@ -524,10 +530,10 @@ function render(): void {
                 </details>
               </section>
 
-              <section class="panel">
+              <section class="panel" id="release-gate-simulation" tabindex="-1" aria-labelledby="release-gate-title">
                 <div class="panel-header">
-                  <span class="panel-title">${t.gateTitle}</span>
-                  <span class="status-pill ${gatePass ? 'badge-low' : 'badge-high'}" id="txt-gate-verdict">${gatePass ? 'PASS' : 'REJECT'}</span>
+                  <h3 class="panel-title" id="release-gate-title">${t.gateTitle}</h3>
+                  <span class="status-pill ${sodPass ? 'badge-low' : 'badge-high'}" id="txt-gate-verdict">${sodPass ? 'SoD: PASS' : 'SoD: REJECT'}</span>
                 </div>
                 <div class="gate-sub-header">
                   <span class="kv-label">Tri-Party Separation of Duties (Discoverer != Verifier != Authorizer)</span>
@@ -550,16 +556,10 @@ function render(): void {
                   </div>
                 </div>
                 <div class="delivery-readiness-note">
-                  <div><strong>${gatePass ? 'Eligible for Human PR Review' : 'Blocked by Release Policy'}</strong></div>
+                  <p>${t.simulationNote}</p>
                   ${simulateSelfCert ? '<div class="fallback-note">Violation: <code>E_SOD_SELF_CERTIFICATION</code> (Discoverer cannot verify its own finding)</div>' : ''}
                   <div class="mono">mergeAllowed: false · deployAllowed: false · requiresHumanApproval: true</div>
                 </div>
-                <details class="tech-receipt">
-                  <summary>Custody Merkle Proof</summary>
-                  <div class="tech-receipt-body">
-                    <div>Custody Chain: 3/3 nodes verified · merkle_root: <code>${sc.merkleRoot}</code></div>
-                  </div>
-                </details>
               </section>
             </div>
           </div>
@@ -727,10 +727,6 @@ function render(): void {
     render();
   });
 
-  document.getElementById('btn-pr')?.addEventListener('click', () => {
-    document.getElementById('txt-gate-verdict')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  });
-
   document.getElementById('btn-toggle-self-cert')?.addEventListener('click', () => {
     simulateSelfCert = !simulateSelfCert;
     render();
@@ -739,8 +735,7 @@ function render(): void {
   const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-scenario]'));
   tabs.forEach((btn, index) => {
     btn.addEventListener('click', () => {
-      activeScenarioId = btn.dataset.scenario as ScenarioId;
-      render();
+      selectScenario(btn);
     });
     btn.addEventListener('keydown', (ev) => {
       let nextIdx = -1;
@@ -750,13 +745,19 @@ function render(): void {
       else if (ev.key === 'End') nextIdx = tabs.length - 1;
       if (nextIdx >= 0) {
         ev.preventDefault();
-        const targetId = tabs[nextIdx].id;
-        activeScenarioId = tabs[nextIdx].dataset.scenario as ScenarioId;
-        render();
-        document.getElementById(targetId)?.focus();
+        selectScenario(tabs[nextIdx]);
       }
     });
   });
+
+  if (focusId) document.getElementById(focusId)?.focus({ preventScroll: true });
+}
+
+function selectScenario(tab: HTMLButtonElement): void {
+  const nextScenarioId = tab.dataset.scenario as ScenarioId;
+  if (nextScenarioId !== activeScenarioId) diffPreviewOpen = false;
+  activeScenarioId = nextScenarioId;
+  render(tab.id);
 }
 
 render();

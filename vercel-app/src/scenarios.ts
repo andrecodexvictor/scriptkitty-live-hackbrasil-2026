@@ -22,6 +22,13 @@ export interface ScenarioEdge {
   violated?: boolean;
 }
 
+interface ScenarioOperation {
+  id: string;
+  descriptionEn: string;
+  descriptionPt: string;
+  preserved: boolean;
+}
+
 export interface ScenarioDataset {
   id: ScenarioId;
   domId: string;
@@ -37,12 +44,31 @@ export interface ScenarioDataset {
   advisoryProviderStatus: 'NOT_CONFIGURED';
   nodes: ScenarioNode[];
   edges: ScenarioEdge[];
-  legitPreserved: number;
-  legitTotal: number;
+  operations: readonly ScenarioOperation[];
   summaryEn: string;
   summaryPt: string;
-  merkleRoot: string;
 }
+
+const BASE_OPERATIONS: readonly ScenarioOperation[] = [
+  {
+    id: 'op-support-read-profile',
+    descriptionEn: 'Support reads the synthetic profile within its assigned scope.',
+    descriptionPt: 'O suporte lê o perfil sintético dentro do escopo atribuído.',
+    preserved: true,
+  },
+  {
+    id: 'op-non-sensitive-export',
+    descriptionEn: 'Support exports a public report summary.',
+    descriptionPt: 'O suporte exporta um resumo público do relatório.',
+    preserved: true,
+  },
+  {
+    id: 'op-finance-process-payments',
+    descriptionEn: 'Finance reads payment PII and writes to the internal ledger.',
+    descriptionPt: 'Finanças lê dados pessoais de pagamentos e grava no registro interno.',
+    preserved: true,
+  },
+];
 
 const BASE_NODES: ScenarioNode[] = [
   { nodeId: 'identity:support-agent', kind: 'identity', trustZone: 'INTERNAL' },
@@ -138,11 +164,9 @@ export const VERCEL_SCENARIOS: Record<ScenarioId, ScenarioDataset> = {
     advisoryProviderStatus: 'NOT_CONFIGURED',
     nodes: BASE_NODES,
     edges: BASE_EDGES,
-    legitPreserved: 3,
-    legitTotal: 3,
+    operations: BASE_OPERATIONS,
     summaryEn: 'Baseline architecture: support exports only PUBLIC summary reports; finance retains isolated internal ledger scope.',
     summaryPt: 'Arquitetura baseline: o suporte exporta apenas resumos PUBLIC; finanças mantém escopo interno isolado.',
-    merkleRoot: '4a7f2b91c8e30d56b1f94c0e82a7d1e3c5b9f0123456789abcdef0123456789a',
   },
   'payments-lab/unsafe-rollout': {
     id: 'payments-lab/unsafe-rollout',
@@ -186,11 +210,9 @@ export const VERCEL_SCENARIOS: Record<ScenarioId, ScenarioDataset> = {
         violated: true,
       },
     ],
-    legitPreserved: 3,
-    legitTotal: 3,
+    operations: BASE_OPERATIONS,
     summaryEn: 'Unsafe rollout adds edge e-rollout-exporter-read-pii, exposing RESTRICTED payment PII to an EXTERNAL sink (PATH_VALIDATED, P1).',
     summaryPt: 'Rollout inseguro adiciona a aresta e-rollout-exporter-read-pii, expondo PII de pagamento RESTRICTED a destino EXTERNAL (PATH_VALIDATED, P1).',
-    merkleRoot: '9f3c1e74b208a5d6c19e0f8b4d7a2c6e5b109876543210fedcba9876543210fe',
   },
   'payments-lab/remediated': {
     id: 'payments-lab/remediated',
@@ -207,11 +229,9 @@ export const VERCEL_SCENARIOS: Record<ScenarioId, ScenarioDataset> = {
     advisoryProviderStatus: 'NOT_CONFIGURED',
     nodes: BASE_NODES,
     edges: BASE_EDGES,
-    legitPreserved: 3,
-    legitTotal: 3,
+    operations: BASE_OPERATIONS,
     summaryEn: 'Counterfactual fix removes e-rollout-exporter-read-pii and restores PUBLIC export ceiling: forbidden paths drop 1 -> 0 while 3/3 workflows remain intact.',
     summaryPt: 'Correção contrafactual remove e-rollout-exporter-read-pii e restaura teto PUBLIC: rotas proibidas caem 1 -> 0 com 3/3 fluxos intactos.',
-    merkleRoot: '6c8e2d4f0a91b7c3e5f802468ace13579bdf02468ace13579bdf02468ace1357',
   },
   'payments-lab/negative-control': {
     id: 'payments-lab/negative-control',
@@ -219,7 +239,7 @@ export const VERCEL_SCENARIOS: Record<ScenarioId, ScenarioDataset> = {
     label: 'Negative Control',
     pill: 'Isolated',
     pillTone: 'ok',
-    inputSha256: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+    inputSha256: '156320fa4255cd72eb812ed0186833c2c06d915ceeb33da34717291ee40bc2e1',
     policyVersion: '2026.11.09-negative-control',
     pathsCount: 0,
     risk: 'NONE',
@@ -243,11 +263,9 @@ export const VERCEL_SCENARIOS: Record<ScenarioId, ScenarioDataset> = {
         effect: 'DENY',
       },
     ],
-    legitPreserved: 0,
-    legitTotal: 0,
+    operations: [],
     summaryEn: 'Negative control verifies DENY semantics and missing source/sink authorization fail closed with 0 exposed paths.',
     summaryPt: 'Controle negativo verifica que semântica DENY e ausência de autorização falham fechado com 0 rotas expostas.',
-    merkleRoot: '1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f809',
   },
 };
 

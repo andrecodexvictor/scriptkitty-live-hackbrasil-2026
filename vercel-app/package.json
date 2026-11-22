@@ -6,6 +6,7 @@
   "description": "Script Kitty - Authorized Security Validation & Remediation Platform (Vercel Edition)",
   "scripts": {
     "dev": "vite",
+    "test": "node --test tests/scenarios.test.mjs",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },

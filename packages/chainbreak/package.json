@@ -1,0 +1,59 @@
+{
+  "name": "@script-kitty/chainbreak",
+  "version": "0.1.0",
+  "description": "ChainBreak v0 - Deterministic Policy Graph & Reachability Engine for ScriptKitty Live (PatchCat)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./schemas": {
+      "types": "./dist/schemas.d.ts",
+      "import": "./dist/schemas.js",
+      "default": "./dist/schemas.js"
+    },
+    "./crypto": {
+      "types": "./dist/crypto.d.ts",
+      "import": "./dist/crypto.js",
+      "default": "./dist/crypto.js"
+    },
+    "./remediation": {
+      "types": "./dist/remediation.d.ts",
+      "import": "./dist/remediation.js",
+      "default": "./dist/remediation.js"
+    },
+    "./analyzer": {
+      "types": "./dist/analyzer.d.ts",
+      "import": "./dist/analyzer.js",
+      "default": "./dist/analyzer.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "node --test tests/**/*.test.mts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@script-kitty/contracts": "*",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.3"
+  },
+  "keywords": [
+    "security",
+    "chainbreak",
+    "policy-graph",
+    "reachability",
+    "zero-trust",
+    "patch-cat",
+    "agentsec"
+  ],
+  "author": "Script Kitty Team",
+  "license": "MIT"
+}

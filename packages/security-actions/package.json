@@ -1,0 +1,51 @@
+{
+  "name": "@script-kitty/security-actions",
+  "version": "0.1.0",
+  "description": "Security Action Engine & Fail-Closed MCP Streamable HTTP Server/Client for ScriptKitty Live",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./engine": {
+      "types": "./dist/engine.d.ts",
+      "import": "./dist/engine.js",
+      "default": "./dist/engine.js"
+    },
+    "./capabilities": {
+      "types": "./dist/capabilities.d.ts",
+      "import": "./dist/capabilities.js",
+      "default": "./dist/capabilities.js"
+    },
+    "./mcp-http": {
+      "types": "./dist/mcp-http.d.ts",
+      "import": "./dist/mcp-http.js",
+      "default": "./dist/mcp-http.js"
+    },
+    "./mcp-client": {
+      "types": "./dist/mcp-client.d.ts",
+      "import": "./dist/mcp-client.js",
+      "default": "./dist/mcp-client.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "node --test tests/**/*.test.mts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.1",
+    "@script-kitty/contracts": "*",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.3"
+  },
+  "author": "Script Kitty Team",
+  "license": "MIT"
+}

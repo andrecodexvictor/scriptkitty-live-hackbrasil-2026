@@ -1,0 +1,45 @@
+{
+  "decision_id": "SK-GATE-99001122-3344-5566-7788-99aabbccddee",
+  "policy_version": "2.0.0",
+  "policy_id": "policy-zero-trust-prod-v2",
+  "target_commit": "a1b2c3d4e5f67890123456789abcdef012345678",
+  "verdict": "PASS",
+  "blocking_findings": [],
+  "unverified_findings": [],
+  "audit_merkle_root": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+  "sod_evaluation": {
+    "discovering_agent_id": "agent-scanner-mantis-01",
+    "verifying_agent_id": "agent-verifier-pytest-02",
+    "authorizing_agent_id": "agent-auth-quality-gate-04",
+    "is_valid": true
+  },
+  "rules_evaluated": [
+    {
+      "rule_id": "RULE_REPRODUCTION_VERIFIED",
+      "status": "PASS",
+      "reason": "Reproduction test triggered failure before patch."
+    },
+    {
+      "rule_id": "RULE_REGRESSION_SUITE_CLEAN",
+      "status": "PASS",
+      "reason": "34 unit tests passed cleanly post-patch."
+    },
+    {
+      "rule_id": "RULE_SEPARATION_OF_DUTIES",
+      "status": "PASS",
+      "reason": "Discovery (agent-scanner-mantis-01) != Verifier (agent-verifier-pytest-02) != Authorizer (agent-auth-quality-gate-04)."
+    },
+    {
+      "rule_id": "RULE_EVIDENCE_CHAIN_CRYPTO",
+      "status": "PASS",
+      "reason": "Merkle root and hash chain verified."
+    },
+    {
+      "rule_id": "RULE_BLAST_RADIUS_TOLERANCE",
+      "status": "PASS",
+      "reason": "Risk tier LOW acceptable for auto-merge."
+    }
+  ],
+  "evaluation_summary": "Fully verified, zero-trust satisfied, mathematically safe.",
+  "decided_at": "2026-11-06T14:18:00Z"
+}

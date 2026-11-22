@@ -1,0 +1,35 @@
+{
+  "name": "@script-kitty/verification-suite",
+  "version": "0.1.0",
+  "description": "ScriptKitty 2.0 Comprehensive Synthetic Verification & E2E Test Suite",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.mts",
+    "test:tier1": "node --test tests/tier1-contracts.test.mts",
+    "test:tier2": "node --test tests/tier2-boundaries.test.mts",
+    "test:tier3": "node --test tests/tier3-adapters.test.mts",
+    "test:tier4": "node --test tests/tier4-scenarios.test.mts",
+    "test:tier5": "node --test tests/adversarial-exploits.test.mts",
+    "test:tier6": "node --test tests/tier6-patchcat-live.test.mts",
+    "test:tier7": "node --test tests/tier7-full-architecture.test.mts",
+    "run-all": "node tests/run-all.mts"
+  },
+  "dependencies": {
+    "@script-kitty/contracts": "*",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.3"
+  },
+  "keywords": [
+    "security",
+    "verification",
+    "synthetic-tests",
+    "zero-trust",
+    "appsec",
+    "agentsec"
+  ],
+  "author": "Script Kitty Team",
+  "license": "MIT"
+}

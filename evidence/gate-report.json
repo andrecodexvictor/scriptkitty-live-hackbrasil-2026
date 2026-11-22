@@ -1,0 +1,1045 @@
+{
+  "schemaVersion": "scriptkitty.quality-gates.v1",
+  "verifiedSha": "f1c334f8c4e58dbe433b45156a0d3491faa60588",
+  "verifiedAtUtc": "2026-11-21T23:51:04.343Z",
+  "totalDurationMs": 472218,
+  "overallVerdict": "FAIL",
+  "localEngineeringVerdict": "FAIL",
+  "summary": {
+    "total": 15,
+    "PASS": 9,
+    "NOT_CONFIGURED": 1,
+    "BLOCKED": 3,
+    "FAIL": 2
+  },
+  "externalHumanBlockers": [
+    {
+      "gateId": "G00",
+      "status": "BLOCKED",
+      "blocker": "Competition repository (https://github.com/andrecodexvictor/scriptkitty-live-hackbrasil-2026) has size=0 KB and remoteHeadSha=none (local HEAD=f1c334f). Human approval required before pushing. | Local remote 'origin' points to 'https://github.com/andrecodexvictor/Script-kitty.git' instead of 'https://github.com/andrecodexvictor/scriptkitty-live-hackbrasil-2026.git'. | History has 28 pre-event commit(s) before 2026-11-04T21:00:00-03:00; clean competition push must follow PROVENANCE.md."
+    },
+    {
+      "gateId": "G05",
+      "status": "NOT_CONFIGURED",
+      "blocker": "TYPESAFE_API_KEY env var is unset; external live judge provider is NOT_CONFIGURED (escalated to PENDING_REVIEW)"
+    },
+    {
+      "gateId": "G09",
+      "status": "BLOCKED",
+      "blocker": "Local 5-viewport Chromium visual QA, EN/PT switcher, A11y, reduced-motion & impeccable ([]) PASSED; PUBLIC_DEMO_URL not deployed over public HTTPS yet."
+    },
+    {
+      "gateId": "G12",
+      "status": "BLOCKED",
+      "blocker": "PUBLIC_DEMO_URL is not configured/deployed yet (requires human Vercel HTTPS deploy approval) | PUBLIC_VIDEO_URL is not configured yet (Hack Brasil requires <=180s team video where all 4 members appear and speak)"
+    }
+  ],
+  "gates": {
+    "G00": {
+      "id": "G00",
+      "name": "Hack Brasil 2026 Eligibility & Provenance Preflight",
+      "status": "BLOCKED",
+      "command": "GET https://api.github.com/repos/andrecodexvictor/scriptkitty-live-hackbrasil-2026 + git remote/log preflight",
+      "exitCode": 0,
+      "durationMs": 2014,
+      "artifacts": [
+        "evidence/submission-preflight.json"
+      ],
+      "details": {
+        "repoEligible": true,
+        "createdAt": "2026-11-21T12:22:37Z",
+        "createdAfterCutoff": true,
+        "isPublic": true,
+        "isNotFork": true,
+        "repoSizeKb": 0,
+        "originUrl": "https://github.com/andrecodexvictor/Script-kitty.git",
+        "preEventCommitCount": 28,
+        "hasProvenanceMd": true
+      },
+      "blocker": "Competition repository (https://github.com/andrecodexvictor/scriptkitty-live-hackbrasil-2026) has size=0 KB and remoteHeadSha=none (local HEAD=f1c334f). Human approval required before pushing. | Local remote 'origin' points to 'https://github.com/andrecodexvictor/Script-kitty.git' instead of 'https://github.com/andrecodexvictor/scriptkitty-live-hackbrasil-2026.git'. | History has 28 pre-event commit(s) before 2026-11-04T21:00:00-03:00; clean competition push must follow PROVENANCE.md."
+    },
+    "G01": {
+      "id": "G01",
+      "name": "Build, Typecheck & Automated Unit/Verification Tests",
+      "status": "PASS",
+      "command": "npm run build; npm --prefix vercel-app run build; npm run typecheck --workspaces --if-present; npm test; npm run test:python; npm run verify",
+      "exitCode": 0,
+      "durationMs": 379394,
+      "artifacts": [
+        "evidence/build.log",
+        "evidence/typecheck.log",
+        "evidence/unit-tests.log"
+      ],
+      "details": {
+        "rootBuildExitCode": 0,
+        "vercelBuildExitCode": 0,
+        "typecheckExitCode": 0,
+        "tsWorkspacesTested": 17,
+        "tsTestsPassed": 620,
+        "tsTestsFailed": 0,
+        "pythonTestsPassed": 20,
+        "verificationSuiteTiers1To7Passed": 121,
+        "verificationSuiteTiers1To7Failed": 0,
+        "combinedAutomatedTestsPassed": 640
+      },
+      "blocker": null
+    },
+    "G02": {
+      "id": "G02",
+      "name": "ChainBreak Policy Graph Reachability & Counterfactual Diff",
+      "status": "PASS",
+      "command": "analyzeFixture(baseline, unsafe-rollout, remediated, negative-control)",
+      "exitCode": 0,
+      "durationMs": 108,
+      "artifacts": [
+        "evidence/chainbreak-baseline.json",
+        "evidence/chainbreak-unsafe.json",
+        "evidence/chainbreak-remediated.json",
+        "evidence/chainbreak-diff.json"
+      ],
+      "details": {
+        "pathCounts": {
+          "baseline": 0,
+          "unsafeRollout": 1,
+          "remediated": 0,
+          "negativeControl": 0
+        },
+        "legitimatePreserved": "3/3",
+        "inputSha256": {
+          "baseline": "76c07c4340acfc748443a496435867c819354f99241cd361cd585d2dc85a8bbc",
+          "unsafeRollout": "142cdbbd10b23de6967672f56587b29a5ef028dc727213810a85cc8bcf5b3da0",
+          "remediated": "49dfd23089baf48d8d86e323f5604cbba6d33d81dbac42cebbb071ecc932b5d1",
+          "negativeControl": "156320fa4255cd72eb812ed0186833c2c06d915ceeb33da34717291ee40bc2e1"
+        },
+        "remediationAction": "REMOVE_EDGE:e-rollout-exporter-read-pii"
+      },
+      "blocker": null
+    },
+    "G03": {
+      "id": "G03",
+      "name": "MCP Streamable HTTP Real Client, Tool Parity & Persistence",
+      "status": "PASS",
+      "command": "Loopback HTTP fetch -> POST /mcp (initialize -> tools/list -> tools/call)",
+      "exitCode": 0,
+      "durationMs": 966,
+      "artifacts": [
+        "evidence/mcp-client-transcript-redacted.json"
+      ],
+      "details": {
+        "toolsCount": 14,
+        "tools": [
+          "security.audit.get",
+          "security.audit.start",
+          "security.chainbreak.analyze",
+          "security.chainbreak.get",
+          "security.evidence.get",
+          "security.judge.evaluate",
+          "security.kali.get_run",
+          "security.kali.lab_run",
+          "security.kali.local_code_scan",
+          "security.kali.service_inventory",
+          "security.kali.tls_review",
+          "security.kali.web_passive_baseline",
+          "security.remediation.spec",
+          "security.status"
+        ],
+        "toolParity": true,
+        "persistedAnalysisId": "cb-6b09ceec48ab6b21",
+        "idempotentReplay": true
+      },
+      "blocker": null
+    },
+    "G04": {
+      "id": "G04",
+      "name": "MCP Fail-Closed Auth (401), Origin (403), Tenant (FORBIDDEN) & Rate Limit (429)",
+      "status": "PASS",
+      "command": "Loopback HTTP negative suite (401, 403, FORBIDDEN, session hijack 403, rate limit 429 + Retry-After)",
+      "exitCode": 0,
+      "durationMs": 966,
+      "artifacts": [
+        "evidence/mcp-client-transcript-redacted.json"
+      ],
+      "details": {
+        "missingBearerStatus": 401,
+        "invalidBearerStatus": 401,
+        "disallowedOriginOptionsStatus": 403,
+        "disallowedOriginPostStatus": 403,
+        "allowedOriginOptionsStatus": 204,
+        "allowedOriginAllowMethods": "POST, GET, DELETE, OPTIONS",
+        "crossTenantChainbreakGetCode": "FORBIDDEN",
+        "crossTenantAuditGetCode": "FORBIDDEN",
+        "crossTenantEvidenceGetCode": "FORBIDDEN",
+        "crossTenantKaliGetRunCode": "FORBIDDEN",
+        "payloadTenantIdInjectionCode": "FORBIDDEN",
+        "crossPrincipalSessionHijackStatus": 403,
+        "postAuthRateLimitStatus": 429,
+        "postAuthRetryAfterSec": 60,
+        "preAuthRateLimitStatus": 429,
+        "preAuthRetryAfterSec": 60,
+        "idleSessionTtlEvictionStatus": 404,
+        "rateLimitServerStatsObserved": {
+          "activeSessions": 0,
+          "rateLimitBuckets": 2,
+          "authRateLimitBuckets": 0,
+          "inFlightRequests": 0
+        }
+      },
+      "blocker": null
+    },
+    "G05": {
+      "id": "G05",
+      "name": "Bounded Advisory Judge Evaluation (Fail-Closed Escalation)",
+      "status": "NOT_CONFIGURED",
+      "command": "MCP tools/call security.judge.evaluate + hash-mismatch pre-validation check",
+      "exitCode": 0,
+      "durationMs": 966,
+      "artifacts": [
+        "evidence/judge-evaluation-redacted.json"
+      ],
+      "details": {
+        "providerStatus": "NOT_CONFIGURED",
+        "decisionSource": "MOCK",
+        "adjudicationStatus": "PENDING_REVIEW",
+        "requiresHumanReview": true,
+        "p0DefinedByJevAlone": false,
+        "hashMismatchBlocked": true
+      },
+      "blocker": "TYPESAFE_API_KEY env var is unset; external live judge provider is NOT_CONFIGURED (escalated to PENDING_REVIEW)"
+    },
+    "G06": {
+      "id": "G06",
+      "name": "Zero-Trust Quality Gate, Tri-Party SoD & SHA-Bound Custody",
+      "status": "PASS",
+      "command": "DeterministicQualityGate.evaluate(commit=f1c334f)",
+      "exitCode": 0,
+      "durationMs": 177,
+      "artifacts": [
+        "evidence/quality-engine-run-redacted.json"
+      ],
+      "details": {
+        "targetCommit": "f1c334f8c4e58dbe433b45156a0d3491faa60588",
+        "inconclusiveVerdict": "BLOCK",
+        "selfCertVerdict": "REJECT",
+        "triPartyVerdict": "PASS",
+        "auditMerkleRoot": "67dcf99a567e5b9544c6bba9c74ad93ec4dc5ba3be41ef99181d34d1dfdbc5a3",
+        "custodyMerkleRoot": "9fbb95a92215d758bff4663c3af80b98c7f08e0e925c9bb300c3075c6b1bea1b"
+      },
+      "blocker": null
+    },
+    "G07": {
+      "id": "G07",
+      "name": "Kali LAB Sandbox Verification, Zero-Shell Argv & Negative Security Suite",
+      "status": "PASS",
+      "command": "@script-kitty/kali-mcp-assessment LAB_SYNTHETIC + negative checks (evil.example, 169.254.169.254, --script=..., raw shell, redaction)",
+      "exitCode": 0,
+      "durationMs": 48,
+      "artifacts": [
+        "evidence/kali-lab-run-redacted.json"
+      ],
+      "details": {
+        "mode": "LAB_SANDBOX_ONLY",
+        "positiveCapabilitiesVerified": 4,
+        "outOfScopeDomainBlocked": "KALI_BLOCKED_PUBLIC_OR_NONLAB_TARGET",
+        "cloudImdsBlocked": "KALI_BLOCKED_IMDS_TARGET",
+        "flagInjectionBlocked": "KALI_WEAPONIZED_PAYLOAD_BLOCKED",
+        "rawShellBlocked": "KALI_SHELL_METACHAR_BLOCKED",
+        "secretRedactionVerified": true
+      },
+      "blocker": null
+    },
+    "G08": {
+      "id": "G08",
+      "name": "Verified Counterfactual Remediation & RFC 8785 Merkle Inclusion Proof",
+      "status": "PASS",
+      "command": "PatchCatOrchestrator.run(unsafe-rollout -> remediated) + EvidenceLedger Merkle",
+      "exitCode": 0,
+      "durationMs": 177,
+      "artifacts": [
+        "evidence/quality-engine-run-redacted.json"
+      ],
+      "details": {
+        "forbiddenPathDelta": "1 -> 0",
+        "legitimateOperationsPreserved": "3/3",
+        "merkleRoot": "4f911797012ede51b1ae5ad10fef3debc81509ac0de75e54e88086baf94631de",
+        "inclusionProofValid": true,
+        "governanceChecks": {
+          "policyMutationBlocked": "E_POLICY_MUTATION_FORBIDDEN",
+          "sodViolationBlocked": "E_SOD_VIOLATION",
+          "unverifiedAiProseBlocked": "UNVERIFIED_AI_PROSE_REJECTED",
+          "crossTenantEvidenceBlocked": "TENANT_ISOLATION_VIOLATION"
+        }
+      },
+      "blocker": null
+    },
+    "G09": {
+      "id": "G09",
+      "name": "Landing / UI / A11y / 5-Viewport Visual QA & Public HTTPS Check",
+      "status": "BLOCKED",
+      "command": "Chromium CDP (5 viewports) + C:\\Program Files\\nodejs\\node.exe C:\\Users\\adm\\.agents\\skills\\impeccable\\scripts\\detect.mjs --json apps/ui/index.html apps/ui/src/style.css apps/ui/src/dashboard-view.ts apps/ui/src/openui-catalog.ts vercel-app/index.html vercel-app/src/style.css",
+      "exitCode": 0,
+      "durationMs": 22021,
+      "artifacts": [
+        "evidence/screenshot-desktop.png",
+        "evidence/screenshot-laptop.png",
+        "evidence/screenshot-tablet.png",
+        "evidence/screenshot-mobile.png",
+        "evidence/screenshot-mobile-360.png"
+      ],
+      "details": {
+        "localVisualQaStatus": "PASS",
+        "uiZeroOverflowAll5Viewports": true,
+        "vercelZeroOverflowAll5Viewports": true,
+        "uiViewports": [
+          {
+            "viewport": "1440x900",
+            "label": "desktop",
+            "screenshot": "evidence/screenshot-desktop.png",
+            "clientWidth": 1440,
+            "scrollWidth": 1440,
+            "overflowPx": 0,
+            "zeroHorizontalOverflow": true
+          },
+          {
+            "viewport": "1280x720",
+            "label": "laptop",
+            "screenshot": "evidence/screenshot-laptop.png",
+            "clientWidth": 1280,
+            "scrollWidth": 1280,
+            "overflowPx": 0,
+            "zeroHorizontalOverflow": true
+          },
+          {
+            "viewport": "768x1024",
+            "label": "tablet",
+            "screenshot": "evidence/screenshot-tablet.png",
+            "clientWidth": 768,
+            "scrollWidth": 768,
+            "overflowPx": 0,
+            "zeroHorizontalOverflow": true
+          },
+          {
+            "viewport": "390x844",
+            "label": "mobile",
+            "screenshot": "evidence/screenshot-mobile.png",
+            "clientWidth": 390,
+            "scrollWidth": 390,
+            "overflowPx": 0,
+            "zeroHorizontalOverflow": true
+          },
+          {
+            "viewport": "360x800",
+            "label": "mobile-360",
+            "screenshot": "evidence/screenshot-mobile-360.png",
+            "clientWidth": 360,
+            "scrollWidth": 360,
+            "overflowPx": 0,
+            "zeroHorizontalOverflow": true
+          }
+        ],
+        "vercelViewports": [
+          {
+            "viewport": "1440x900",
+            "label": "desktop",
+            "clientWidth": 1440,
+            "scrollWidth": 1440,
+            "overflowPx": 0,
+            "zeroHorizontalOverflow": true
+          },
+          {
+            "viewport": "1280x720",
+            "label": "laptop",
+            "clientWidth": 1280,
+            "scrollWidth": 1280,
+            "overflowPx": 0,
+            "zeroHorizontalOverflow": true
+          },
+          {
+            "viewport": "768x1024",
+            "label": "tablet",
+            "clientWidth": 768,
+            "scrollWidth": 768,
+            "overflowPx": 0,
+            "zeroHorizontalOverflow": true
+          },
+          {
+            "viewport": "390x844",
+            "label": "mobile",
+            "clientWidth": 390,
+            "scrollWidth": 390,
+            "overflowPx": 0,
+            "zeroHorizontalOverflow": true
+          },
+          {
+            "viewport": "360x800",
+            "label": "mobile-360",
+            "clientWidth": 360,
+            "scrollWidth": 360,
+            "overflowPx": 0,
+            "zeroHorizontalOverflow": true
+          }
+        ],
+        "a11yAndInteraction": {
+          "initialTitle": "PatchCat Access Verification Console",
+          "ptTitle": "Explorador PatchCat — Verificação de Acesso",
+          "bilingualSwitchWorks": true,
+          "keyboardArrowRightMovedTab": true,
+          "clickTabSwitchWorks": true,
+          "themeToggleWorks": true,
+          "hasHeader": true,
+          "hasMain": true,
+          "hasFocusStyle": true,
+          "focusVisibleTarget": "btn-learn",
+          "prefersReducedMotionEmulated": true
+        },
+        "impeccableAntipatternScan": {
+          "exitCode": 0,
+          "findingsCount": 0,
+          "findings": []
+        },
+        "publicHttpsCheck": {
+          "configuredUrl": null,
+          "reachable": false,
+          "httpStatus": null
+        }
+      },
+      "blocker": "Local 5-viewport Chromium visual QA, EN/PT switcher, A11y, reduced-motion & impeccable ([]) PASSED; PUBLIC_DEMO_URL not deployed over public HTTPS yet."
+    },
+    "G10": {
+      "id": "G10",
+      "name": "Security Hygiene, Dependency Audit, GC Bounds & Provenance Verification",
+      "status": "FAIL",
+      "command": "npm audit --omit=dev --json + repo secret scan + GC hygiene + LICENSE/PROVENANCE check",
+      "exitCode": 1,
+      "durationMs": 38468,
+      "artifacts": [
+        "evidence/dependency-audit.log",
+        "evidence/code-security.log"
+      ],
+      "details": {
+        "scannedFilesCount": 607,
+        "leakedLiveSecretsCount": 0,
+        "syntheticTestFixturesVerifiedCount": 28,
+        "productionDependencyVulnerabilities": 1,
+        "advisoryContext": {
+          "package": "zod",
+          "installedVersion": "3.25.76",
+          "severity": "high",
+          "advisoryUrl": "https://github.com/advisories/GHSA-mrhx-c7xc-m3w5",
+          "fixAvailable": {
+            "name": "zod",
+            "version": "4.6.7",
+            "isSemVerMajor": true
+          },
+          "runtimeMitigation": "Honest FAIL preserved (semver-major zod v3->v4 upgrade deferred to preserve v3 schema compatibility). Runtime exposure mitigated in LAB mode by maxRequestBodyBytes = 1_048_576 (1 MiB) in packages/security-actions/src/mcp-http.ts (readBoundedBody) and 127.0.0.1 loopback-only binding."
+        },
+        "hasLicense": true,
+        "hasProvenanceMd": true,
+        "hasNoticeMd": true,
+        "gcHygiene": {
+          "mcpRateLimiterPruning": true,
+          "mcpSessionTtlEviction": true,
+          "uiSnapshotMapBounded": true
+        }
+      },
+      "blocker": "npm audit reported 1 prod vulnerabilities"
+    },
+    "G11": {
+      "id": "G11",
+      "name": "Operational Cold-Start Launcher & 10-Stage End-to-End Demo",
+      "status": "PASS",
+      "command": "node scripts/start-live-demo.mjs --check --ui-port=0 --mcp-port=0; npm run demo",
+      "exitCode": 0,
+      "durationMs": 4037,
+      "artifacts": [],
+      "details": {
+        "startLiveDemoCheckExitCode": 0,
+        "startLiveDemoCheckVerdict": "PASS",
+        "startLiveDemoToolsCount": 14,
+        "demoWednesdayExitCode": 0,
+        "demoWednesdayAll10StagesPassed": true
+      },
+      "blocker": null
+    },
+    "G12": {
+      "id": "G12",
+      "name": "Public Demo URL & <=180s Demo/Team Video Verification",
+      "status": "BLOCKED",
+      "command": "ffprobe demo-video/scriptkitty-live-poc-demo-2m30s.mp4 + PUBLIC_DEMO_URL & PUBLIC_VIDEO_URL check",
+      "exitCode": 0,
+      "durationMs": 7150,
+      "artifacts": [
+        "demo-video/scriptkitty-live-poc-demo-2m30s.mp4",
+        "demo-video/scriptkitty-live-poc-demo-2m30s.srt"
+      ],
+      "details": {
+        "localPocVideoStatus": "PASS",
+        "localPocVideoMeta": {
+          "durationSec": 150,
+          "within180sLimit": true,
+          "sizeBytes": 18391865,
+          "videoCodec": "h264",
+          "pixFmt": "yuv420p",
+          "width": 1920,
+          "height": 1080,
+          "audioCodec": "aac"
+        },
+        "srtPresent": true,
+        "extractedKeyframesCount": 6,
+        "publicDemoUrl": null,
+        "publicDemoReachable": false,
+        "publicVideoUrl": null,
+        "publicVideoReachable": false
+      },
+      "blocker": "PUBLIC_DEMO_URL is not configured/deployed yet (requires human Vercel HTTPS deploy approval) | PUBLIC_VIDEO_URL is not configured yet (Hack Brasil requires <=180s team video where all 4 members appear and speak)"
+    },
+    "G13": {
+      "id": "G13",
+      "name": "Deterministic Evidence Bundle & Gate Report Emission",
+      "status": "PASS",
+      "command": "Verify evidence/* artifacts non-empty + emit evidence/gate-report.json",
+      "exitCode": 0,
+      "durationMs": 4,
+      "artifacts": [
+        "evidence/gate-report.json"
+      ],
+      "details": {
+        "verifiedEvidenceFilesCount": 19,
+        "expectedEvidenceFilesCount": 19,
+        "missingEvidenceFiles": []
+      },
+      "blocker": null
+    },
+    "G14": {
+      "id": "G14",
+      "name": "Hack Brasil 2026 Final Submission Freeze Gate",
+      "status": "FAIL",
+      "command": "Verify G00..G13 completion prior to 2026-11-27T23:59:00-03:00",
+      "exitCode": 1,
+      "durationMs": 2,
+      "artifacts": [
+        "evidence/gate-report.json"
+      ],
+      "details": {
+        "freezeDeadlineIso": "2026-11-27T23:59:00-03:00",
+        "localEngineeringGatesFailed": 1,
+        "pendingExternalHumanGates": [
+          "G00",
+          "G05",
+          "G09",
+          "G12"
+        ],
+        "humanSubmissionChecklist": [
+          "1. Review PROVENANCE.md and push clean Hack Brasil 2026 commit to https://github.com/andrecodexvictor/scriptkitty-live-hackbrasil-2026",
+          "2. Deploy public HTTPS preview (vercel-app or apps/ui) and set PUBLIC_DEMO_URL",
+          "3. Record/upload <=180s 4-person on-camera team pitch video and set PUBLIC_VIDEO_URL",
+          "4. Re-run npm run gates to confirm G00, G09, G12, and G14 transition from BLOCKED to PASS"
+        ]
+      },
+      "blocker": "Blocked by local failures: [G10]"
+    }
+  },
+  "gateList": [
+    {
+      "id": "G00",
+      "name": "Hack Brasil 2026 Eligibility & Provenance Preflight",
+      "status": "BLOCKED",
+      "command": "GET https://api.github.com/repos/andrecodexvictor/scriptkitty-live-hackbrasil-2026 + git remote/log preflight",
+      "exitCode": 0,
+      "durationMs": 2014,
+      "artifacts": [
+        "evidence/submission-preflight.json"
+      ],
+      "details": {
+        "repoEligible": true,
+        "createdAt": "2026-11-21T12:22:37Z",
+        "createdAfterCutoff": true,
+        "isPublic": true,
+        "isNotFork": true,
+        "repoSizeKb": 0,
+        "originUrl": "https://github.com/andrecodexvictor/Script-kitty.git",
+        "preEventCommitCount": 28,
+        "hasProvenanceMd": true
+      },
+      "blocker": "Competition repository (https://github.com/andrecodexvictor/scriptkitty-live-hackbrasil-2026) has size=0 KB and remoteHeadSha=none (local HEAD=f1c334f). Human approval required before pushing. | Local remote 'origin' points to 'https://github.com/andrecodexvictor/Script-kitty.git' instead of 'https://github.com/andrecodexvictor/scriptkitty-live-hackbrasil-2026.git'. | History has 28 pre-event commit(s) before 2026-11-04T21:00:00-03:00; clean competition push must follow PROVENANCE.md."
+    },
+    {
+      "id": "G01",
+      "name": "Build, Typecheck & Automated Unit/Verification Tests",
+      "status": "PASS",
+      "command": "npm run build; npm --prefix vercel-app run build; npm run typecheck --workspaces --if-present; npm test; npm run test:python; npm run verify",
+      "exitCode": 0,
+      "durationMs": 379394,
+      "artifacts": [
+        "evidence/build.log",
+        "evidence/typecheck.log",
+        "evidence/unit-tests.log"
+      ],
+      "details": {
+        "rootBuildExitCode": 0,
+        "vercelBuildExitCode": 0,
+        "typecheckExitCode": 0,
+        "tsWorkspacesTested": 17,
+        "tsTestsPassed": 620,
+        "tsTestsFailed": 0,
+        "pythonTestsPassed": 20,
+        "verificationSuiteTiers1To7Passed": 121,
+        "verificationSuiteTiers1To7Failed": 0,
+        "combinedAutomatedTestsPassed": 640
+      },
+      "blocker": null
+    },
+    {
+      "id": "G02",
+      "name": "ChainBreak Policy Graph Reachability & Counterfactual Diff",
+      "status": "PASS",
+      "command": "analyzeFixture(baseline, unsafe-rollout, remediated, negative-control)",
+      "exitCode": 0,
+      "durationMs": 108,
+      "artifacts": [
+        "evidence/chainbreak-baseline.json",
+        "evidence/chainbreak-unsafe.json",
+        "evidence/chainbreak-remediated.json",
+        "evidence/chainbreak-diff.json"
+      ],
+      "details": {
+        "pathCounts": {
+          "baseline": 0,
+          "unsafeRollout": 1,
+          "remediated": 0,
+          "negativeControl": 0
+        },
+        "legitimatePreserved": "3/3",
+        "inputSha256": {
+          "baseline": "76c07c4340acfc748443a496435867c819354f99241cd361cd585d2dc85a8bbc",
+          "unsafeRollout": "142cdbbd10b23de6967672f56587b29a5ef028dc727213810a85cc8bcf5b3da0",
+          "remediated": "49dfd23089baf48d8d86e323f5604cbba6d33d81dbac42cebbb071ecc932b5d1",
+          "negativeControl": "156320fa4255cd72eb812ed0186833c2c06d915ceeb33da34717291ee40bc2e1"
+        },
+        "remediationAction": "REMOVE_EDGE:e-rollout-exporter-read-pii"
+      },
+      "blocker": null
+    },
+    {
+      "id": "G03",
+      "name": "MCP Streamable HTTP Real Client, Tool Parity & Persistence",
+      "status": "PASS",
+      "command": "Loopback HTTP fetch -> POST /mcp (initialize -> tools/list -> tools/call)",
+      "exitCode": 0,
+      "durationMs": 966,
+      "artifacts": [
+        "evidence/mcp-client-transcript-redacted.json"
+      ],
+      "details": {
+        "toolsCount": 14,
+        "tools": [
+          "security.audit.get",
+          "security.audit.start",
+          "security.chainbreak.analyze",
+          "security.chainbreak.get",
+          "security.evidence.get",
+          "security.judge.evaluate",
+          "security.kali.get_run",
+          "security.kali.lab_run",
+          "security.kali.local_code_scan",
+          "security.kali.service_inventory",
+          "security.kali.tls_review",
+          "security.kali.web_passive_baseline",
+          "security.remediation.spec",
+          "security.status"
+        ],
+        "toolParity": true,
+        "persistedAnalysisId": "cb-6b09ceec48ab6b21",
+        "idempotentReplay": true
+      },
+      "blocker": null
+    },
+    {
+      "id": "G04",
+      "name": "MCP Fail-Closed Auth (401), Origin (403), Tenant (FORBIDDEN) & Rate Limit (429)",
+      "status": "PASS",
+      "command": "Loopback HTTP negative suite (401, 403, FORBIDDEN, session hijack 403, rate limit 429 + Retry-After)",
+      "exitCode": 0,
+      "durationMs": 966,
+      "artifacts": [
+        "evidence/mcp-client-transcript-redacted.json"
+      ],
+      "details": {
+        "missingBearerStatus": 401,
+        "invalidBearerStatus": 401,
+        "disallowedOriginOptionsStatus": 403,
+        "disallowedOriginPostStatus": 403,
+        "allowedOriginOptionsStatus": 204,
+        "allowedOriginAllowMethods": "POST, GET, DELETE, OPTIONS",
+        "crossTenantChainbreakGetCode": "FORBIDDEN",
+        "crossTenantAuditGetCode": "FORBIDDEN",
+        "crossTenantEvidenceGetCode": "FORBIDDEN",
+        "crossTenantKaliGetRunCode": "FORBIDDEN",
+        "payloadTenantIdInjectionCode": "FORBIDDEN",
+        "crossPrincipalSessionHijackStatus": 403,
+        "postAuthRateLimitStatus": 429,
+        "postAuthRetryAfterSec": 60,
+        "preAuthRateLimitStatus": 429,
+        "preAuthRetryAfterSec": 60,
+        "idleSessionTtlEvictionStatus": 404,
+        "rateLimitServerStatsObserved": {
+          "activeSessions": 0,
+          "rateLimitBuckets": 2,
+          "authRateLimitBuckets": 0,
+          "inFlightRequests": 0
+        }
+      },
+      "blocker": null
+    },
+    {
+      "id": "G05",
+      "name": "Bounded Advisory Judge Evaluation (Fail-Closed Escalation)",
+      "status": "NOT_CONFIGURED",
+      "command": "MCP tools/call security.judge.evaluate + hash-mismatch pre-validation check",
+      "exitCode": 0,
+      "durationMs": 966,
+      "artifacts": [
+        "evidence/judge-evaluation-redacted.json"
+      ],
+      "details": {
+        "providerStatus": "NOT_CONFIGURED",
+        "decisionSource": "MOCK",
+        "adjudicationStatus": "PENDING_REVIEW",
+        "requiresHumanReview": true,
+        "p0DefinedByJevAlone": false,
+        "hashMismatchBlocked": true
+      },
+      "blocker": "TYPESAFE_API_KEY env var is unset; external live judge provider is NOT_CONFIGURED (escalated to PENDING_REVIEW)"
+    },
+    {
+      "id": "G06",
+      "name": "Zero-Trust Quality Gate, Tri-Party SoD & SHA-Bound Custody",
+      "status": "PASS",
+      "command": "DeterministicQualityGate.evaluate(commit=f1c334f)",
+      "exitCode": 0,
+      "durationMs": 177,
+      "artifacts": [
+        "evidence/quality-engine-run-redacted.json"
+      ],
+      "details": {
+        "targetCommit": "f1c334f8c4e58dbe433b45156a0d3491faa60588",
+        "inconclusiveVerdict": "BLOCK",
+        "selfCertVerdict": "REJECT",
+        "triPartyVerdict": "PASS",
+        "auditMerkleRoot": "67dcf99a567e5b9544c6bba9c74ad93ec4dc5ba3be41ef99181d34d1dfdbc5a3",
+        "custodyMerkleRoot": "9fbb95a92215d758bff4663c3af80b98c7f08e0e925c9bb300c3075c6b1bea1b"
+      },
+      "blocker": null
+    },
+    {
+      "id": "G07",
+      "name": "Kali LAB Sandbox Verification, Zero-Shell Argv & Negative Security Suite",
+      "status": "PASS",
+      "command": "@script-kitty/kali-mcp-assessment LAB_SYNTHETIC + negative checks (evil.example, 169.254.169.254, --script=..., raw shell, redaction)",
+      "exitCode": 0,
+      "durationMs": 48,
+      "artifacts": [
+        "evidence/kali-lab-run-redacted.json"
+      ],
+      "details": {
+        "mode": "LAB_SANDBOX_ONLY",
+        "positiveCapabilitiesVerified": 4,
+        "outOfScopeDomainBlocked": "KALI_BLOCKED_PUBLIC_OR_NONLAB_TARGET",
+        "cloudImdsBlocked": "KALI_BLOCKED_IMDS_TARGET",
+        "flagInjectionBlocked": "KALI_WEAPONIZED_PAYLOAD_BLOCKED",
+        "rawShellBlocked": "KALI_SHELL_METACHAR_BLOCKED",
+        "secretRedactionVerified": true
+      },
+      "blocker": null
+    },
+    {
+      "id": "G08",
+      "name": "Verified Counterfactual Remediation & RFC 8785 Merkle Inclusion Proof",
+      "status": "PASS",
+      "command": "PatchCatOrchestrator.run(unsafe-rollout -> remediated) + EvidenceLedger Merkle",
+      "exitCode": 0,
+      "durationMs": 177,
+      "artifacts": [
+        "evidence/quality-engine-run-redacted.json"
+      ],
+      "details": {
+        "forbiddenPathDelta": "1 -> 0",
+        "legitimateOperationsPreserved": "3/3",
+        "merkleRoot": "4f911797012ede51b1ae5ad10fef3debc81509ac0de75e54e88086baf94631de",
+        "inclusionProofValid": true,
+        "governanceChecks": {
+          "policyMutationBlocked": "E_POLICY_MUTATION_FORBIDDEN",
+          "sodViolationBlocked": "E_SOD_VIOLATION",
+          "unverifiedAiProseBlocked": "UNVERIFIED_AI_PROSE_REJECTED",
+          "crossTenantEvidenceBlocked": "TENANT_ISOLATION_VIOLATION"
+        }
+      },
+      "blocker": null
+    },
+    {
+      "id": "G09",
+      "name": "Landing / UI / A11y / 5-Viewport Visual QA & Public HTTPS Check",
+      "status": "BLOCKED",
+      "command": "Chromium CDP (5 viewports) + C:\\Program Files\\nodejs\\node.exe C:\\Users\\adm\\.agents\\skills\\impeccable\\scripts\\detect.mjs --json apps/ui/index.html apps/ui/src/style.css apps/ui/src/dashboard-view.ts apps/ui/src/openui-catalog.ts vercel-app/index.html vercel-app/src/style.css",
+      "exitCode": 0,
+      "durationMs": 22021,
+      "artifacts": [
+        "evidence/screenshot-desktop.png",
+        "evidence/screenshot-laptop.png",
+        "evidence/screenshot-tablet.png",
+        "evidence/screenshot-mobile.png",
+        "evidence/screenshot-mobile-360.png"
+      ],
+      "details": {
+        "localVisualQaStatus": "PASS",
+        "uiZeroOverflowAll5Viewports": true,
+        "vercelZeroOverflowAll5Viewports": true,
+        "uiViewports": [
+          {
+            "viewport": "1440x900",
+            "label": "desktop",
+            "screenshot": "evidence/screenshot-desktop.png",
+            "clientWidth": 1440,
+            "scrollWidth": 1440,
+            "overflowPx": 0,
+            "zeroHorizontalOverflow": true
+          },
+          {
+            "viewport": "1280x720",
+            "label": "laptop",
+            "screenshot": "evidence/screenshot-laptop.png",
+            "clientWidth": 1280,
+            "scrollWidth": 1280,
+            "overflowPx": 0,
+            "zeroHorizontalOverflow": true
+          },
+          {
+            "viewport": "768x1024",
+            "label": "tablet",
+            "screenshot": "evidence/screenshot-tablet.png",
+            "clientWidth": 768,
+            "scrollWidth": 768,
+            "overflowPx": 0,
+            "zeroHorizontalOverflow": true
+          },
+          {
+            "viewport": "390x844",
+            "label": "mobile",
+            "screenshot": "evidence/screenshot-mobile.png",
+            "clientWidth": 390,
+            "scrollWidth": 390,
+            "overflowPx": 0,
+            "zeroHorizontalOverflow": true
+          },
+          {
+            "viewport": "360x800",
+            "label": "mobile-360",
+            "screenshot": "evidence/screenshot-mobile-360.png",
+            "clientWidth": 360,
+            "scrollWidth": 360,
+            "overflowPx": 0,
+            "zeroHorizontalOverflow": true
+          }
+        ],
+        "vercelViewports": [
+          {
+            "viewport": "1440x900",
+            "label": "desktop",
+            "clientWidth": 1440,
+            "scrollWidth": 1440,
+            "overflowPx": 0,
+            "zeroHorizontalOverflow": true
+          },
+          {
+            "viewport": "1280x720",
+            "label": "laptop",
+            "clientWidth": 1280,
+            "scrollWidth": 1280,
+            "overflowPx": 0,
+            "zeroHorizontalOverflow": true
+          },
+          {
+            "viewport": "768x1024",
+            "label": "tablet",
+            "clientWidth": 768,
+            "scrollWidth": 768,
+            "overflowPx": 0,
+            "zeroHorizontalOverflow": true
+          },
+          {
+            "viewport": "390x844",
+            "label": "mobile",
+            "clientWidth": 390,
+            "scrollWidth": 390,
+            "overflowPx": 0,
+            "zeroHorizontalOverflow": true
+          },
+          {
+            "viewport": "360x800",
+            "label": "mobile-360",
+            "clientWidth": 360,
+            "scrollWidth": 360,
+            "overflowPx": 0,
+            "zeroHorizontalOverflow": true
+          }
+        ],
+        "a11yAndInteraction": {
+          "initialTitle": "PatchCat Access Verification Console",
+          "ptTitle": "Explorador PatchCat — Verificação de Acesso",
+          "bilingualSwitchWorks": true,
+          "keyboardArrowRightMovedTab": true,
+          "clickTabSwitchWorks": true,
+          "themeToggleWorks": true,
+          "hasHeader": true,
+          "hasMain": true,
+          "hasFocusStyle": true,
+          "focusVisibleTarget": "btn-learn",
+          "prefersReducedMotionEmulated": true
+        },
+        "impeccableAntipatternScan": {
+          "exitCode": 0,
+          "findingsCount": 0,
+          "findings": []
+        },
+        "publicHttpsCheck": {
+          "configuredUrl": null,
+          "reachable": false,
+          "httpStatus": null
+        }
+      },
+      "blocker": "Local 5-viewport Chromium visual QA, EN/PT switcher, A11y, reduced-motion & impeccable ([]) PASSED; PUBLIC_DEMO_URL not deployed over public HTTPS yet."
+    },
+    {
+      "id": "G10",
+      "name": "Security Hygiene, Dependency Audit, GC Bounds & Provenance Verification",
+      "status": "FAIL",
+      "command": "npm audit --omit=dev --json + repo secret scan + GC hygiene + LICENSE/PROVENANCE check",
+      "exitCode": 1,
+      "durationMs": 38468,
+      "artifacts": [
+        "evidence/dependency-audit.log",
+        "evidence/code-security.log"
+      ],
+      "details": {
+        "scannedFilesCount": 607,
+        "leakedLiveSecretsCount": 0,
+        "syntheticTestFixturesVerifiedCount": 28,
+        "productionDependencyVulnerabilities": 1,
+        "advisoryContext": {
+          "package": "zod",
+          "installedVersion": "3.25.76",
+          "severity": "high",
+          "advisoryUrl": "https://github.com/advisories/GHSA-mrhx-c7xc-m3w5",
+          "fixAvailable": {
+            "name": "zod",
+            "version": "4.6.7",
+            "isSemVerMajor": true
+          },
+          "runtimeMitigation": "Honest FAIL preserved (semver-major zod v3->v4 upgrade deferred to preserve v3 schema compatibility). Runtime exposure mitigated in LAB mode by maxRequestBodyBytes = 1_048_576 (1 MiB) in packages/security-actions/src/mcp-http.ts (readBoundedBody) and 127.0.0.1 loopback-only binding."
+        },
+        "hasLicense": true,
+        "hasProvenanceMd": true,
+        "hasNoticeMd": true,
+        "gcHygiene": {
+          "mcpRateLimiterPruning": true,
+          "mcpSessionTtlEviction": true,
+          "uiSnapshotMapBounded": true
+        }
+      },
+      "blocker": "npm audit reported 1 prod vulnerabilities"
+    },
+    {
+      "id": "G11",
+      "name": "Operational Cold-Start Launcher & 10-Stage End-to-End Demo",
+      "status": "PASS",
+      "command": "node scripts/start-live-demo.mjs --check --ui-port=0 --mcp-port=0; npm run demo",
+      "exitCode": 0,
+      "durationMs": 4037,
+      "artifacts": [],
+      "details": {
+        "startLiveDemoCheckExitCode": 0,
+        "startLiveDemoCheckVerdict": "PASS",
+        "startLiveDemoToolsCount": 14,
+        "demoWednesdayExitCode": 0,
+        "demoWednesdayAll10StagesPassed": true
+      },
+      "blocker": null
+    },
+    {
+      "id": "G12",
+      "name": "Public Demo URL & <=180s Demo/Team Video Verification",
+      "status": "BLOCKED",
+      "command": "ffprobe demo-video/scriptkitty-live-poc-demo-2m30s.mp4 + PUBLIC_DEMO_URL & PUBLIC_VIDEO_URL check",
+      "exitCode": 0,
+      "durationMs": 7150,
+      "artifacts": [
+        "demo-video/scriptkitty-live-poc-demo-2m30s.mp4",
+        "demo-video/scriptkitty-live-poc-demo-2m30s.srt"
+      ],
+      "details": {
+        "localPocVideoStatus": "PASS",
+        "localPocVideoMeta": {
+          "durationSec": 150,
+          "within180sLimit": true,
+          "sizeBytes": 18391865,
+          "videoCodec": "h264",
+          "pixFmt": "yuv420p",
+          "width": 1920,
+          "height": 1080,
+          "audioCodec": "aac"
+        },
+        "srtPresent": true,
+        "extractedKeyframesCount": 6,
+        "publicDemoUrl": null,
+        "publicDemoReachable": false,
+        "publicVideoUrl": null,
+        "publicVideoReachable": false
+      },
+      "blocker": "PUBLIC_DEMO_URL is not configured/deployed yet (requires human Vercel HTTPS deploy approval) | PUBLIC_VIDEO_URL is not configured yet (Hack Brasil requires <=180s team video where all 4 members appear and speak)"
+    },
+    {
+      "id": "G13",
+      "name": "Deterministic Evidence Bundle & Gate Report Emission",
+      "status": "PASS",
+      "command": "Verify evidence/* artifacts non-empty + emit evidence/gate-report.json",
+      "exitCode": 0,
+      "durationMs": 4,
+      "artifacts": [
+        "evidence/gate-report.json"
+      ],
+      "details": {
+        "verifiedEvidenceFilesCount": 19,
+        "expectedEvidenceFilesCount": 19,
+        "missingEvidenceFiles": []
+      },
+      "blocker": null
+    },
+    {
+      "id": "G14",
+      "name": "Hack Brasil 2026 Final Submission Freeze Gate",
+      "status": "FAIL",
+      "command": "Verify G00..G13 completion prior to 2026-11-27T23:59:00-03:00",
+      "exitCode": 1,
+      "durationMs": 2,
+      "artifacts": [
+        "evidence/gate-report.json"
+      ],
+      "details": {
+        "freezeDeadlineIso": "2026-11-27T23:59:00-03:00",
+        "localEngineeringGatesFailed": 1,
+        "pendingExternalHumanGates": [
+          "G00",
+          "G05",
+          "G09",
+          "G12"
+        ],
+        "humanSubmissionChecklist": [
+          "1. Review PROVENANCE.md and push clean Hack Brasil 2026 commit to https://github.com/andrecodexvictor/scriptkitty-live-hackbrasil-2026",
+          "2. Deploy public HTTPS preview (vercel-app or apps/ui) and set PUBLIC_DEMO_URL",
+          "3. Record/upload <=180s 4-person on-camera team pitch video and set PUBLIC_VIDEO_URL",
+          "4. Re-run npm run gates to confirm G00, G09, G12, and G14 transition from BLOCKED to PASS"
+        ]
+      },
+      "blocker": "Blocked by local failures: [G10]"
+    }
+  ]
+}

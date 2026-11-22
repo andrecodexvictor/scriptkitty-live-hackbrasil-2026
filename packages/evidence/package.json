@@ -1,0 +1,57 @@
+{
+  "name": "@script-kitty/evidence",
+  "version": "0.1.0",
+  "description": "Unified Evidence Ledger for ScriptKitty Live with RFC 8785 canonical digest verification, AI-prose rejection, tenant-isolated node:sqlite persistence, and binary Merkle inclusion proofs",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./schemas": {
+      "types": "./dist/schemas.d.ts",
+      "import": "./dist/schemas.js",
+      "default": "./dist/schemas.js"
+    },
+    "./crypto": {
+      "types": "./dist/crypto.d.ts",
+      "import": "./dist/crypto.js",
+      "default": "./dist/crypto.js"
+    },
+    "./ledger": {
+      "types": "./dist/ledger.d.ts",
+      "import": "./dist/ledger.js",
+      "default": "./dist/ledger.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "pretest": "npm run build",
+    "test": "node --test tests/**/*.test.mts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@script-kitty/chainbreak": "*",
+    "@script-kitty/contracts": "*",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.3"
+  },
+  "keywords": [
+    "security",
+    "evidence",
+    "merkle",
+    "rfc8785",
+    "sqlite",
+    "zero-trust",
+    "chainbreak",
+    "patch-cat"
+  ],
+  "author": "Script Kitty Team",
+  "license": "MIT"
+}

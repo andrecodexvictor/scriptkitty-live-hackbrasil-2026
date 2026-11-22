@@ -1,0 +1,32 @@
+{
+  "engine": "quality_engine",
+  "policy_version": 1,
+  "state": "pass",
+  "boundary_enforcement": {
+    "deterministic_principle_upheld": true,
+    "max_file_bytes_limit": 2097152,
+    "max_files_limit": 5000,
+    "max_total_bytes_limit": 33554432,
+    "observed_files": 48,
+    "observed_total_bytes": 142090
+  },
+  "exceptions_evaluation": {
+    "total_exceptions": 1,
+    "unexpired_exceptions": 1,
+    "expired_exceptions": 0,
+    "active_suppressions": [
+      {
+        "ruleId": "CWE-89",
+        "fingerprint": "8f48a1b5d634289a0123456789abcdef8899aabbccddeeff0011223344556677",
+        "reason": "Production hotfix applied and regression tested",
+        "expires": "2030-12-31"
+      }
+    ]
+  },
+  "decision": {
+    "verdict": "PASS",
+    "blocking_findings": [],
+    "unverified_findings": [],
+    "audit_merkle_root": "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
+  }
+}

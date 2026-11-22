@@ -1,0 +1,49 @@
+{
+  "account_id": "cf-acc-881920394819",
+  "zone_id": "cf-zone-001122334455",
+  "insights": [
+    {
+      "id": "cf-insight-dns-9912",
+      "type": "dangling_dns",
+      "severity": "high",
+      "title": "Dangling CNAME Record vulnerable to Subdomain Takeover",
+      "description": "CNAME record 'staging.example.com' points to decommissioned Azure storage bucket.",
+      "hostname": "staging.example.com",
+      "record_name": "staging",
+      "record_type": "CNAME",
+      "record_value": "abandoned-bucket.blob.core.windows.net",
+      "details": {
+        "status": "UNCLAIMED",
+        "recommended_action": "Remove DNS record or reclaim cloud resource."
+      }
+    },
+    {
+      "id": "cf-insight-tls-4412",
+      "type": "deprecated_tls",
+      "severity": "moderate",
+      "title": "Deprecated TLS 1.0/1.1 Protocol Version Permitted",
+      "description": "Zone permits inbound SSL/TLS negotiations with TLS 1.0, vulnerable to POODLE/BEAST.",
+      "hostname": "api.example.com",
+      "details": {
+        "minimum_tls_version": "1.0",
+        "recommended_version": "1.2"
+      }
+    }
+  ],
+  "edge_events": [
+    {
+      "RayID": "891234567890abcd",
+      "Action": "block",
+      "Source": "waf",
+      "RuleID": "waf-owasp-sqli-blocking",
+      "ClientIP": "198.51.100.42",
+      "ClientRequestHost": "api.example.com",
+      "ClientRequestMethod": "GET",
+      "ClientRequestURI": "/api/v1/users?id=1%27%20OR%201=1--",
+      "EdgeResponseStatus": 403,
+      "BotScore": 12,
+      "AISecurityInjectionScore": 0.94,
+      "AISecurityPIICategories": ["DATABASE_CREDENTIALS"]
+    }
+  ]
+}

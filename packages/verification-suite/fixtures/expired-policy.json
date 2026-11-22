@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "max_file_bytes": 2097152,
+  "max_files": 5000,
+  "max_total_bytes": 33554432,
+  "timeout_ms": 20000,
+  "severity_threshold": [
+    "CRITICAL",
+    "HIGH"
+  ],
+  "required_scanners": [
+    "gitleaks"
+  ],
+  "exceptions": [
+    {
+      "rule_id": "CWE-89",
+      "fingerprint": "8f48a1b5d634289a0123456789abcdef8899aabbccddeeff0011223344556677",
+      "reason": "Legacy database adapter pending migration in Q1 2024",
+      "expires": "2024-01-01"
+    }
+  ],
+  "allowed_scopes": [
+    "src"
+  ]
+}

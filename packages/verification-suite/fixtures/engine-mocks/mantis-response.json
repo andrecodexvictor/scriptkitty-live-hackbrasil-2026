@@ -1,0 +1,41 @@
+{
+  "engine": "mantis",
+  "version": "1.0.0-adk",
+  "scan_summary": {
+    "target": "github.com/org/scriptkitty-target",
+    "commit_hash": "a1b2c3d4e5f67890123456789abcdef012345678",
+    "threat_model_path": "workspace/kb/THREAT_MODEL.md",
+    "directories_analyzed": 14,
+    "total_token_savings_pct": 87.5
+  },
+  "raw_findings": [
+    {
+      "uuid": "mantis-sqli-01934812",
+      "title": "SQL Injection in User Lookup Endpoint",
+      "description": "User input from req.query.id concatenated directly into database query string.",
+      "cwe_id": "CWE-89",
+      "owasp_category": "A03:2021-Injection",
+      "calibrated_risk_score": 9.5,
+      "file_path": "src/api/users.ts",
+      "start_line": 42,
+      "end_line": 42,
+      "symbol": "findUserById",
+      "matched_code": "const query = `SELECT * FROM users WHERE id = '${req.query.id}'`;"
+    }
+  ],
+  "reproduction_proof": {
+    "poc_script": "workspace/poc_sqli.ts",
+    "container_image": "docker.io/scriptkitty/mantis-sandbox:latest",
+    "exit_code": 1,
+    "stdout": "FAILED: SQL syntax error leaked in response: syntax error near '--'",
+    "stderr": "",
+    "duration_ms": 420
+  },
+  "patch_proposal": {
+    "patch_id": "SK-PATCH-MANTIS-001",
+    "unified_diff": "--- a/src/api/users.ts\n+++ b/src/api/users.ts\n@@ -41,3 +41,3 @@ export async function findUserById(req, res) {\n-  const query = `SELECT * FROM users WHERE id = '${req.query.id}'`;\n-  const result = await db.raw(query);\n+  const result = await db('users').where({ id: req.query.id }).first();\n",
+    "recheck_reproducer_exit_code": 0,
+    "regression_tests_passed": 34,
+    "regression_tests_failed": 0
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "finding": {
+    "finding_id": "SK-FIND-UNVERIFIED-001",
+    "source_engine": "heuristic_scanner",
+    "title": "Theoretical Hardcoded Secret Pattern in Test Helper",
+    "description": "Scanner flagged potential API key token without reachability or empirical reproduction.",
+    "cwe_id": "CWE-798",
+    "owasp_category": "A07:2021-Identification and Authentication Failures",
+    "severity": "HIGH",
+    "confidence": "TENTATIVE",
+    "target_type": "SOURCE_CODE",
+    "target": "tests/helpers/auth.ts",
+    "location": {
+      "file_path": "tests/helpers/auth.ts",
+      "start_line": 15,
+      "end_line": 15,
+      "symbol": "mockApiKey"
+    },
+    "fingerprint": "a1b2c3d4e5f67890123456789abcdef0123456789abcdef0123456789abcdef0",
+    "commit_hash": "b2c3d4e5f67890123456789abcdef0123456789a",
+    "discovered_at": "2026-11-06T14:20:00Z",
+    "agent_context": {
+      "discovering_agent_id": "agent-scanner-regex-01"
+    }
+  },
+  "evidence": null,
+  "expected_gate_decision": {
+    "verdict": "REJECT",
+    "reason": "E_MISSING_EVIDENCE: Finding SK-FIND-UNVERIFIED-001 lacks independent empirical reproduction proof."
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "OpenAI Codex Security",
+          "version": "0.3.1",
+          "informationUri": "https://learn.chatgpt.com/docs/security/cli",
+          "rules": [
+            {
+              "id": "CODEX-SEC-089",
+              "name": "SqlInjectionReachability",
+              "shortDescription": {
+                "text": "Tainted input reaches unescaped SQL execution sink"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": ["security", "cwe-89", "owasp-a03"],
+                "cwe": ["CWE-89"],
+                "owasp": ["A03:2021-Injection"],
+                "precision": "very-high"
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "CODEX-SEC-089",
+          "ruleIndex": 0,
+          "level": "error",
+          "message": {
+            "text": "Confirmed reachable SQL injection vulnerability via findUserById handler"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/api/users.ts"
+                },
+                "region": {
+                  "startLine": 42,
+                  "endLine": 42,
+                  "startColumn": 12,
+                  "endColumn": 68,
+                  "snippet": {
+                    "text": "const query = `SELECT * FROM users WHERE id = '${req.query.id}'`;"
+                  }
+                }
+              },
+              "logicalLocations": [
+                {
+                  "name": "findUserById",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "reachability": "REACHABLE",
+            "attackPath": [
+              "req.query.id (untrusted HTTP parameter)",
+              "src/api/users.ts:42 (string template interpolation)",
+              "db.raw(query) (database execution sink)"
+            ],
+            "costUsd": 0.042
+          }
+        }
+      ]
+    }
+  ]
+}

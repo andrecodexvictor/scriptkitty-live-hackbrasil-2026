@@ -1,0 +1,200 @@
+{
+  "schemaVersion": "security.analysis.v1",
+  "analysisId": "cb-6b09ceec48ab6b21",
+  "tenantId": "payments-lab",
+  "fixtureId": "payments-lab/unsafe-rollout",
+  "policyVersion": "2026.11.09-unsafe-rollout",
+  "mode": "LAB",
+  "paths": [
+    {
+      "pathId": "path-4bb9497d66bd3024",
+      "startIdentity": "identity:support-agent",
+      "targetAsset": "data_asset:customer-payment-pii",
+      "targetDestination": "destination:external-report-sink",
+      "edges": [
+        {
+          "edgeId": "e-support-invoke-exporter",
+          "from": "identity:support-agent",
+          "to": "mcp_tool:report-exporter",
+          "kind": "can_invoke",
+          "scope": "reporting-public",
+          "sourceRef": "policies/payments-lab/unsafe-rollout.policy.yaml#edges.support_invoke_exporter",
+          "policyId": "NO_RESTRICTED_DATA_EXTERNAL_TRANSFER",
+          "policyVersion": "2026.11.09-unsafe-rollout",
+          "dataClassification": "PUBLIC"
+        },
+        {
+          "edgeId": "e-rollout-exporter-read-pii",
+          "from": "mcp_tool:report-exporter",
+          "to": "data_asset:customer-payment-pii",
+          "kind": "can_read",
+          "scope": "reporting-public",
+          "sourceRef": "policies/payments-lab/report-exporter-rollout.yaml#L24",
+          "policyId": "NO_RESTRICTED_DATA_EXTERNAL_TRANSFER",
+          "policyVersion": "2026.11.09-unsafe-rollout",
+          "dataClassification": "RESTRICTED"
+        },
+        {
+          "edgeId": "e-exporter-transfer-external",
+          "from": "mcp_tool:report-exporter",
+          "to": "destination:external-report-sink",
+          "kind": "transfers_data_to",
+          "scope": "reporting-public",
+          "sourceRef": "policies/payments-lab/report-exporter-rollout.yaml#L38",
+          "policyId": "NO_RESTRICTED_DATA_EXTERNAL_TRANSFER",
+          "policyVersion": "2026.11.09-unsafe-rollout",
+          "dataClassification": "RESTRICTED"
+        }
+      ],
+      "violatedPolicyId": "NO_RESTRICTED_DATA_EXTERNAL_TRANSFER",
+      "status": "PATH_VALIDATED",
+      "evidenceIds": [
+        "ev-policy-2dcc3a767620df40",
+        "ev-path-31fa82db6996753f"
+      ],
+      "riskRecommendation": "P1",
+      "explanation": "Modeled policy reachability path (PATH_VALIDATED) violating 'NO_RESTRICTED_DATA_EXTERNAL_TRANSFER': starting from 'identity:support-agent', ordered transitions [e-support-invoke-exporter (identity:support-agent --[can_invoke; scope=reporting-public; class=PUBLIC]--> mcp_tool:report-exporter; ref=policies/payments-lab/unsafe-rollout.policy.yaml#edges.support_invoke_exporter) -> e-rollout-exporter-read-pii (mcp_tool:report-exporter --[can_read; scope=reporting-public; class=RESTRICTED]--> data_asset:customer-payment-pii; ref=policies/payments-lab/report-exporter-rollout.yaml#L24) -> e-exporter-transfer-external (mcp_tool:report-exporter --[transfers_data_to; scope=reporting-public; class=RESTRICTED]--> destination:external-report-sink; ref=policies/payments-lab/report-exporter-rollout.yaml#L38)] allow 'RESTRICTED' asset 'data_asset:customer-payment-pii' to reach 'destination:external-report-sink'. Note: PATH_VALIDATED proves reachability within the modeled policy graph, not production exploitation.",
+      "nonTechnicalSummary": "Under the tested policy rollout, an authorized identity (identity:support-agent) can trigger a chain of permissions that moves restricted data (data_asset:customer-payment-pii) to an external destination (destination:external-report-sink) that is not permitted to receive it. This finding is derived deterministically from the modeled permission rules and has not been run against production systems."
+    }
+  ],
+  "evidenceIds": [
+    "ev-policy-2dcc3a767620df40",
+    "ev-path-31fa82db6996753f",
+    "ev-test-54b405d99c03d398"
+  ],
+  "evidence": [
+    {
+      "evidenceId": "ev-policy-2dcc3a767620df40",
+      "analysisId": "cb-6b09ceec48ab6b21",
+      "kind": "POLICY_SNAPSHOT",
+      "sourceRef": "policies/payments-lab/unsafe-rollout.policy.yaml#rules.no_restricted_external",
+      "contentSha256": "e86c0c5f67875210a25ad33bc922b823b8740c135df9c850154e167b610eaa32",
+      "producer": "@script-kitty/chainbreak",
+      "createdAt": "2026-11-21T23:49:50.469Z",
+      "verified": true,
+      "summary": "Policy snapshot (2026.11.09-unsafe-rollout) across 9 nodes and 8 edges"
+    },
+    {
+      "evidenceId": "ev-path-31fa82db6996753f",
+      "analysisId": "cb-6b09ceec48ab6b21",
+      "kind": "GRAPH_PATH",
+      "sourceRef": "policies/payments-lab/unsafe-rollout.policy.yaml#edges.support_invoke_exporter, policies/payments-lab/report-exporter-rollout.yaml#L24, policies/payments-lab/report-exporter-rollout.yaml#L38",
+      "contentSha256": "31fa82db6996753f6cb71ee2b76d2b05c6d6dc7bf9cd95fae94a73abb57b2376",
+      "producer": "@script-kitty/chainbreak",
+      "createdAt": "2026-11-21T23:49:50.469Z",
+      "verified": true,
+      "summary": "Graph path identity:support-agent -> data_asset:customer-payment-pii -> destination:external-report-sink (PATH_VALIDATED)"
+    },
+    {
+      "evidenceId": "ev-test-54b405d99c03d398",
+      "analysisId": "cb-6b09ceec48ab6b21",
+      "kind": "TEST_RESULT",
+      "sourceRef": "policies/payments-lab/legitimate-ops.yaml#support_read_profile, policies/payments-lab/legitimate-ops.yaml#non_sensitive_export, policies/payments-lab/legitimate-ops.yaml#finance_process_payments",
+      "contentSha256": "bc4d02a3029f60ece6bbfc24f2c4530075d22e6ba8c5e747ed9dcea062fd840e",
+      "producer": "@script-kitty/chainbreak",
+      "createdAt": "2026-11-21T23:49:50.469Z",
+      "verified": true,
+      "summary": "Legitimate operations check: 3/3 preserved"
+    }
+  ],
+  "remediationSpecs": [
+    {
+      "remediationId": "rem-1831f4a4aa2e733b",
+      "analysisId": "cb-6b09ceec48ab6b21",
+      "tenantId": "payments-lab",
+      "fixtureId": "payments-lab/unsafe-rollout",
+      "pathId": "path-4bb9497d66bd3024",
+      "violatedPolicyId": "NO_RESTRICTED_DATA_EXTERNAL_TRANSFER",
+      "riskRecommendation": "P1",
+      "minimalChange": true,
+      "actions": [
+        {
+          "actionType": "REMOVE_EDGE",
+          "edgeId": "e-rollout-exporter-read-pii",
+          "from": "mcp_tool:report-exporter",
+          "to": "data_asset:customer-payment-pii",
+          "edgeKind": "can_read",
+          "currentScope": "reporting-public",
+          "currentDataClassification": "RESTRICTED",
+          "proposedChange": "Remove or disable edge 'e-rollout-exporter-read-pii' (mcp_tool:report-exporter --[can_read]--> data_asset:customer-payment-pii) in scope 'reporting-public'",
+          "sourceRef": "policies/payments-lab/report-exporter-rollout.yaml#L24"
+        }
+      ],
+      "breaksUnauthorizedPath": true,
+      "preservesLegitimateOperations": true,
+      "preservedOperationIds": [
+        "op-finance-process-payments",
+        "op-non-sensitive-export",
+        "op-support-read-profile"
+      ],
+      "acceptanceCriteria": [
+        "Re-running ChainBreak on the remediated policy graph produces 0 paths violating 'NO_RESTRICTED_DATA_EXTERNAL_TRANSFER'.",
+        "All 3 declared legitimate operation(s) remain preserved (legitimateOperationsPreserved === true).",
+        "Human security reviewer approves the policy diff for sourceRef [policies/payments-lab/report-exporter-rollout.yaml#L24] before merge."
+      ],
+      "verificationTests": [
+        "chainbreak:verify-no-path:NO_RESTRICTED_DATA_EXTERNAL_TRANSFER",
+        "chainbreak:verify-legitimate-op:op-support-read-profile",
+        "chainbreak:verify-legitimate-op:op-non-sensitive-export",
+        "chainbreak:verify-legitimate-op:op-finance-process-payments"
+      ],
+      "requiresHumanApproval": true,
+      "autoApplyAllowed": false,
+      "rationale": "Counterfactual graph simulation verified that applying minimal defensive change (Remove or disable edge 'e-rollout-exporter-read-pii' (mcp_tool:report-exporter --[can_read]--> data_asset:customer-payment-pii) in scope 'reporting-public') breaks unauthorized path 'path-4bb9497d66bd3024' while preserving 3/3 legitimate operations.",
+      "nonTechnicalSummary": "To stop restricted data from reaching an unauthorized external destination, remove or restrict the single excessive permission (e-rollout-exporter-read-pii). Validated simulations confirm normal reporting and payment workflows continue working without interruption.",
+      "evidenceIds": [
+        "ev-policy-2dcc3a767620df40",
+        "ev-path-31fa82db6996753f"
+      ],
+      "createdAt": "2026-11-21T23:49:50.469Z"
+    }
+  ],
+  "legitimateOperations": [
+    {
+      "operationId": "op-finance-process-payments",
+      "description": "Finance operator assumes finance-processor service role to read payment PII and write internal settlement ledger",
+      "preserved": true,
+      "reason": "Verified via ordered edges [e-finance-assume-processor -> e-finance-read-payment-pii -> e-finance-write-ledger]",
+      "verifiedEdgeIds": [
+        "e-finance-assume-processor",
+        "e-finance-read-payment-pii",
+        "e-finance-write-ledger"
+      ]
+    },
+    {
+      "operationId": "op-non-sensitive-export",
+      "description": "Support agent invokes report-exporter to export PUBLIC non-sensitive summary to external report sink",
+      "preserved": true,
+      "reason": "Verified via ordered edges [e-support-invoke-exporter -> e-exporter-read-summary -> e-exporter-transfer-external]",
+      "verifiedEdgeIds": [
+        "e-support-invoke-exporter",
+        "e-exporter-read-summary",
+        "e-exporter-transfer-external"
+      ]
+    },
+    {
+      "operationId": "op-support-read-profile",
+      "description": "Support agent reads synthetic customer support profile within support-ops scope",
+      "preserved": true,
+      "reason": "Verified via ordered edges [e-support-read-profile]",
+      "verifiedEdgeIds": [
+        "e-support-read-profile"
+      ]
+    }
+  ],
+  "legitimateOperationsPreserved": true,
+  "startedAt": "2026-11-21T23:49:50.469Z",
+  "completedAt": "2026-11-21T23:49:50.469Z",
+  "status": "COMPLETED",
+  "inputSha256": "142cdbbd10b23de6967672f56587b29a5ef028dc727213810a85cc8bcf5b3da0",
+  "source": "DETERMINISTIC_LAB_ANALYSIS",
+  "productionTested": false,
+  "budgetStats": {
+    "nodesVisited": 10,
+    "edgesTraversed": 18,
+    "maxDepthReached": 3,
+    "pathsEvaluated": 3,
+    "budgetExceeded": false
+  },
+  "diagnostics": []
+}

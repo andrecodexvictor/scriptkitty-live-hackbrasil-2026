@@ -1,0 +1,86 @@
+{
+  "schemaVersion": "security.analysis.v1",
+  "analysisId": "cb-39d04f81814395a1",
+  "tenantId": "payments-lab",
+  "fixtureId": "payments-lab/baseline",
+  "policyVersion": "2026.11.09-baseline",
+  "mode": "LAB",
+  "paths": [],
+  "evidenceIds": [
+    "ev-policy-5d32e5211a3dbb92",
+    "ev-test-612ac98a74bd2b81"
+  ],
+  "evidence": [
+    {
+      "evidenceId": "ev-policy-5d32e5211a3dbb92",
+      "analysisId": "cb-39d04f81814395a1",
+      "kind": "POLICY_SNAPSHOT",
+      "sourceRef": "policies/payments-lab/baseline.policy.yaml#rules.no_restricted_external",
+      "contentSha256": "6a0dc57dcae3b72b025b77806e77181c473c80927f8f95ae47c98c216673f150",
+      "producer": "@script-kitty/chainbreak",
+      "createdAt": "2026-11-21T23:49:50.449Z",
+      "verified": true,
+      "summary": "Policy snapshot (2026.11.09-baseline) across 9 nodes and 7 edges"
+    },
+    {
+      "evidenceId": "ev-test-612ac98a74bd2b81",
+      "analysisId": "cb-39d04f81814395a1",
+      "kind": "TEST_RESULT",
+      "sourceRef": "policies/payments-lab/legitimate-ops.yaml#support_read_profile, policies/payments-lab/legitimate-ops.yaml#non_sensitive_export, policies/payments-lab/legitimate-ops.yaml#finance_process_payments",
+      "contentSha256": "bc4d02a3029f60ece6bbfc24f2c4530075d22e6ba8c5e747ed9dcea062fd840e",
+      "producer": "@script-kitty/chainbreak",
+      "createdAt": "2026-11-21T23:49:50.449Z",
+      "verified": true,
+      "summary": "Legitimate operations check: 3/3 preserved"
+    }
+  ],
+  "remediationSpecs": [],
+  "legitimateOperations": [
+    {
+      "operationId": "op-finance-process-payments",
+      "description": "Finance operator assumes finance-processor service role to read payment PII and write internal settlement ledger",
+      "preserved": true,
+      "reason": "Verified via ordered edges [e-finance-assume-processor -> e-finance-read-payment-pii -> e-finance-write-ledger]",
+      "verifiedEdgeIds": [
+        "e-finance-assume-processor",
+        "e-finance-read-payment-pii",
+        "e-finance-write-ledger"
+      ]
+    },
+    {
+      "operationId": "op-non-sensitive-export",
+      "description": "Support agent invokes report-exporter to export PUBLIC non-sensitive summary to external report sink",
+      "preserved": true,
+      "reason": "Verified via ordered edges [e-support-invoke-exporter -> e-exporter-read-summary -> e-exporter-transfer-external]",
+      "verifiedEdgeIds": [
+        "e-support-invoke-exporter",
+        "e-exporter-read-summary",
+        "e-exporter-transfer-external"
+      ]
+    },
+    {
+      "operationId": "op-support-read-profile",
+      "description": "Support agent reads synthetic customer support profile within support-ops scope",
+      "preserved": true,
+      "reason": "Verified via ordered edges [e-support-read-profile]",
+      "verifiedEdgeIds": [
+        "e-support-read-profile"
+      ]
+    }
+  ],
+  "legitimateOperationsPreserved": true,
+  "startedAt": "2026-11-21T23:49:50.449Z",
+  "completedAt": "2026-11-21T23:49:50.449Z",
+  "status": "COMPLETED",
+  "inputSha256": "76c07c4340acfc748443a496435867c819354f99241cd361cd585d2dc85a8bbc",
+  "source": "DETERMINISTIC_LAB_ANALYSIS",
+  "productionTested": false,
+  "budgetStats": {
+    "nodesVisited": 9,
+    "edgesTraversed": 13,
+    "maxDepthReached": 3,
+    "pathsEvaluated": 2,
+    "budgetExceeded": false
+  },
+  "diagnostics": []
+}

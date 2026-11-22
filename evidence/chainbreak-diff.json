@@ -1,0 +1,46 @@
+{
+  "gateId": "G02",
+  "generatedAtUtc": "2026-11-21T23:49:50.528Z",
+  "mode": "LAB",
+  "productionTested": false,
+  "beforeFixture": {
+    "fixtureId": "payments-lab/unsafe-rollout",
+    "analysisId": "cb-6b09ceec48ab6b21",
+    "inputSha256": "142cdbbd10b23de6967672f56587b29a5ef028dc727213810a85cc8bcf5b3da0",
+    "forbiddenPathsCount": 1,
+    "pathStatus": "PATH_VALIDATED",
+    "violatedPolicyId": "NO_RESTRICTED_DATA_EXTERNAL_TRANSFER",
+    "legitimateOperationsPreserved": "3/3"
+  },
+  "afterFixture": {
+    "fixtureId": "payments-lab/remediated",
+    "analysisId": "cb-b04ba60ed258d095",
+    "inputSha256": "49dfd23089baf48d8d86e323f5604cbba6d33d81dbac42cebbb071ecc932b5d1",
+    "forbiddenPathsCount": 0,
+    "legitimateOperationsPreserved": "3/3"
+  },
+  "negativeControlFixture": {
+    "fixtureId": "payments-lab/negative-control",
+    "analysisId": "cb-4f3a138c21a72a32",
+    "inputSha256": "156320fa4255cd72eb812ed0186833c2c06d915ceeb33da34717291ee40bc2e1",
+    "forbiddenPathsCount": 0
+  },
+  "counterfactualRemediation": {
+    "remediationId": "rem-1831f4a4aa2e733b",
+    "forbiddenPathDelta": "1 -> 0",
+    "legitimateOperationsPreservedSummary": "3/3",
+    "minimalAction": {
+      "actionType": "REMOVE_EDGE",
+      "edgeId": "e-rollout-exporter-read-pii",
+      "from": "mcp_tool:report-exporter",
+      "to": "data_asset:customer-payment-pii",
+      "edgeKind": "can_read",
+      "currentScope": "reporting-public",
+      "currentDataClassification": "RESTRICTED",
+      "proposedChange": "Remove or disable edge 'e-rollout-exporter-read-pii' (mcp_tool:report-exporter --[can_read]--> data_asset:customer-payment-pii) in scope 'reporting-public'",
+      "sourceRef": "policies/payments-lab/report-exporter-rollout.yaml#L24"
+    },
+    "requiresHumanApproval": true,
+    "autoApplyAllowed": false
+  }
+}

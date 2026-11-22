@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 196" width="820" height="196" role="img" aria-label="PatchCat five telemetry states showcase">
+  <rect x="1" y="1" width="818" height="194" rx="12" fill="#0C121A" stroke="#273A4D" stroke-width="1.5" />
+  <text x="24" y="29" fill="#F2F6FA" font-family="'IBM Plex Sans', system-ui, -apple-system, sans-serif" font-size="13" font-weight="600">PatchCat Telemetry Poses</text>
+  <text x="796" y="29" text-anchor="end" fill="#9DB0C1" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="11">5 STATES · #0C121A GRAPHITE</text>
+  <line x1="24" y1="40" x2="796" y2="40" stroke="#273A4D" stroke-width="1" />
+
+  <!-- 1. idle -->
+  <rect x="24" y="54" width="140" height="122" rx="8" fill="#111C28" stroke="#273A4D" stroke-width="1.25" />
+  <g transform="translate(52, 62) scale(1.3)">
+    <polygon points="15.8,39.4 26.0,42.0 32.0,42.6 38.0,42.0 48.2,39.4 49.6,47.4 32.0,59.0 14.4,47.4" fill="#0C121A" stroke="#79B7F3" stroke-width="2.1" stroke-linejoin="miter" stroke-miterlimit="2.5" />
+    <polygon points="20.4,43.2 32.0,45.0 43.6,43.2 44.6,47.2 32.0,55.8 19.4,47.2" fill="#111C28" stroke="#79B7F3" stroke-opacity="0.34" stroke-width="1" />
+    <path d="M 12.2 24.4 L 14.4 7.6 L 24.4 15.8 L 32.0 15.0 L 39.6 15.8 L 49.6 7.6 L 50.6 13.0 L 45.6 14.6 L 46.2 17.4 L 51.2 18.6 L 51.8 24.4 L 52.2 30.8 L 47.8 39.0 L 38.0 42.0 L 32.0 42.6 L 26.0 42.0 L 16.2 39.0 L 11.8 30.8 Z" fill="#0C121A" />
+    <polygon points="16.0,12.8 21.8,17.4 15.4,22.0" fill="#162330" />
+    <polygon points="46.8,12.4 42.0,17.2 48.0,21.8 48.2,19.8 44.0,18.2 44.0,14.2" fill="#162330" />
+    <path d="M 24.4 15.8 L 32.0 19.8 L 39.6 15.8" fill="none" stroke="#79B7F3" stroke-opacity="0.32" stroke-width="1.2" />
+    <path d="M 12.2 24.4 L 14.4 7.6 L 24.4 15.8 L 32.0 15.0 L 39.6 15.8 L 49.6 7.6 L 50.6 13.0 L 45.6 14.6 L 46.2 17.4 L 51.2 18.6 L 51.8 24.4 L 52.2 30.8 L 47.8 39.0 L 38.0 42.0 L 32.0 42.6 L 26.0 42.0 L 16.2 39.0 L 11.8 30.8 Z" fill="none" stroke="#79B7F3" stroke-width="2.15" stroke-linejoin="miter" stroke-miterlimit="2.5" />
+    <polygon points="18.0,26.2 27.4,27.6 26.6,31.0 18.0,30.2" fill="#79B7F3" />
+    <polygon points="46.0,26.2 36.6,27.6 37.4,31.0 46.0,30.2" fill="#79B7F3" />
+    <polygon points="29.4,34.6 34.6,34.6 32.0,37.8" fill="#79B7F3" />
+    <polygon points="32.0,46.0 35.5,49.5 32.0,53.0 28.5,49.5" fill="#A594F9" />
+  </g>
+  <text x="94" y="154" text-anchor="middle" fill="#F2F6FA" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="11" font-weight="600">idle</text>
+  <circle cx="67" cy="166" r="2.8" fill="#79B7F3" />
+  <text x="75" y="169" fill="#79B7F3" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="9.5">#79B7F3</text>
+
+  <!-- 2. scanning -->
+  <rect x="182" y="54" width="140" height="122" rx="8" fill="#111C28" stroke="#273A4D" stroke-width="1.25" />
+  <g transform="translate(210, 62) scale(1.3)">
+    <polygon points="15.8,39.4 26.0,42.0 32.0,42.6 38.0,42.0 48.2,39.4 49.6,47.4 32.0,59.0 14.4,47.4" fill="#0C121A" stroke="#79B7F3" stroke-width="2.1" stroke-linejoin="miter" stroke-miterlimit="2.5" />
+    <polygon points="20.4,43.2 32.0,45.0 43.6,43.2 44.6,47.2 32.0,55.8 19.4,47.2" fill="#111C28" stroke="#79B7F3" stroke-opacity="0.34" stroke-width="1" />
+    <path d="M 12.2 24.4 L 14.4 7.6 L 24.4 15.8 L 32.0 15.0 L 39.6 15.8 L 49.6 7.6 L 50.6 13.0 L 45.6 14.6 L 46.2 17.4 L 51.2 18.6 L 51.8 24.4 L 52.2 30.8 L 47.8 39.0 L 38.0 42.0 L 32.0 42.6 L 26.0 42.0 L 16.2 39.0 L 11.8 30.8 Z" fill="#0C121A" />
+    <polygon points="16.0,12.8 21.8,17.4 15.4,22.0" fill="#162330" />
+    <polygon points="46.8,12.4 42.0,17.2 48.0,21.8 48.2,19.8 44.0,18.2 44.0,14.2" fill="#162330" />
+    <path d="M 24.4 15.8 L 32.0 19.8 L 39.6 15.8" fill="none" stroke="#79B7F3" stroke-opacity="0.32" stroke-width="1.2" />
+    <path d="M 12.2 24.4 L 14.4 7.6 L 24.4 15.8 L 32.0 15.0 L 39.6 15.8 L 49.6 7.6 L 50.6 13.0 L 45.6 14.6 L 46.2 17.4 L 51.2 18.6 L 51.8 24.4 L 52.2 30.8 L 47.8 39.0 L 38.0 42.0 L 32.0 42.6 L 26.0 42.0 L 16.2 39.0 L 11.8 30.8 Z" fill="none" stroke="#79B7F3" stroke-width="2.15" stroke-linejoin="miter" stroke-miterlimit="2.5" />
+    <polygon points="17.8,26.8 24.8,27.1 24.8,29.6 18.0,29.4" fill="#79B7F3" />
+    <rect x="25.6" y="27.1" width="2.2" height="2.5" fill="#A594F9" />
+    <polygon points="36.2,27.1 43.4,26.8 43.4,29.4 36.2,29.6" fill="#79B7F3" />
+    <rect x="44.2" y="26.8" width="2.2" height="2.5" fill="#A594F9" />
+    <polygon points="29.4,34.6 34.6,34.6 32.0,37.8" fill="#79B7F3" />
+    <path d="M 27.8 49.4 L 32.0 52.8 L 36.2 49.4" fill="none" stroke="#A594F9" stroke-width="2" stroke-linecap="square" />
+    <path d="M 29.0 46.2 L 32.0 48.8 L 35.0 46.2" fill="none" stroke="#79B7F3" stroke-width="1.6" stroke-linecap="square" />
+    <path d="M 52.2 6.8 A 8.5 8.5 0 0 1 56.8 14.4" fill="none" stroke="#A594F9" stroke-width="1.8" stroke-linecap="square" />
+    <path d="M 54.6 4.4 A 11.5 11.5 0 0 1 59.8 14.0" fill="none" stroke="#79B7F3" stroke-width="1.4" stroke-linecap="square" stroke-opacity="0.7" />
+  </g>
+  <text x="252" y="154" text-anchor="middle" fill="#F2F6FA" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="11" font-weight="600">scanning</text>
+  <circle cx="203" cy="166" r="2.8" fill="#79B7F3" />
+  <circle cx="211" cy="166" r="2.8" fill="#A594F9" />
+  <text x="219" y="169" fill="#A594F9" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="9">#79B7F3 · #A594F9</text>
+
+  <!-- 3. alert -->
+  <rect x="340" y="54" width="140" height="122" rx="8" fill="#111C28" stroke="#273A4D" stroke-width="1.25" />
+  <g transform="translate(368, 62) scale(1.3)">
+    <polygon points="15.8,39.4 26.0,42.0 32.0,42.6 38.0,42.0 48.2,39.4 49.6,47.4 32.0,59.0 14.4,47.4" fill="#0C121A" stroke="#F08589" stroke-width="2.1" stroke-linejoin="miter" stroke-miterlimit="2.5" />
+    <polygon points="20.4,43.2 32.0,45.0 43.6,43.2 44.6,47.2 32.0,55.8 19.4,47.2" fill="#111C28" stroke="#F08589" stroke-opacity="0.34" stroke-width="1" />
+    <path d="M 12.2 24.4 L 14.4 7.6 L 24.4 15.8 L 32.0 15.0 L 39.6 15.8 L 49.6 7.6 L 50.6 13.0 L 45.6 14.6 L 46.2 17.4 L 51.2 18.6 L 51.8 24.4 L 52.2 30.8 L 47.8 39.0 L 38.0 42.0 L 32.0 42.6 L 26.0 42.0 L 16.2 39.0 L 11.8 30.8 Z" fill="#0C121A" />
+    <polygon points="16.0,12.8 21.8,17.4 15.4,22.0" fill="#162330" />
+    <polygon points="46.8,12.4 42.0,17.2 48.0,21.8 48.2,19.8 44.0,18.2 44.0,14.2" fill="#162330" />
+    <path d="M 24.4 15.8 L 32.0 19.8 L 39.6 15.8" fill="none" stroke="#F08589" stroke-opacity="0.32" stroke-width="1.2" />
+    <path d="M 12.2 24.4 L 14.4 7.6 L 24.4 15.8 L 32.0 15.0 L 39.6 15.8 L 49.6 7.6 L 50.6 13.0 L 45.6 14.6 L 46.2 17.4 L 51.2 18.6 L 51.8 24.4 L 52.2 30.8 L 47.8 39.0 L 38.0 42.0 L 32.0 42.6 L 26.0 42.0 L 16.2 39.0 L 11.8 30.8 Z" fill="none" stroke="#F08589" stroke-width="2.15" stroke-linejoin="miter" stroke-miterlimit="2.5" />
+    <polygon points="17.6,24.8 28.0,28.4 26.8,31.6 17.8,28.6" fill="#F08589" />
+    <polygon points="46.4,24.8 36.0,28.4 37.2,31.6 46.2,28.6" fill="#F08589" />
+    <polygon points="29.4,34.6 34.6,34.6 32.0,37.8" fill="#F08589" />
+    <rect x="30.8" y="44.8" width="2.4" height="4.8" fill="#F08589" />
+    <polygon points="32.0,51.0 33.6,52.6 32.0,54.2 30.4,52.6" fill="#F08589" />
+  </g>
+  <text x="410" y="154" text-anchor="middle" fill="#F2F6FA" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="11" font-weight="600">alert</text>
+  <circle cx="383" cy="166" r="2.8" fill="#F08589" />
+  <text x="391" y="169" fill="#F08589" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="9.5">#F08589</text>
+
+  <!-- 4. verified -->
+  <rect x="498" y="54" width="140" height="122" rx="8" fill="#111C28" stroke="#273A4D" stroke-width="1.25" />
+  <g transform="translate(526, 62) scale(1.3)">
+    <polygon points="15.8,39.4 26.0,42.0 32.0,42.6 38.0,42.0 48.2,39.4 49.6,47.4 32.0,59.0 14.4,47.4" fill="#0C121A" stroke="#64CDB1" stroke-width="2.1" stroke-linejoin="miter" stroke-miterlimit="2.5" />
+    <polygon points="20.4,43.2 32.0,45.0 43.6,43.2 44.6,47.2 32.0,55.8 19.4,47.2" fill="#111C28" stroke="#64CDB1" stroke-opacity="0.34" stroke-width="1" />
+    <path d="M 12.2 24.4 L 14.4 7.6 L 24.4 15.8 L 32.0 15.0 L 39.6 15.8 L 49.6 7.6 L 50.6 13.0 L 45.6 14.6 L 46.2 17.4 L 51.2 18.6 L 51.8 24.4 L 52.2 30.8 L 47.8 39.0 L 38.0 42.0 L 32.0 42.6 L 26.0 42.0 L 16.2 39.0 L 11.8 30.8 Z" fill="#0C121A" />
+    <polygon points="16.0,12.8 21.8,17.4 15.4,22.0" fill="#162330" />
+    <polygon points="46.8,12.4 42.0,17.2 48.0,21.8 48.2,19.8 44.0,18.2 44.0,14.2" fill="#162330" />
+    <path d="M 24.4 15.8 L 32.0 19.8 L 39.6 15.8" fill="none" stroke="#64CDB1" stroke-opacity="0.32" stroke-width="1.2" />
+    <path d="M 12.2 24.4 L 14.4 7.6 L 24.4 15.8 L 32.0 15.0 L 39.6 15.8 L 49.6 7.6 L 50.6 13.0 L 45.6 14.6 L 46.2 17.4 L 51.2 18.6 L 51.8 24.4 L 52.2 30.8 L 47.8 39.0 L 38.0 42.0 L 32.0 42.6 L 26.0 42.0 L 16.2 39.0 L 11.8 30.8 Z" fill="none" stroke="#64CDB1" stroke-width="2.15" stroke-linejoin="miter" stroke-miterlimit="2.5" />
+    <polygon points="18.2,27.0 27.2,27.2 26.6,30.4 18.4,30.2" fill="#64CDB1" />
+    <polygon points="45.8,27.0 36.8,27.2 37.4,30.4 45.6,30.2" fill="#64CDB1" />
+    <polygon points="29.4,34.6 34.6,34.6 32.0,37.8" fill="#64CDB1" />
+    <path d="M 27.6 49.6 L 30.6 52.6 L 36.6 46.6" fill="none" stroke="#64CDB1" stroke-width="2.3" stroke-linecap="square" stroke-linejoin="miter" />
+  </g>
+  <text x="568" y="154" text-anchor="middle" fill="#F2F6FA" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="11" font-weight="600">verified</text>
+  <circle cx="541" cy="166" r="2.8" fill="#64CDB1" />
+  <text x="549" y="169" fill="#64CDB1" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="9.5">#64CDB1</text>
+
+  <!-- 5. needs_review -->
+  <rect x="656" y="54" width="140" height="122" rx="8" fill="#111C28" stroke="#273A4D" stroke-width="1.25" />
+  <g transform="translate(684, 62) scale(1.3)">
+    <polygon points="15.8,39.4 26.0,42.0 32.0,42.6 38.0,42.0 48.2,39.4 49.6,47.4 32.0,59.0 14.4,47.4" fill="#0C121A" stroke="#EDBA6C" stroke-width="2.1" stroke-linejoin="miter" stroke-miterlimit="2.5" />
+    <polygon points="20.4,43.2 32.0,45.0 43.6,43.2 44.6,47.2 32.0,55.8 19.4,47.2" fill="#111C28" stroke="#EDBA6C" stroke-opacity="0.34" stroke-width="1" />
+    <path d="M 12.2 24.4 L 14.4 7.6 L 24.4 15.8 L 32.0 15.0 L 39.6 15.8 L 49.6 7.6 L 50.6 13.0 L 45.6 14.6 L 46.2 17.4 L 51.2 18.6 L 51.8 24.4 L 52.2 30.8 L 47.8 39.0 L 38.0 42.0 L 32.0 42.6 L 26.0 42.0 L 16.2 39.0 L 11.8 30.8 Z" fill="#0C121A" />
+    <polygon points="16.0,12.8 21.8,17.4 15.4,22.0" fill="#162330" />
+    <polygon points="46.8,12.4 42.0,17.2 48.0,21.8 48.2,19.8 44.0,18.2 44.0,14.2" fill="#162330" />
+    <path d="M 24.4 15.8 L 32.0 19.8 L 39.6 15.8" fill="none" stroke="#EDBA6C" stroke-opacity="0.32" stroke-width="1.2" />
+    <path d="M 12.2 24.4 L 14.4 7.6 L 24.4 15.8 L 32.0 15.0 L 39.6 15.8 L 49.6 7.6 L 50.6 13.0 L 45.6 14.6 L 46.2 17.4 L 51.2 18.6 L 51.8 24.4 L 52.2 30.8 L 47.8 39.0 L 38.0 42.0 L 32.0 42.6 L 26.0 42.0 L 16.2 39.0 L 11.8 30.8 Z" fill="none" stroke="#EDBA6C" stroke-width="2.15" stroke-linejoin="miter" stroke-miterlimit="2.5" />
+    <polygon points="18.0,26.8 27.2,27.2 26.6,30.4 18.2,30.2" fill="#EDBA6C" />
+    <polygon points="36.8,27.8 46.0,26.8 45.6,29.2 37.0,29.8" fill="#EDBA6C" />
+    <polygon points="29.4,34.6 34.6,34.6 32.0,37.8" fill="#EDBA6C" />
+    <rect x="28.6" y="46.2" width="2.3" height="6.0" fill="#EDBA6C" />
+    <rect x="33.1" y="46.2" width="2.3" height="6.0" fill="#EDBA6C" />
+  </g>
+  <text x="726" y="154" text-anchor="middle" fill="#F2F6FA" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="11" font-weight="600">needs_review</text>
+  <circle cx="699" cy="166" r="2.8" fill="#EDBA6C" />
+  <text x="707" y="169" fill="#EDBA6C" font-family="'IBM Plex Mono', ui-monospace, monospace" font-size="9.5">#EDBA6C</text>
+</svg>

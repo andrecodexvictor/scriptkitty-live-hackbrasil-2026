@@ -1,0 +1,201 @@
+{
+  "schemaVersion": "chainbreak.graph.v1",
+  "fixtureId": "payments-lab/negative-control",
+  "tenantId": "payments-lab",
+  "policyVersion": "2026.11.09-negative-control",
+  "declaredInputSha256": "156320fa4255cd72eb812ed0186833c2c06d915ceeb33da34717291ee40bc2e1",
+  "description": "Payments Lab negative control: structural edges exist in the graph, but incompatible edge types, mismatched scopes, unsatisfied conditions (MFA/explicit grant/DENY), and missing data acquisition prevent valid attack paths (must return 0 paths).",
+  "startIdentities": [
+    "identity:support-agent",
+    "identity:auditor-agent"
+  ],
+  "policies": [
+    {
+      "policyId": "NO_RESTRICTED_DATA_EXTERNAL_TRANSFER",
+      "description": "RESTRICTED payment and PII data assets must never be transferred to EXTERNAL trust-zone destinations lacking explicit RESTRICTED clearance.",
+      "forbiddenTargetClassification": "RESTRICTED",
+      "forbiddenDestinationTrustZone": "EXTERNAL",
+      "riskRecommendation": "P1",
+      "policyVersion": "2026.11.09-negative-control",
+      "sourceRef": "policies/payments-lab/negative-control.policy.yaml#rules.no_restricted_external"
+    }
+  ],
+  "nodes": [
+    {
+      "nodeId": "identity:support-agent",
+      "kind": "identity",
+      "label": "Support Agent Identity",
+      "tenantId": "payments-lab",
+      "scope": "support-ops",
+      "allowedScopes": ["support-ops", "reporting-public"],
+      "roles": ["support-reader"],
+      "trustZone": "INTERNAL",
+      "isEntryIdentity": true,
+      "sourceRef": "policies/payments-lab/negative-control.policy.yaml#identities.support_agent"
+    },
+    {
+      "nodeId": "identity:auditor-agent",
+      "kind": "identity",
+      "label": "Auditor Agent Identity",
+      "tenantId": "payments-lab",
+      "scope": "audit-ops",
+      "allowedScopes": ["audit-ops"],
+      "roles": ["auditor"],
+      "trustZone": "INTERNAL",
+      "isEntryIdentity": true,
+      "sourceRef": "policies/payments-lab/negative-control.policy.yaml#identities.auditor_agent"
+    },
+    {
+      "nodeId": "mcp_tool:report-exporter",
+      "kind": "mcp_tool",
+      "label": "MCP Report Exporter Tool",
+      "tenantId": "payments-lab",
+      "scope": "reporting-public",
+      "roles": ["report-exporter"],
+      "trustZone": "INTERNAL",
+      "sourceRef": "policies/payments-lab/negative-control.policy.yaml#tools.report_exporter"
+    },
+    {
+      "nodeId": "service:audit-exporter",
+      "kind": "service",
+      "label": "Audit Export Service",
+      "tenantId": "payments-lab",
+      "scope": "audit-ops",
+      "roles": ["audit-exporter"],
+      "trustZone": "INTERNAL",
+      "sourceRef": "policies/payments-lab/negative-control.policy.yaml#services.audit_exporter"
+    },
+    {
+      "nodeId": "data_asset:customer-payment-pii",
+      "kind": "data_asset",
+      "label": "Restricted Customer Payment & PII Vault",
+      "tenantId": "payments-lab",
+      "scope": "finance-core",
+      "dataClassification": "RESTRICTED",
+      "trustZone": "INTERNAL",
+      "isRestrictedAsset": true,
+      "sourceRef": "policies/payments-lab/negative-control.policy.yaml#assets.customer_payment_pii"
+    },
+    {
+      "nodeId": "destination:external-report-sink",
+      "kind": "destination",
+      "label": "External Partner Reporting Sink",
+      "tenantId": "payments-lab",
+      "scope": "reporting-public",
+      "dataClassification": "PUBLIC",
+      "allowedClassifications": ["PUBLIC"],
+      "trustZone": "EXTERNAL",
+      "isUnauthorizedDestination": true,
+      "sourceRef": "policies/payments-lab/negative-control.policy.yaml#destinations.external_report_sink"
+    }
+  ],
+  "edges": [
+    {
+      "edgeId": "e-neg-incompatible-read-dest",
+      "from": "identity:support-agent",
+      "to": "destination:external-report-sink",
+      "kind": "can_read",
+      "tenantId": "payments-lab",
+      "scope": "support-ops",
+      "conditions": { "effect": "ALLOW", "active": true },
+      "sourceRef": "policies/payments-lab/negative-control.policy.yaml#edges.incompatible_read_dest",
+      "policyVersion": "2026.11.09-negative-control",
+      "dataClassification": "RESTRICTED"
+    },
+    {
+      "edgeId": "e-neg-incompatible-invoke-asset",
+      "from": "mcp_tool:report-exporter",
+      "to": "data_asset:customer-payment-pii",
+      "kind": "can_invoke",
+      "tenantId": "payments-lab",
+      "scope": "reporting-public",
+      "conditions": { "effect": "ALLOW", "active": true },
+      "sourceRef": "policies/payments-lab/negative-control.policy.yaml#edges.incompatible_invoke_asset",
+      "policyVersion": "2026.11.09-negative-control",
+      "dataClassification": "RESTRICTED"
+    },
+    {
+      "edgeId": "e-neg-support-invoke-exporter",
+      "from": "identity:support-agent",
+      "to": "mcp_tool:report-exporter",
+      "kind": "can_invoke",
+      "tenantId": "payments-lab",
+      "scope": "reporting-public",
+      "conditions": { "effect": "ALLOW", "active": true },
+      "sourceRef": "policies/payments-lab/negative-control.policy.yaml#edges.support_invoke_exporter",
+      "policyVersion": "2026.11.09-negative-control",
+      "dataClassification": "RESTRICTED"
+    },
+    {
+      "edgeId": "e-neg-scope-mismatched-read",
+      "from": "mcp_tool:report-exporter",
+      "to": "data_asset:customer-payment-pii",
+      "kind": "can_read",
+      "tenantId": "payments-lab",
+      "scope": "finance-core",
+      "conditions": { "effect": "ALLOW", "active": true },
+      "sourceRef": "policies/payments-lab/negative-control.policy.yaml#edges.scope_mismatched_read",
+      "policyVersion": "2026.11.09-negative-control",
+      "dataClassification": "RESTRICTED"
+    },
+    {
+      "edgeId": "e-neg-transfer-without-read",
+      "from": "mcp_tool:report-exporter",
+      "to": "destination:external-report-sink",
+      "kind": "transfers_data_to",
+      "tenantId": "payments-lab",
+      "scope": "reporting-public",
+      "conditions": { "effect": "ALLOW", "active": true },
+      "sourceRef": "policies/payments-lab/negative-control.policy.yaml#edges.transfer_without_read",
+      "policyVersion": "2026.11.09-negative-control",
+      "dataClassification": "RESTRICTED"
+    },
+    {
+      "edgeId": "e-neg-audit-invoke",
+      "from": "identity:auditor-agent",
+      "to": "service:audit-exporter",
+      "kind": "can_invoke",
+      "tenantId": "payments-lab",
+      "scope": "audit-ops",
+      "conditions": { "effect": "ALLOW", "active": true },
+      "sourceRef": "policies/payments-lab/negative-control.policy.yaml#edges.audit_invoke",
+      "policyVersion": "2026.11.09-negative-control",
+      "dataClassification": "RESTRICTED"
+    },
+    {
+      "edgeId": "e-neg-unsatisfied-mfa-grant",
+      "from": "service:audit-exporter",
+      "to": "data_asset:customer-payment-pii",
+      "kind": "can_read",
+      "tenantId": "payments-lab",
+      "scope": "audit-ops",
+      "conditions": {
+        "effect": "ALLOW",
+        "active": true,
+        "requiresMfa": true,
+        "mfaVerified": false,
+        "requiresExplicitGrant": true,
+        "explicitGrantPresent": false
+      },
+      "sourceRef": "policies/payments-lab/negative-control.policy.yaml#edges.unsatisfied_mfa_grant",
+      "policyVersion": "2026.11.09-negative-control",
+      "dataClassification": "RESTRICTED"
+    },
+    {
+      "edgeId": "e-neg-explicit-deny-transfer",
+      "from": "service:audit-exporter",
+      "to": "destination:external-report-sink",
+      "kind": "transfers_data_to",
+      "tenantId": "payments-lab",
+      "scope": "audit-ops",
+      "conditions": {
+        "effect": "DENY",
+        "active": true
+      },
+      "sourceRef": "policies/payments-lab/negative-control.policy.yaml#edges.explicit_deny_transfer",
+      "policyVersion": "2026.11.09-negative-control",
+      "dataClassification": "RESTRICTED"
+    }
+  ],
+  "legitimateOperations": []
+}

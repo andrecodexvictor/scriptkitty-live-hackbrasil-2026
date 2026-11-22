@@ -1,0 +1,115 @@
+{
+  "gateId": "G05",
+  "generatedAtUtc": "2026-11-21T23:49:51.503Z",
+  "status": "NOT_CONFIGURED",
+  "typesafeApiKeyConfigured": false,
+  "providerStatus": "NOT_CONFIGURED",
+  "decisionSource": "MOCK",
+  "advisoryOutcome": "PENDING_REVIEW",
+  "requiresHumanReview": true,
+  "invariantsVerified": {
+    "preValidationPassedOnValidHash": true,
+    "preValidationBlockedOnHashMismatch": true,
+    "p0DefinedByJevAlone": false,
+    "exploitConfirmed": false,
+    "mergeAllowed": false,
+    "deployAllowed": false
+  },
+  "adjudication": {
+    "evaluationId": "jev-9b5737818eb64bac",
+    "analysisId": "cb-6b09ceec48ab6b21",
+    "tenantId": "payments-lab",
+    "model": "mock-offline-v0",
+    "modelVersion": "0.1.0-mock",
+    "rubricVersion": "jev-rubric-v0",
+    "questions": {
+      "evidence_sufficient": "Are the cited graph identifiers, policy references, and reachability facts backed by independent verified evidence of matching tenant and policy scope?",
+      "needs_manual_review": "Do material evidence gaps, inconclusive paths, high severity risks, or ambiguity require human security review?",
+      "triage": "Based strictly on the verified policy graph facts and evidence metadata, classify the advisory triage outcome without confirming production exploitation."
+    },
+    "answers": {
+      "evidence_sufficient": {
+        "type": "noul",
+        "noul": 0.94
+      },
+      "needs_manual_review": {
+        "type": "noul",
+        "noul": 0.92
+      },
+      "triage": {
+        "type": "choice",
+        "choice": "likely_actionable",
+        "confidence": 0.91,
+        "probabilities": {
+          "likely_actionable": 0.91,
+          "needs_more_evidence": 0.06,
+          "likely_irrelevant": 0.03
+        }
+      }
+    },
+    "triage": "likely_actionable",
+    "decision": "escalated_human_review",
+    "status": "PENDING_REVIEW",
+    "probabilities": {
+      "evidenceSufficient": 0.94,
+      "needsManualReview": 0.92,
+      "triageProbabilities": {
+        "likely_actionable": 0.91,
+        "needs_more_evidence": 0.06,
+        "likely_irrelevant": 0.03
+      }
+    },
+    "confidenceOrUncertainty": {
+      "confidence": 0.91,
+      "uncertainty": 0.09,
+      "evidenceSufficiencyScore": 0.94,
+      "manualReviewScore": 0.92,
+      "threshold": 0.75,
+      "thresholdCalibrated": false,
+      "calibrationNote": "Threshold is uncalibrated raw score/confidence; not a calibrated statistical probability."
+    },
+    "escalated": true,
+    "escalationReasons": [
+      "JEV_FLAGGED_MANUAL_REVIEW: needs_manual_review=0.92 >= threshold 0.5",
+      "CRITICAL_OR_UNDETERMINED_RISK: deterministic risk=P1 requires mandatory human review"
+    ],
+    "escalationReason": "JEV_FLAGGED_MANUAL_REVIEW: needs_manual_review=0.92 >= threshold 0.5; CRITICAL_OR_UNDETERMINED_RISK: deterministic risk=P1 requires mandatory human review",
+    "requiresHumanReview": true,
+    "riskRecommendation": "P1",
+    "evidenceIds": [
+      "ev-policy-2dcc3a767620df40",
+      "ev-path-31fa82db6996753f",
+      "ev-test-54b405d99c03d398"
+    ],
+    "sourceRefs": [
+      "policies/payments-lab/unsafe-rollout.policy.yaml#rules.no_restricted_external",
+      "policies/payments-lab/unsafe-rollout.policy.yaml#edges.support_invoke_exporter, policies/payments-lab/report-exporter-rollout.yaml#L24, policies/payments-lab/report-exporter-rollout.yaml#L38",
+      "policies/payments-lab/legitimate-ops.yaml#support_read_profile, policies/payments-lab/legitimate-ops.yaml#non_sensitive_export, policies/payments-lab/legitimate-ops.yaml#finance_process_payments",
+      "policies/payments-lab/unsafe-rollout.policy.yaml#edges.support_invoke_exporter",
+      "policies/payments-lab/report-exporter-rollout.yaml#L24",
+      "policies/payments-lab/report-exporter-rollout.yaml#L38"
+    ],
+    "decisionSource": "MOCK",
+    "providerStatus": "NOT_CONFIGURED",
+    "preValidation": {
+      "passed": true,
+      "blockingOutcome": "NONE",
+      "checkedAt": "2026-11-21T23:49:51.146Z",
+      "checks": {
+        "identityAndTenantScope": true,
+        "labModeBoundary": true,
+        "hashIntegrity": true,
+        "evidenceCompletenessAndVerification": true,
+        "policyAndSourceRefs": true
+      },
+      "issues": []
+    },
+    "sanitizedStateDigest": "53260c975c0503dea2affbb7fced13987881713e64d88225cbdad5aa523dcced",
+    "mergeAllowed": false,
+    "deployAllowed": false,
+    "exploitConfirmed": false,
+    "p0DefinedByJevAlone": false,
+    "timestamp": "2026-11-21T23:49:51.146Z"
+  },
+  "honestDisclosure": "TYPESAFE_API_KEY unset -> NOT_CONFIGURED (escalated to PENDING_REVIEW; never fake PASS)."
+}

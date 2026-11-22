@@ -1,0 +1,137 @@
+{
+  "gateId": "G07",
+  "verifiedSha": "f1c334f8c4e58dbe433b45156a0d3491faa60588",
+  "generatedAtUtc": "2026-11-21T23:49:51.735Z",
+  "mode": "LAB_SANDBOX_ONLY",
+  "allowlistedCapabilities": [
+    "security.kali.recon_surface",
+    "security.kali.config_audit",
+    "security.kali.verify_reproducer",
+    "security.kali.sbom_cve_check"
+  ],
+  "positiveLabRuns": {
+    "reconSurface": {
+      "ok": true,
+      "executionMode": "LAB_SIMULATION",
+      "argv": [
+        "nmap",
+        "-sT",
+        "-Pn",
+        "-n",
+        "--max-retries",
+        "1",
+        "--host-timeout",
+        "20s",
+        "-p",
+        "80,443,3000",
+        "-oX",
+        "-",
+        "--",
+        "127.0.0.1"
+      ]
+    },
+    "tlsReview": {
+      "ok": true,
+      "argv": [
+        "testssl.sh",
+        "--quiet",
+        "--color",
+        "0",
+        "--jsonfile-pretty",
+        "-",
+        "--connect-timeout",
+        "10",
+        "--openssl-timeout",
+        "10",
+        "--",
+        "127.0.0.1:443"
+      ]
+    },
+    "webPassiveBaseline": {
+      "ok": true,
+      "argv": [
+        "curl",
+        "--silent",
+        "--show-error",
+        "--head",
+        "--max-time",
+        "15",
+        "--proto",
+        "=http,https",
+        "--noproxy",
+        "*",
+        "--",
+        "http://127.0.0.1:3000/"
+      ]
+    },
+    "sbomCveCheck": {
+      "ok": true,
+      "networkMode": "airgapped",
+      "sbomSummary": {
+        "bomFormat": "CycloneDX",
+        "specVersion": "1.5",
+        "manifestPath": "apps/lab-app/package.json",
+        "sbomSha256": "524a5dbc1ac07af100a770bb2e6f2ffee35d8b4fbfef4a97bc5683a006816a50",
+        "componentCount": 2,
+        "vulnerabilityCount": 1
+      }
+    },
+    "verifyReproducer": {
+      "ok": true,
+      "evidenceId": "SK-EVID-KALI-d21a4dbc2aba81c8"
+    }
+  },
+  "negativeSecurityChecks": {
+    "outOfScopeDomain": {
+      "blocked": true,
+      "code": "KALI_BLOCKED_PUBLIC_OR_NONLAB_TARGET",
+      "message": "KALI_BLOCKED_PUBLIC_OR_NONLAB_TARGET: Target host 'evil.example' is restricted strictly to 127.0.0.1, localhost, or *.localnet"
+    },
+    "imdsBlock": {
+      "blocked": true,
+      "code": "KALI_BLOCKED_IMDS_TARGET",
+      "message": "KALI_BLOCKED_IMDS_TARGET: Cloud IMDS / host-escape endpoint '169.254.169.254' is strictly blocked"
+    },
+    "rfc1918Block": {
+      "blocked": true,
+      "code": "KALI_BLOCKED_RFC1918_TARGET",
+      "message": "KALI_BLOCKED_RFC1918_TARGET: Private LAN / non-lab IPv4 '192.168.1.25' is blocked outside isolated loopback/localnet"
+    },
+    "flagScriptBlock": {
+      "blocked": true,
+      "code": "KALI_WEAPONIZED_PAYLOAD_BLOCKED",
+      "message": "KALI_WEAPONIZED_PAYLOAD_BLOCKED: Weaponized/offensive tool or exploit flag pattern blocked at 'params.target_host'"
+    },
+    "shellMetaBlock": {
+      "blocked": true,
+      "code": "KALI_SHELL_METACHAR_BLOCKED",
+      "message": "KALI_SHELL_METACHAR_BLOCKED: Shell metacharacter or control character forbidden at 'params.target_host'"
+    },
+    "rawCmdBlock": {
+      "safe": false,
+      "ruleId": "KALI_FORBIDDEN_RAW_EXECUTION_PARAM",
+      "reason": "Forbidden raw execution or exploit parameter 'command' rejected"
+    },
+    "rawNmapArgsBlock": {
+      "safe": false,
+      "ruleId": "KALI_FORBIDDEN_RAW_EXECUTION_PARAM",
+      "reason": "Forbidden raw execution or exploit parameter 'raw_nmap_args' rejected"
+    },
+    "runCmdParamBlock": {
+      "safe": false,
+      "ruleId": "KALI_FORBIDDEN_RAW_EXECUTION_PARAM",
+      "reason": "Forbidden raw execution or exploit parameter 'run_command' rejected"
+    },
+    "liveFailClosed": "KALI_SANDBOX_UNAVAILABLE"
+  },
+  "isolationAndRedaction": {
+    "profileAOciGvisorValid": true,
+    "strippedHostCredentialKeys": [
+      "GITHUB_TOKEN",
+      "OPENAI_API_KEY"
+    ],
+    "canarySecretRedacted": true,
+    "guardianAuditEvents": 10,
+    "guardianAuditMerkleRoot": "57542f25edf6d007f12277c5fe5b0e990b5c574eb6d336cc58e1395f210815c3"
+  }
+}

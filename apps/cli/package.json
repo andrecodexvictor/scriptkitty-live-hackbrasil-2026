@@ -1,0 +1,50 @@
+{
+  "name": "@script-kitty/cli",
+  "version": "1.0.0",
+  "description": "Script Kitty CLI — PatchCat Live, Encrypted Credentials, and Real Local Security Scanners",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./credentials": {
+      "types": "./dist/credentials.d.ts",
+      "import": "./dist/credentials.js",
+      "default": "./dist/credentials.js"
+    },
+    "./chat": {
+      "types": "./dist/chat.d.ts",
+      "import": "./dist/chat.js",
+      "default": "./dist/chat.js"
+    },
+    "./real_scanner": {
+      "types": "./dist/real_scanner.d.ts",
+      "import": "./dist/real_scanner.js",
+      "default": "./dist/real_scanner.js"
+    }
+  },
+  "bin": {
+    "script-kitty": "dist/index.js",
+    "sk": "dist/index.js",
+    "kitty": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/**/*.test.mts"
+  },
+  "dependencies": {
+    "commander": "^12.0.0",
+    "chalk": "^4.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}

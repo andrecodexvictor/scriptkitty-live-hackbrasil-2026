@@ -1,0 +1,36 @@
+{
+  "name": "script-kitty-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Script Kitty - Your Patch Cat: Authorized Security Validation & Remediation Platform",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=apps/ui",
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "test:python": "python -m unittest discover -s tests/python -p \"test_*.py\"",
+    "verify": "node packages/verification-suite/tests/run-all.mts",
+    "gates": "node scripts/run-quality-gates.mjs",
+    "demo": "node scripts/demo-wednesday.mjs",
+    "demo:live": "node scripts/start-live-demo.mjs",
+    "cli": "npm run start --workspace=apps/cli",
+    "mcp": "npm run start --workspace=apps/mcp-server"
+  },
+  "keywords": [
+    "security",
+    "vulnerability-management",
+    "remediation",
+    "agents",
+    "mcp",
+    "owasp",
+    "patch-cat"
+  ],
+  "author": "Script Kitty Team",
+  "license": "MIT",
+  "dependencies": {
+    "zod": "^3.25.76"
+  }
+}

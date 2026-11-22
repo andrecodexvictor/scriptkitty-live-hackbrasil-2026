@@ -1,0 +1,599 @@
+{
+  "schemaVersion": "scriptkitty.independent-audit.v2",
+  "auditPass": 2,
+  "auditor": "auditor",
+  "auditedAtUtc": "2026-11-21T23:59:13Z",
+  "previousAuditAtUtc": "2026-11-21T17:37:01Z",
+  "verdict": "BLOCKED",
+  "localOfflineEngineeringStatus": "DRAFT_READY_HARDENED_WITH_G10_ZOD_ADVISORY",
+  "repository": {
+    "branch": "main",
+    "verifiedSha": "f1c334f8c4e58dbe433b45156a0d3491faa60588",
+    "headCommitAuthorDate": "2026-07-25T18:35:00-03:00",
+    "dirtyWorkingTree": true,
+    "gitStatusTotalEntries": 99,
+    "gitStatusModifiedTracked": 29,
+    "gitStatusUntracked": 70,
+    "localOriginUrl": "https://github.com/andrecodexvictor/Script-kitty.git",
+    "totalLocalCommits": 28,
+    "preEventCommitCountActual": 28,
+    "preEventCommitCountReportedInGateReport": 28,
+    "labAppRoutesIntactOnDisk": true,
+    "competitionRepo": {
+      "fullName": "andrecodexvictor/scriptkitty-live-hackbrasil-2026",
+      "htmlUrl": "https://github.com/andrecodexvictor/scriptkitty-live-hackbrasil-2026",
+      "private": false,
+      "fork": false,
+      "createdAt": "2026-11-21T12:22:37Z",
+      "createdAfterHackBrasilCutoff": true,
+      "defaultBranch": "main",
+      "sizeKb": 0,
+      "pushed": false
+    }
+  },
+  "environmentCredentialsUnset": {
+    "TYPESAFE_API_KEY": true,
+    "OPENAI_API_KEY": true,
+    "CLOUDFLARE_API_TOKEN": true,
+    "MANTIS_RUNNER": true,
+    "QUALITY_ENGINE_URL": true,
+    "PUBLIC_DEMO_URL": true,
+    "PUBLIC_VIDEO_URL": true
+  },
+  "summary": {
+    "totalGates": 15,
+    "PASS": 9,
+    "NOT_CONFIGURED": 1,
+    "BLOCKED": 3,
+    "FAIL": 2,
+    "INCONCLUSIVE": 0
+  },
+  "resolvedInDeltaPass": [
+    "ConfusedDeputyGuard.nonceCache converted to bounded TTL Map (maxNonceCacheSize=10000) with pruneExpiredNonces",
+    "InMemoryAuditLogger and FileAuditLogger capped via maxInMemoryEvents=5000 ring buffer with writeQueue rejection recovery",
+    "RollbackEngine bounded (maxCheckpoints=100, maxAuditEntries=1000, consumed checkpoint deletion) and lifecycle.ts clears snapshotManager in finally",
+    "mcp-http.ts CORS Access-Control-Allow-Methods now includes DELETE, plus headersTimeout=10000ms, requestTimeout=30000ms, and maxConcurrentRequests 503+Retry-After backpressure",
+    "McpBrowserClient.close() sends DELETE /mcp and PatchCatLiveController reuses single active MCP session",
+    "PatchCatLiveController secrets converted to ECMAScript private #secrets vault",
+    "packages/security-actions/src/capabilities.ts replaced (store as any).db escape hatch with typed CompanyBrainStore.getEvidenceById",
+    "packages/security-actions/src/engine.ts attached execPromise.catch(() => {}) for post-timeout rejection safety",
+    "packages/jev-judge/src/typesafe-provider.ts redacts upstream HTTP error bodies via sanitizeStringForExternalJev",
+    "apps/cli/src/credentials.ts enforces assertValidKdfParams (1024<=N<=65536, r<=16, p<=4, keyLen=32)",
+    "apps/ui/src/live-controller.ts scrubbed all runtime JEV / Company Brain / factory.delivery.v1 strings (0 hits)",
+    "evidence/screenshot-laptop.png 1280px needs_review pose chip border-touching alignment fixed",
+    "demo-video/frames/04-1m28s-jev-and-mcp-fail-closed.png stale pre-rebrand frame deleted (6 clean frames remain)",
+    "evidence/gate-report.json and submission-preflight.json now report exact preEventCommitCount=28 and 640 distinct tests",
+    "README.md and docs/SUBMISSION_PACK.md updated to exact 640 distinct tests (499 TS unit/integration + 121 7-tier + 20 Python) and qualified ProcessSandbox",
+    "SQLite WAL/PRAGMAs, covering composite indexes, bounded stmtCache, SQLITE_BUSY tx retry, and chunked IN(...) N+1 elimination implemented in CompanyBrainStore and EvidenceLedger",
+    "Frontend lightweight optimization cut apps/ui initial critical JS by 26.1% gzip (114.74 kB -> 84.75 kB gzip), lazy-loaded motion, removed sourcemaps/legacy assets, and paused mascot3d rAF when hidden/offscreen"
+  ],
+  "gates": {
+    "G00": {
+      "name": "Hack Brasil 2026 Eligibility & Provenance Preflight",
+      "verdict": "BLOCKED",
+      "command": "git remote -v; git branch --show-current; git rev-parse HEAD; git status --porcelain; git rev-list --count HEAD; GET https://api.github.com/repos/andrecodexvictor/scriptkitty-live-hackbrasil-2026",
+      "observed": {
+        "repoEligibleContainer": true,
+        "repoSizeKb": 0,
+        "originMatchesCompetition": false,
+        "actualPreEventCommits": 28,
+        "gateReportPreEventCommits": 28,
+        "licensePresent": true,
+        "provenanceMdPresent": true,
+        "noticeMdPresent": true,
+        "robocopyExcludesAgentsDir": true,
+        "robocopyDotfilesFlagNuance": "PROVENANCE.md:103 places .dotarchitecture, .dotcontext, .dotstack in /XD, but on disk they are files (-a----) and need /XF"
+      },
+      "evidence": [
+        "LICENSE",
+        "PROVENANCE.md",
+        "NOTICE.md",
+        "evidence/submission-preflight.json"
+      ],
+      "blocker": "Competition repo is empty (size=0 KB); local origin points to legacy Script-kitty.git with 28 pre-event commits; requires human-approved clean export (moving 3 dotfiles to /XF) and push."
+    },
+    "G01": {
+      "name": "Build, Typecheck & Automated Tests",
+      "verdict": "PASS",
+      "command": "npm run build; npm --prefix vercel-app run build; npm run typecheck --workspaces --if-present; npm test; npm run test:python; npm run verify",
+      "observed": {
+        "exitCode": 0,
+        "compilableWorkspacesBuilt": 16,
+        "vercelAppBuilt": true,
+        "viteWarningObserved": "mergeDefs not exported by zod/v4/core/util.js imported by @openuidev/lang-core",
+        "typecheckWorkspacesClean": 16,
+        "tsWorkspacesTested": 17,
+        "tsTestsPassed": 620,
+        "tsTestsFailed": 0,
+        "tsUnitIntegrationDistinct": 499,
+        "verificationSuiteTiers1To7Passed": 121,
+        "verificationSuiteTiers1To7Failed": 0,
+        "pythonTestsPassed": 20,
+        "pythonDurationSec": 0.101,
+        "distinctCombinedAutomatedTestsPassed": 640,
+        "workspaceTestCounts": {
+          "cli": 5,
+          "lab-app": 10,
+          "mcp-server": 6,
+          "ui": 8,
+          "adapters": 75,
+          "chainbreak": 18,
+          "company-context": 5,
+          "contracts": 91,
+          "evidence": 12,
+          "jev-judge": 5,
+          "kali-mcp-assessment": 18,
+          "patchcat-orchestrator": 6,
+          "quality-gate": 29,
+          "remediation-engine": 33,
+          "runtime-guardian": 170,
+          "security-actions": 8,
+          "verification-suite": 121
+        }
+      },
+      "evidence": [
+        "evidence/build.log",
+        "evidence/typecheck.log",
+        "evidence/unit-tests.log"
+      ],
+      "blocker": null
+    },
+    "G02": {
+      "name": "ChainBreak Policy Graph Reachability & Counterfactual Diff",
+      "verdict": "PASS",
+      "command": "Live loopback MCP tools/call security.chainbreak.analyze (4 payments-lab fixtures + 50x parallel stress) + security.remediation.spec",
+      "observed": {
+        "baselinePaths": 0,
+        "unsafeRolloutPaths": 1,
+        "unsafeRolloutFindingStatus": "PATH_VALIDATED",
+        "remediatedPaths": 0,
+        "negativeControlPaths": 0,
+        "legitimateOperationsPreservedAllFixtures": true,
+        "remediationAction": "REMOVE_EDGE:e-rollout-exporter-read-pii",
+        "requiresHumanApproval": true,
+        "autoApplyAllowed": false,
+        "parallel50RequestsSucceeded": 50,
+        "parallel50UniqueAnalysisIds": 1,
+        "inputSha256": {
+          "baseline": "76c07c4340acfc748443a496435867c819354f99241cd361cd585d2dc85a8bbc",
+          "unsafeRollout": "142cdbbd10b23de6967672f56587b29a5ef028dc727213810a85cc8bcf5b3da0",
+          "remediated": "49dfd23089baf48d8d86e323f5604cbba6d33d81dbac42cebbb071ecc932b5d1",
+          "negativeControl": "156320fa4255cd72eb812ed0186833c2c06d915ceeb33da34717291ee40bc2e1"
+        }
+      },
+      "evidence": [
+        "evidence/chainbreak-baseline.json",
+        "evidence/chainbreak-unsafe.json",
+        "evidence/chainbreak-remediated.json",
+        "evidence/chainbreak-diff.json"
+      ],
+      "blocker": null
+    },
+    "G03": {
+      "name": "MCP Streamable HTTP Real Client, Tool Parity & Hardened Persistence",
+      "verdict": "PASS",
+      "command": "Ephemeral Node fetch client -> startMcpHttpServer(127.0.0.1:0) + CompanyBrainStore & EvidenceLedger PRAGMA / EXPLAIN QUERY PLAN / getEvidenceById live check",
+      "observed": {
+        "toolsCount": 14,
+        "exactToolParityWithSecurityCapabilityIds": true,
+        "securityStatusMode": "LAB",
+        "productionTested": false,
+        "mergeAllowed": false,
+        "deployAllowed": false,
+        "idempotentReplay": true,
+        "typedGetEvidenceByIdVerified": true,
+        "crossTenantGetEvidenceByIdThrowsTenantIsolationError": true,
+        "sqlitePragmasVerified": true,
+        "explainQueryPlanCoveringIndexesVerified": true
+      },
+      "evidence": [
+        "evidence/mcp-client-transcript-redacted.json"
+      ],
+      "blocker": null
+    },
+    "G04": {
+      "name": "MCP Fail-Closed Auth (401), Origin (403), Tenant (FORBIDDEN), Rate Limit (429), Backpressure (503), CORS DELETE & Session TTL (404)",
+      "verdict": "PASS",
+      "command": "Ephemeral Node fetch negative & concurrency suite against startMcpHttpServer(127.0.0.1:0)",
+      "observed": {
+        "missingBearerStatus": 401,
+        "badBearerStatus": 401,
+        "evilOriginOptionsStatus": 403,
+        "evilOriginPostStatus": 403,
+        "allowedOriginOptionsStatus": 204,
+        "corsAllowMethodsObserved": "POST, GET, DELETE, OPTIONS",
+        "corsDeletePreflightStatus": 204,
+        "liveDeleteSessionStatus": 200,
+        "activeSessionsAfterDelete": 0,
+        "headersTimeoutMs": 10000,
+        "requestTimeoutMs": 30000,
+        "parallel50ConcurrencyHttp200Count": 50,
+        "inFlightRequestsAfterParallel50": 0,
+        "backpressureMaxConcurrent1MidInFlight": 1,
+        "backpressureOverloadStatus": 503,
+        "backpressureRetryAfterSec": 1,
+        "inFlightRequestsAfterBackpressure": 0,
+        "crossPrincipalSessionHijackStatus": 403,
+        "oversizedBody1_1MbStatus": 413,
+        "crossTenantChainbreakGet": "FORBIDDEN",
+        "crossTenantAuditGet": "FORBIDDEN",
+        "crossTenantEvidenceGet": "FORBIDDEN",
+        "crossTenantKaliGetRun": "FORBIDDEN",
+        "payloadTenantIdInjection": "FORBIDDEN",
+        "postAuthRateLimitStatuses": [200, 200, 429],
+        "postAuthRetryAfterSec": 60,
+        "preAuthRateLimitStatuses": [401, 401, 429],
+        "preAuthRetryAfterSec": 60,
+        "idleSessionTtlEvictionStatus": 404,
+        "activeSessionsAfterTtlEviction": 0
+      },
+      "evidence": [
+        "evidence/mcp-client-transcript-redacted.json"
+      ],
+      "blocker": null
+    },
+    "G05": {
+      "name": "Bounded Advisory Judge Evaluation (Fail-Closed Escalation)",
+      "verdict": "NOT_CONFIGURED",
+      "command": "Live loopback MCP tools/call security.judge.evaluate (TYPESAFE_API_KEY unset) + hash-mismatch negative call + typesafe-provider redaction check",
+      "observed": {
+        "providerStatus": "NOT_CONFIGURED",
+        "decisionSource": "MOCK",
+        "status": "PENDING_REVIEW",
+        "requiresHumanReview": true,
+        "p0DefinedByJevAlone": false,
+        "hashMismatchStatus": "REJECTED",
+        "upstreamErrorBodyRedacted": true
+      },
+      "evidence": [
+        "evidence/judge-evaluation-redacted.json"
+      ],
+      "blocker": "TYPESAFE_API_KEY is unset; external live judge provider is NOT_CONFIGURED (honestly degraded to MOCK / PENDING_REVIEW)."
+    },
+    "G06": {
+      "name": "Zero-Trust Quality Gate, Tri-Party SoD & SHA-Bound Custody",
+      "verdict": "PASS",
+      "command": "Independent DeterministicQualityGate.evaluate bound to f1c334f8c4e58dbe433b45156a0d3491faa60588",
+      "observed": {
+        "inconclusiveVerdict": "BLOCK",
+        "selfCertVerdict": "REJECT",
+        "selfCertViolation": "E_SOD_SELF_CERTIFICATION: Discovering agent cannot verify its own finding",
+        "triPartyVerdict": "PASS",
+        "auditMerkleRoot": "bca9b882325dae315e022444c66744e3f4efb7c2fcb8b1a978f2964f8cf34699"
+      },
+      "evidence": [
+        "evidence/quality-engine-run-redacted.json"
+      ],
+      "blocker": null
+    },
+    "G07": {
+      "name": "Kali LAB Sandbox Verification, Zero-Shell Argv & Negative Security Suite",
+      "verdict": "PASS",
+      "command": "Live loopback MCP tools/call security.kali.lab_run positive (127.0.0.1) + negative (evil.example, 169.254.169.254, --script=vuln, 127.0.0.1$(id))",
+      "observed": {
+        "executionMode": "LAB_SYNTHETIC",
+        "evilDomainBlocked": "FORBIDDEN / KALI_BLOCKED_PUBLIC_OR_NONLAB_TARGET",
+        "imdsBlocked": "FORBIDDEN / KALI_BLOCKED_IMDS_TARGET",
+        "flagInjectionBlocked": "INPUT_INVALID / KALI_WEAPONIZED_PAYLOAD_BLOCKED",
+        "shellInjectionBlocked": "INPUT_INVALID / KALI_SHELL_METACHAR_BLOCKED",
+        "liveContainerRuntimeTested": false,
+        "placeholderImageDigestDetected": true
+      },
+      "evidence": [
+        "evidence/kali-lab-run-redacted.json"
+      ],
+      "blocker": null
+    },
+    "G08": {
+      "name": "Verified Counterfactual Remediation & RFC 8785 Merkle Inclusion Proof",
+      "verdict": "PASS",
+      "command": "npm run demo + workspace tests (evidence 12/12, patchcat-orchestrator 6/6, remediation-engine 33/33) + direct inspection of apps/lab-app/src/routes/*",
+      "observed": {
+        "forbiddenPathDelta": "1 -> 0",
+        "legitimateOperationsPreserved": "3/3",
+        "inclusionProofValid": true,
+        "governanceBlocksVerified": [
+          "E_POLICY_MUTATION_FORBIDDEN",
+          "E_SOD_VIOLATION",
+          "UNVERIFIED_AI_PROSE_REJECTED",
+          "TENANT_ISOLATION_VIOLATION"
+        ],
+        "labAppVulnerableRoutesUnmutated": true,
+        "rollbackCapsAndFinallyClearVerified": true
+      },
+      "evidence": [
+        "evidence/quality-engine-run-redacted.json"
+      ],
+      "blocker": null
+    },
+    "G09": {
+      "name": "Landing / UI / A11y / Visual QA, Lightweight Bundle & Public HTTPS Check",
+      "verdict": "BLOCKED",
+      "command": "node impeccable/scripts/detect.mjs --json + visual inspection of regenerated screenshots + runtime codename scan + dist bundle audit",
+      "observed": {
+        "impeccableFindings": [],
+        "localVisualQaPassed": true,
+        "topLevelHtmlAndLandingCodenamesClean": true,
+        "liveControllerRuntimeCodenameLeaks": [],
+        "laptop1280NeedsReviewChipFixed": true,
+        "appsUiInitialCriticalJsGzipReductionPct": 26.1,
+        "motionLazyLoadedOffInitialHtml": true,
+        "sourcemapsShipped": false,
+        "publicDemoUrlConfigured": false
+      },
+      "evidence": [
+        "evidence/screenshot-desktop.png",
+        "evidence/screenshot-laptop.png",
+        "evidence/screenshot-mobile.png",
+        "evidence/screenshot-mobile-360.png",
+        "assets/brand/patchcat-avatar.png"
+      ],
+      "blocker": "PUBLIC_DEMO_URL is unset and not deployed over public HTTPS."
+    },
+    "G10": {
+      "name": "Security Hygiene, Dependency Audit, GC Bounds & Provenance Verification",
+      "verdict": "FAIL",
+      "command": "npm audit --omit=dev --json + independent secret scan + pass #2 GC/token/KDF/DB/concurrency source audit",
+      "observed": {
+        "npmAuditExitCode": 1,
+        "prodVulnerabilitiesTotal": 1,
+        "advisory": {
+          "package": "zod",
+          "installedVersion": "3.25.76",
+          "affectedRange": "<4.6.6",
+          "severity": "high",
+          "cvssScore": 7.5,
+          "cwe": "CWE-770",
+          "ghsaId": "GHSA-mrhx-c7xc-m3w5",
+          "url": "https://github.com/advisories/GHSA-mrhx-c7xc-m3w5",
+          "fixAvailable": {
+            "name": "zod",
+            "version": "4.6.7",
+            "isSemVerMajor": true
+          },
+          "labRuntimeMitigation": "maxRequestBodyBytes = 1_048_576 (HTTP 413 verified) in mcp-http.ts + 127.0.0.1 loopback binding"
+        },
+        "independentSecretScan": {
+          "liveSecretsCount": 0,
+          "envFilesCount": 0
+        },
+        "pass1GcLeaksResolved": true,
+        "remainingMinorLeakVectors": [
+          "createSecurityActionEngine() convenience wrapper discards owned SQLite .close() handle (use createSecurityActionRuntime())",
+          "Standalone TamperEvidentAuditLogger (outside DeterministicQualityGate) has no ring-buffer cap"
+        ]
+      },
+      "evidence": [
+        "evidence/dependency-audit.log",
+        "evidence/code-security.log",
+        "evidence/CODE_ARCHITECTURE_AUDIT.md"
+      ],
+      "blocker": "npm audit --omit=dev reported 1 High prod advisory (zod@3.25.76 GHSA-mrhx-c7xc-m3w5); requires semver-major upgrade to zod@4.6.7 to pass cleanly."
+    },
+    "G11": {
+      "name": "Operational Cold-Start Launcher & 10-Stage End-to-End Demo",
+      "verdict": "PASS",
+      "command": "node scripts/start-live-demo.mjs --check --ui-port=0 --mcp-port=0; npm run demo; node --check scripts/record-demo-video.mjs",
+      "observed": {
+        "startLiveDemoCheckVerdict": "PASS",
+        "startLiveDemoToolsCount": 14,
+        "demoWednesdayAll10StagesPassed": true,
+        "recordDemoVideoSyntaxOk": true
+      },
+      "evidence": [
+        "evidence/DEMO_RUNBOOK.md"
+      ],
+      "blocker": null
+    },
+    "G12": {
+      "name": "Public Demo URL & <=180s Demo/Team Video Verification",
+      "verdict": "BLOCKED",
+      "command": "ffprobe -v error -show_format -show_streams -of json demo-video/scriptkitty-live-poc-demo-2m30s.mp4 + inspect .srt and frames/",
+      "observed": {
+        "localVideoDurationSec": 150.0,
+        "within180sLimit": true,
+        "resolution": "1920x1080",
+        "fps": 30,
+        "videoCodec": "h264",
+        "pixFmt": "yuv420p",
+        "audioCodec": "aac",
+        "sizeBytes": 18391865,
+        "srtCodenameLeaks": 0,
+        "framesCount": 6,
+        "stalePreRebrandFrameRemoved": true,
+        "teamMembersOnCameraCount": 0,
+        "publicDemoUrlConfigured": false,
+        "publicVideoUrlConfigured": false
+      },
+      "evidence": [
+        "demo-video/scriptkitty-live-poc-demo-2m30s.mp4",
+        "demo-video/scriptkitty-live-poc-demo-2m30s.srt"
+      ],
+      "blocker": "PUBLIC_DEMO_URL unset, PUBLIC_VIDEO_URL unset, and 0/4 team members appear on camera and speak in the local PoC MP4."
+    },
+    "G13": {
+      "name": "Deterministic Evidence Bundle & Gate Report Emission",
+      "verdict": "PASS",
+      "command": "Verify evidence/* artifacts non-empty and cross-check regenerated gate-report.json (2026-11-21T23:51:04.343Z)",
+      "observed": {
+        "allExpected19GateArtifactsNonEmpty": true,
+        "gateReportPreEventCommitCountAccurate": true,
+        "gateReportCombinedTestsMatchIndependentRun": 640
+      },
+      "evidence": [
+        "evidence/gate-report.json"
+      ],
+      "blocker": null
+    },
+    "G14": {
+      "name": "Hack Brasil 2026 Final Submission Freeze Gate",
+      "verdict": "FAIL",
+      "command": "Aggregate G00..G13 readiness evaluation prior to 2026-11-27T23:59:00-03:00",
+      "observed": {
+        "localEngineeringFailures": ["G10"],
+        "humanExternalBlockers": ["G00", "G09", "G12"],
+        "notConfiguredAdvisory": ["G05"]
+      },
+      "evidence": [
+        "evidence/gate-report.json",
+        "evidence/INDEPENDENT_AUDIT.md"
+      ],
+      "blocker": "Blocked by G10 (zod@3.25.76 High advisory) and human/external gates G00, G09, G12."
+    }
+  },
+  "databaseAndConcurrencyAudit": {
+    "storesAudited": [
+      "packages/company-context/src/store.ts",
+      "packages/evidence/src/ledger.ts"
+    ],
+    "sqlitePragmasConfigured": {
+      "journal_mode": "WAL (memory on :memory:)",
+      "busy_timeout": 5000,
+      "synchronous": "NORMAL (1)",
+      "foreign_keys": "ON (1)",
+      "temp_store": "MEMORY (2)",
+      "cache_size": -16000,
+      "wal_autocheckpoint": 1000
+    },
+    "preparedStatementCacheMax": 256,
+    "sqliteBusyTxMaxRetries": 5,
+    "explainQueryPlanVerified": {
+      "assertAnalysisOwnership": "SEARCH evidence_receipts USING COVERING INDEX idx_receipts_analysis_tenant (analysis_id=?)",
+      "listAnalyses": "SEARCH security_analyses USING INDEX idx_analyses_tenant_created_desc (tenant_id=?)",
+      "getDeliveryEvaluations": "SEARCH factory_delivery_evaluations USING INDEX idx_delivery_tenant_created_desc (tenant_id=?)"
+    },
+    "nPlusOneEliminationVerified": [
+      "CompanyBrainStore.assertRowsOwnership chunked IN(...) batching",
+      "EvidenceLedger.getReceiptsByIds chunked IN(...) batching",
+      "PaginationOptions (limit/offset) on list queries"
+    ],
+    "httpConcurrencyVerified": {
+      "parallelRequests": 50,
+      "http200Count": 50,
+      "uniqueAnalysisIds": 1,
+      "inFlightRequestsPostRun": 0,
+      "backpressureLimitTested": 1,
+      "backpressureOverloadHttpStatus": 503,
+      "backpressureRetryAfterSec": 1,
+      "headersTimeoutMs": 10000,
+      "requestTimeoutMs": 30000
+    },
+    "horizontalScalingCaveat": "node:sqlite DatabaseSync with Atomics.wait retry scales cleanly for single-node loopback/LAB concurrency; multi-instance production deployment requires migrating behind a repository interface to PostgreSQL."
+  },
+  "frontendBundleAudit": {
+    "appsUiDist": {
+      "filesCount": 12,
+      "totalRawBytes": 456225,
+      "totalGzipBytes": 156691,
+      "hasSourcemaps": false,
+      "hasLegacyUnusedAssets": false,
+      "hasBrandAssets": true,
+      "beforeInitialCriticalJsBytes": 380530,
+      "beforeInitialCriticalJsGzipBytes": 114740,
+      "afterInitialCriticalJsBytes": 297256,
+      "afterInitialCriticalJsGzipBytes": 84746,
+      "initialCriticalJsGzipDeltaPct": -26.14,
+      "deferredMotionChunks": {
+        "vendorMotionBytes": 73476,
+        "vendorMotionGzipBytes": 26850,
+        "motionChoreographyBytes": 1471,
+        "motionChoreographyGzipBytes": 692,
+        "absentFromInitialIndexHtml": true
+      },
+      "chunks": {
+        "indexJs": { "rawBytes": 164144, "gzipBytes": 43207 },
+        "vendorOpenUiJs": { "rawBytes": 133112, "gzipBytes": 41539, "modulepreload": true },
+        "vendorJs": { "rawBytes": 5772, "gzipBytes": 2184 },
+        "indexCss": { "rawBytes": 27454, "gzipBytes": 5183 },
+        "indexHtml": { "rawBytes": 1014, "gzipBytes": 527 },
+        "brandAssetsTotalBytes": 49782
+      }
+    },
+    "vercelAppDist": {
+      "filesCount": 8,
+      "totalRawBytes": 122898,
+      "totalGzipBytes": 56039,
+      "hasSourcemaps": false,
+      "removedSourcemapBytes": 82510,
+      "hasLegacyUnusedAssets": false,
+      "hasBrandAssets": true,
+      "chunks": {
+        "indexJs": { "rawBytes": 51281, "gzipBytes": 14864 },
+        "indexCss": { "rawBytes": 20897, "gzipBytes": 4167 },
+        "indexHtml": { "rawBytes": 938, "gzipBytes": 499 },
+        "brandAssetsTotalBytes": 49782
+      }
+    },
+    "mascot3dRuntimeEfficiency": {
+      "pausesOnVisibilityHidden": true,
+      "pausesWhenOffscreenIntersectionObserver": true,
+      "pausesOnPrefersReducedMotion": true,
+      "idleFrameIntervalMs": 38,
+      "activeFrameIntervalMs": 16,
+      "destroyRemovesListenersAndDisconnectsObserver": true
+    }
+  },
+  "claimsInventory": [
+    { "id": "C01-C04", "claim": "ChainBreak deterministic reachability (0/1/0/0), 3/3 legit ops, counterfactual fix, zero FP negative control", "classification": "REAL", "scope": "LAB_SYNTHETIC fixtures only; 50x parallel idempotency verified" },
+    { "id": "C05", "claim": "AppSec FIND->PROVE->FIX->VERIFY->LEARN (CWE-89/78/639) with rollback", "classification": "REAL", "scope": "LAB target + env-scrubbed host Node subprocess (qualified honestly in docs)" },
+    { "id": "C06", "claim": "Loopback MCP Streamable HTTP 14 tools + fail-closed 401/403/413/429/404/503/DELETE/FORBIDDEN", "classification": "REAL", "scope": "Loopback 127.0.0.1; CORS DELETE, session teardown, timeouts & backpressure verified" },
+    { "id": "C07", "claim": "Runtime Guardian interception (tool poisoning, prompt injection, scope, HMAC delegation, Merkle audit)", "classification": "REAL", "scope": "170/170 tests pass; nonceCache & audit-logger GC leaks resolved" },
+    { "id": "C08", "claim": "Kali LAB Verification Sandbox guardrails vs live container execution", "classification": "MOCK", "scope": "Guardrails/argv/blocks REAL; scan results LAB_SYNTHETIC MOCK; LIVE_CONTAINER INCOMPLETE (placeholder digest)" },
+    { "id": "C09", "claim": "Bounded Advisory Risk Review (jev-judge)", "classification": "NOT_CONFIGURED", "scope": "Sanitizer, pre-validation & error redaction REAL; external TypeSafe JEV provider MOCK/NOT_CONFIGURED" },
+    { "id": "C10", "claim": "Deterministic Quality Gate, Tri-Party SoD, RFC 8785 Merkle custody & hardened SQLite persistence", "classification": "REAL", "scope": "LAB mode with permanent non-mutation locks; WAL/indexes/N+1 batching verified" },
+    { "id": "C11", "claim": "Hack Brasil public repo, public HTTPS demo, 4-person <=180s team video", "classification": "INCOMPLETE", "scope": "Repo size=0, PUBLIC_DEMO_URL unset, PUBLIC_VIDEO_URL unset, 0/4 team on camera" },
+    { "id": "IMP-01", "claim": "UI Model Providers modal saves keys for AI inference", "classification": "INCOMPLETE", "scope": "Private #secrets form state only; zero remote AI calls wired" },
+    { "id": "IMP-02", "claim": "External adapters (Mantis, Codex, Cloudflare, Quality Engine, Harness2)", "classification": "NOT_CONFIGURED", "scope": "Offline normalizers REAL; live invocations NOT_CONFIGURED or DISABLED_BY_FLAG" },
+    { "id": "IMP-03", "claim": "Legacy Rust crates (packages/policies, packages/audit)", "classification": "INCOMPLETE", "scope": "Uncompiled/untested on host (no cargo)" },
+    { "id": "IMP-04", "claim": "Zero High/Critical production npm vulnerabilities", "classification": "FAILED", "scope": "zod@3.25.76 GHSA-mrhx-c7xc-m3w5 High (CVSS 7.5)" }
+  ],
+  "topVulnerabilities": [
+    {
+      "rank": 1,
+      "severity": "HIGH",
+      "status": "PARTIALLY_MITIGATED_PASS_2",
+      "cwe": ["CWE-770"],
+      "title": "Memory Exhaustion DoS via zod@3.25.76 (Pass #1 GC & Session Leaks Resolved)",
+      "details": "zod@3.25.76 GHSA-mrhx-c7xc-m3w5 (CVSS 7.5) remains open in production dependencies. All 4 Pass #1 GC/session exhaustion vectors (nonceCache, audit-logger, rollback/lifecycle, browser session leak & CORS DELETE) were verified RESOLVED in Pass #2.",
+      "mitigation": "Upgrade zod>=4.6.7 across workspaces (also clears @openuidev/lang-core Vite warning); retain 1 MiB readBoundedBody (413) and loopback binding."
+    },
+    {
+      "rank": 2,
+      "severity": "MEDIUM",
+      "status": "PARTIALLY_MITIGATED_PASS_2",
+      "cwe": ["CWE-321", "CWE-598"],
+      "title": "Weak Default CLI Machine-Derived Key & Static Demo Bootstrap Token",
+      "details": "Pass #2 resolved CLI kdfParams bounds, ES #secrets private vault, and typesafe-provider error redaction. Remaining open: CLI falls back to predictable hostname|user|homedir passphrase when SCRIPT_KITTY_MASTER_KEY is unset; start-live-demo.mjs still defaults to static token in ?token= query URL.",
+      "mitigation": "Use OS keychain or mandatory master key in CLI credentials.ts; generate random per-run demo token and pass via #fragment or paste."
+    },
+    {
+      "rank": 3,
+      "severity": "MEDIUM",
+      "status": "OPEN_QUALIFIED_IN_DOCS",
+      "cwe": ["CWE-693", "CWE-287"],
+      "title": "Host Subprocess Sandbox Escape Surface & Unauthenticated Loopback Daemon Trust",
+      "details": "ProcessSandbox runs host Node child processes with env scrubbing only (no kernel net/fs jail or process-tree kill; now accurately qualified in README/SUBMISSION_PACK); QualityEngineAdapter targets an unauthenticated loopback HTTP daemon; Kali LIVE_CONTAINER retains synthetic placeholder @sha256 digest.",
+      "mitigation": "Wrap untrusted reproducers in rootless OCI --net=none --read-only containers with process-group kills; require auth on Quality Engine daemon; pin a verified live Kali digest and smoke-test LIVE_CONTAINER."
+    }
+  ],
+  "architectureMetrics": {
+    "sourceFilesMatchedTsJsCssHtmlPy": 184,
+    "totalSourceLinesMatched": 85188,
+    "workspaceCount": 18,
+    "packageJsonDependencyCycles": 0,
+    "actualImportCycles": [
+      ["@script-kitty/kali-mcp-assessment", "@script-kitty/security-actions", "@script-kitty/kali-mcp-assessment"]
+    ],
+    "encapsulationViolationResolved": true,
+    "duplicatedBrowserLines": {
+      "appsUiOfflineEngine": 3406,
+      "vercelAppStaticPreview": 2766,
+      "combined": 6172
+    }
+  },
+  "cleanupCheck": {
+    "port3847Listeners": 0,
+    "port5173Listeners": 0,
+    "productFilesMutatedByAuditor": 0
+  }
+}

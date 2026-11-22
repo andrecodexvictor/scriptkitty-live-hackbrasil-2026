@@ -1,0 +1,283 @@
+{
+  "schemaVersion": "chainbreak.graph.v1",
+  "fixtureId": "payments-lab/remediated",
+  "tenantId": "payments-lab",
+  "policyVersion": "2026.11.09-remediated",
+  "declaredInputSha256": "49dfd23089baf48d8d86e323f5604cbba6d33d81dbac42cebbb071ecc932b5d1",
+  "description": "Payments Lab remediated: removes the excessive rollout edge e-rollout-exporter-read-pii and restores PUBLIC classification ceiling on external report transfer, preserving all legitimate operations.",
+  "startIdentities": [
+    "identity:support-agent",
+    "identity:finance-operator"
+  ],
+  "policies": [
+    {
+      "policyId": "NO_RESTRICTED_DATA_EXTERNAL_TRANSFER",
+      "description": "RESTRICTED payment and PII data assets must never be transferred to EXTERNAL trust-zone destinations lacking explicit RESTRICTED clearance.",
+      "forbiddenTargetClassification": "RESTRICTED",
+      "forbiddenDestinationTrustZone": "EXTERNAL",
+      "riskRecommendation": "P1",
+      "policyVersion": "2026.11.09-remediated",
+      "sourceRef": "policies/payments-lab/remediated.policy.yaml#rules.no_restricted_external"
+    }
+  ],
+  "nodes": [
+    {
+      "nodeId": "identity:support-agent",
+      "kind": "identity",
+      "label": "Support Agent Identity",
+      "tenantId": "payments-lab",
+      "scope": "support-ops",
+      "allowedScopes": ["support-ops", "reporting-public"],
+      "roles": ["support-reader"],
+      "trustZone": "INTERNAL",
+      "isEntryIdentity": true,
+      "sourceRef": "policies/payments-lab/remediated.policy.yaml#identities.support_agent"
+    },
+    {
+      "nodeId": "identity:finance-operator",
+      "kind": "identity",
+      "label": "Finance Operator Identity",
+      "tenantId": "payments-lab",
+      "scope": "finance-core",
+      "allowedScopes": ["finance-core"],
+      "roles": ["finance-operator"],
+      "trustZone": "INTERNAL",
+      "isEntryIdentity": true,
+      "sourceRef": "policies/payments-lab/remediated.policy.yaml#identities.finance_operator"
+    },
+    {
+      "nodeId": "mcp_tool:report-exporter",
+      "kind": "mcp_tool",
+      "label": "MCP Report Exporter Tool",
+      "tenantId": "payments-lab",
+      "scope": "reporting-public",
+      "roles": ["report-exporter"],
+      "trustZone": "INTERNAL",
+      "sourceRef": "policies/payments-lab/remediated.policy.yaml#tools.report_exporter"
+    },
+    {
+      "nodeId": "service:finance-processor",
+      "kind": "service",
+      "label": "Finance Payment Processor Service",
+      "tenantId": "payments-lab",
+      "scope": "finance-core",
+      "roles": ["payment-processor"],
+      "trustZone": "INTERNAL",
+      "sourceRef": "policies/payments-lab/remediated.policy.yaml#services.finance_processor"
+    },
+    {
+      "nodeId": "data_asset:customer-profile-synthetic",
+      "kind": "data_asset",
+      "label": "Synthetic Customer Support Profile",
+      "tenantId": "payments-lab",
+      "scope": "support-ops",
+      "dataClassification": "INTERNAL",
+      "trustZone": "INTERNAL",
+      "isRestrictedAsset": false,
+      "sourceRef": "policies/payments-lab/remediated.policy.yaml#assets.customer_profile_synthetic"
+    },
+    {
+      "nodeId": "data_asset:non-sensitive-summary",
+      "kind": "data_asset",
+      "label": "Aggregated Non-Sensitive Report Summary",
+      "tenantId": "payments-lab",
+      "scope": "reporting-public",
+      "dataClassification": "PUBLIC",
+      "trustZone": "INTERNAL",
+      "isRestrictedAsset": false,
+      "sourceRef": "policies/payments-lab/remediated.policy.yaml#assets.non_sensitive_summary"
+    },
+    {
+      "nodeId": "data_asset:customer-payment-pii",
+      "kind": "data_asset",
+      "label": "Restricted Customer Payment & PII Vault",
+      "tenantId": "payments-lab",
+      "scope": "finance-core",
+      "dataClassification": "RESTRICTED",
+      "trustZone": "INTERNAL",
+      "isRestrictedAsset": true,
+      "sourceRef": "policies/payments-lab/remediated.policy.yaml#assets.customer_payment_pii"
+    },
+    {
+      "nodeId": "data_asset:payment-ledger-internal",
+      "kind": "data_asset",
+      "label": "Internal Settlement Ledger",
+      "tenantId": "payments-lab",
+      "scope": "finance-core",
+      "dataClassification": "RESTRICTED",
+      "trustZone": "INTERNAL",
+      "isRestrictedAsset": true,
+      "sourceRef": "policies/payments-lab/remediated.policy.yaml#assets.payment_ledger_internal"
+    },
+    {
+      "nodeId": "destination:external-report-sink",
+      "kind": "destination",
+      "label": "External Partner Reporting Sink",
+      "tenantId": "payments-lab",
+      "scope": "reporting-public",
+      "dataClassification": "PUBLIC",
+      "allowedClassifications": ["PUBLIC"],
+      "trustZone": "EXTERNAL",
+      "isUnauthorizedDestination": true,
+      "sourceRef": "policies/payments-lab/remediated.policy.yaml#destinations.external_report_sink"
+    }
+  ],
+  "edges": [
+    {
+      "edgeId": "e-support-read-profile",
+      "from": "identity:support-agent",
+      "to": "data_asset:customer-profile-synthetic",
+      "kind": "can_read",
+      "tenantId": "payments-lab",
+      "scope": "support-ops",
+      "conditions": {
+        "effect": "ALLOW",
+        "active": true,
+        "requiredRoles": ["support-reader"]
+      },
+      "sourceRef": "policies/payments-lab/remediated.policy.yaml#edges.support_read_profile",
+      "policyId": "NO_RESTRICTED_DATA_EXTERNAL_TRANSFER",
+      "policyVersion": "2026.11.09-remediated",
+      "dataClassification": "INTERNAL"
+    },
+    {
+      "edgeId": "e-support-invoke-exporter",
+      "from": "identity:support-agent",
+      "to": "mcp_tool:report-exporter",
+      "kind": "can_invoke",
+      "tenantId": "payments-lab",
+      "scope": "reporting-public",
+      "conditions": {
+        "effect": "ALLOW",
+        "active": true,
+        "allowedDataClassifications": ["PUBLIC"]
+      },
+      "sourceRef": "policies/payments-lab/remediated.policy.yaml#edges.support_invoke_exporter",
+      "policyId": "NO_RESTRICTED_DATA_EXTERNAL_TRANSFER",
+      "policyVersion": "2026.11.09-remediated",
+      "dataClassification": "PUBLIC"
+    },
+    {
+      "edgeId": "e-exporter-read-summary",
+      "from": "mcp_tool:report-exporter",
+      "to": "data_asset:non-sensitive-summary",
+      "kind": "can_read",
+      "tenantId": "payments-lab",
+      "scope": "reporting-public",
+      "conditions": {
+        "effect": "ALLOW",
+        "active": true,
+        "allowedDataClassifications": ["PUBLIC"]
+      },
+      "sourceRef": "policies/payments-lab/remediated.policy.yaml#edges.exporter_read_summary",
+      "policyId": "NO_RESTRICTED_DATA_EXTERNAL_TRANSFER",
+      "policyVersion": "2026.11.09-remediated",
+      "dataClassification": "PUBLIC"
+    },
+    {
+      "edgeId": "e-exporter-transfer-external",
+      "from": "mcp_tool:report-exporter",
+      "to": "destination:external-report-sink",
+      "kind": "transfers_data_to",
+      "tenantId": "payments-lab",
+      "scope": "reporting-public",
+      "conditions": {
+        "effect": "ALLOW",
+        "active": true,
+        "allowedDataClassifications": ["PUBLIC"]
+      },
+      "sourceRef": "policies/payments-lab/remediated.policy.yaml#edges.exporter_transfer_external",
+      "policyId": "NO_RESTRICTED_DATA_EXTERNAL_TRANSFER",
+      "policyVersion": "2026.11.09-remediated",
+      "dataClassification": "PUBLIC"
+    },
+    {
+      "edgeId": "e-finance-assume-processor",
+      "from": "identity:finance-operator",
+      "to": "service:finance-processor",
+      "kind": "assumes_role",
+      "tenantId": "payments-lab",
+      "scope": "finance-core",
+      "conditions": {
+        "effect": "ALLOW",
+        "active": true,
+        "requiredRoles": ["finance-operator"]
+      },
+      "sourceRef": "policies/payments-lab/remediated.policy.yaml#edges.finance_assume_processor",
+      "policyId": "NO_RESTRICTED_DATA_EXTERNAL_TRANSFER",
+      "policyVersion": "2026.11.09-remediated",
+      "dataClassification": "RESTRICTED"
+    },
+    {
+      "edgeId": "e-finance-read-payment-pii",
+      "from": "service:finance-processor",
+      "to": "data_asset:customer-payment-pii",
+      "kind": "can_read",
+      "tenantId": "payments-lab",
+      "scope": "finance-core",
+      "conditions": {
+        "effect": "ALLOW",
+        "active": true,
+        "requiredRoles": ["payment-processor"]
+      },
+      "sourceRef": "policies/payments-lab/remediated.policy.yaml#edges.finance_read_payment_pii",
+      "policyId": "NO_RESTRICTED_DATA_EXTERNAL_TRANSFER",
+      "policyVersion": "2026.11.09-remediated",
+      "dataClassification": "RESTRICTED"
+    },
+    {
+      "edgeId": "e-finance-write-ledger",
+      "from": "service:finance-processor",
+      "to": "data_asset:payment-ledger-internal",
+      "kind": "can_write",
+      "tenantId": "payments-lab",
+      "scope": "finance-core",
+      "conditions": {
+        "effect": "ALLOW",
+        "active": true,
+        "networkZone": "INTERNAL"
+      },
+      "sourceRef": "policies/payments-lab/remediated.policy.yaml#edges.finance_write_ledger",
+      "policyId": "NO_RESTRICTED_DATA_EXTERNAL_TRANSFER",
+      "policyVersion": "2026.11.09-remediated",
+      "dataClassification": "RESTRICTED"
+    }
+  ],
+  "legitimateOperations": [
+    {
+      "operationId": "op-support-read-profile",
+      "description": "Support agent reads synthetic customer support profile within support-ops scope",
+      "startIdentity": "identity:support-agent",
+      "requiredEdgeIds": ["e-support-read-profile"],
+      "targetNodeId": "data_asset:customer-profile-synthetic",
+      "expectedDataClassification": "INTERNAL",
+      "sourceRef": "policies/payments-lab/legitimate-ops.yaml#support_read_profile"
+    },
+    {
+      "operationId": "op-non-sensitive-export",
+      "description": "Support agent invokes report-exporter to export PUBLIC non-sensitive summary to external report sink",
+      "startIdentity": "identity:support-agent",
+      "requiredEdgeIds": [
+        "e-support-invoke-exporter",
+        "e-exporter-read-summary",
+        "e-exporter-transfer-external"
+      ],
+      "targetNodeId": "destination:external-report-sink",
+      "expectedDataClassification": "PUBLIC",
+      "sourceRef": "policies/payments-lab/legitimate-ops.yaml#non_sensitive_export"
+    },
+    {
+      "operationId": "op-finance-process-payments",
+      "description": "Finance operator assumes finance-processor service role to read payment PII and write internal settlement ledger",
+      "startIdentity": "identity:finance-operator",
+      "requiredEdgeIds": [
+        "e-finance-assume-processor",
+        "e-finance-read-payment-pii",
+        "e-finance-write-ledger"
+      ],
+      "targetNodeId": "data_asset:payment-ledger-internal",
+      "expectedDataClassification": "RESTRICTED",
+      "sourceRef": "policies/payments-lab/legitimate-ops.yaml#finance_process_payments"
+    }
+  ]
+}
